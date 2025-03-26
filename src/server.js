@@ -269,10 +269,11 @@ app.get('/api/equipment/:characterId', async (req, res) => {
 app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
 
+    // minFame=<minFame>&maxFame=<maxFame>&, max fame - min fame = 2000
     try {
         // Step 1: Search for characters by fame
         const searchUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-            `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
+            `?maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
         const searchResponse = await axios.get(searchUrl);
         const rows = searchResponse.data.rows;
 
@@ -390,64 +391,11 @@ app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
       `;
         const setResult = await client.query(setQuery, [jobId, jobGrowId]);
 
-        // 4. Get human-readable names for items and fusion items.
-        // Collect distinct item IDs from both queries.
-        const itemIdsSet = new Set();
-        itemsResult.rows.forEach(row => {
-            if (row.item_id) itemIdsSet.add(row.item_id);
-        });
-        fusionResult.rows.forEach(row => {
-            if (row.fusion_item_id) itemIdsSet.add(row.fusion_item_id);
-        });
-        const itemIds = Array.from(itemIdsSet);
-
+        // 4. (Disabled) Getting human-readable names for normal items and fusion items.
+        // For now, we simply set these mappings to an empty object so that later item_name remains null.
         const itemsWithNames = {};
-        if (itemIds.length > 0) {
-            for (const id of itemIds) {
-                const singleItemUrl = `https://api.dfoneople.com/df/items/${id}?apikey=${apiKey}`;
-                try {
-                    const response = await axios.get(singleItemUrl);
-                    // Assume response.data.itemName contains the human-readable name.
-                    if (response.data && response.data.itemName) {
-                        itemsWithNames[id] = response.data.itemName;
-                    } else {
-                        itemsWithNames[id] = null;
-                    }
-                } catch (e) {
-                    console.error(`Error fetching item info for ${id}:`, e.message);
-                    itemsWithNames[id] = null;
-                }
-            }
-        }
-
-        // 5. Get human-readable names for set items.
-        const setItemIdsSet = new Set();
-        setResult.rows.forEach(row => {
-            if (row.set_item_id) setItemIdsSet.add(row.set_item_id);
-        });
-        const setItemIds = Array.from(setItemIdsSet);
+        // 5. (Disabled) Getting human-readable names for set items.
         const setItemsWithNames = {};
-        if (setItemIds.length > 0) {
-            const chunkSize = 15;
-            for (let i = 0; i < setItemIds.length; i += chunkSize) {
-                const chunk = setItemIds.slice(i, i + chunkSize);
-                const idsParam = chunk.join(',');
-                const multiSetUrl = `https://api.dfoneople.com/df/multi/items?itemIds=${idsParam}&apikey=${apiKey}`;
-                try {
-                    const response = await axios.get(multiSetUrl);
-                    if (response.data && response.data.items) {
-                        response.data.items.forEach(item => {
-                            // Assume the response returns objects with itemId and itemName.
-                            setItemsWithNames[item.itemId] = item.itemName;
-                        });
-                    }
-                } catch (e) {
-                    console.error(`Error fetching set item info for chunk ${chunk}:`, e.message);
-                    // Assign null for any IDs in this chunk that failed.
-                    chunk.forEach(id => setItemsWithNames[id] = null);
-                }
-            }
-        }
 
         // 6. Attach human-readable names to the aggregated stats.
         const itemsWithStats = itemsResult.rows.map(row => ({
