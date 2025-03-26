@@ -101,15 +101,6 @@ app.get('/api/talisman/:serverId/:characterId', async (req, res) => {
     res.json(response.data);
 });
 
-// equip trait info
-// app.get('/api/equiptrait/:serverId/:characterId', async (req, res) => {
-//     const { serverId, characterId } = req.params;
-//     const url = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment-trait?apikey=${apiKey}`;
-
-//     const response = await axios.get(url);
-//     res.json(response.data);
-// });
-
 // skill
 app.get('/api/skill/:serverId/:characterId', async (req, res) => {
     const { serverId, characterId } = req.params;
@@ -132,7 +123,7 @@ app.get('/api/buff/:serverId/:characterId', async (req, res) => {
 app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
     const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-        `?&maxFame=40000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
+        `?&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
 
     // const response = await axios.get(url);
     // res.json(response.data);
@@ -180,6 +171,100 @@ app.get('/api/stored-characters', async (req, res) => {
     } catch (error) {
         console.error('Error retrieving stored characters:', error.message);
         res.status(500).json({ error: 'Failed to retrieve stored characters' });
+    }
+});
+
+// POST endpoint to store equipment data from a received payload
+app.post('/api/equipment', async (req, res) => {
+    const { characterId, equipment } = req.body;
+
+    // Validate incoming payload
+    if (!characterId || !Array.isArray(equipment)) {
+        return res.status(400).json({ error: 'Invalid payload. Required: characterId and equipment array.' });
+    }
+
+    try {
+        // Loop through each equipment item
+        for (const equip of equipment) {
+            // Skip TITLE parts
+            if (equip.slotId === 'TITLE') continue;
+
+            const itemId = equip.itemId;
+            const setItemId = equip.setItemId;
+            let fusionItemId = null;
+
+            // For parts other than WEAPON, check for a fusion option (using upgradeInfo)
+            if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
+                fusionItemId = equip.upgradeInfo.itemId;
+            }
+
+            // Insert the extracted data into the PostgreSQL table
+            const queryText = `
+          INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
+          VALUES ($1, $2, $3, $4, $5)
+        `;
+            await client.query(queryText, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
+        }
+        res.status(200).json({ message: 'Equipment data stored successfully' });
+    } catch (error) {
+        console.error('Error storing equipment data:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// GET endpoint to fetch equipment data from the external API,
+// extract the required fields, and store them in the database.
+app.get('/api/fetch-equipment/:serverId/:characterId', async (req, res) => {
+    const { serverId, characterId } = req.params;
+
+    try {
+        // Build the request URL using the provided parameters
+        const url = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
+        const response = await axios.get(url);
+        const equipmentData = response.data;
+
+        if (!equipmentData || !equipmentData.equipment) {
+            return res.status(404).json({ error: 'No equipment data found' });
+        }
+
+        // Process and store each equipment item
+        for (const equip of equipmentData.equipment) {
+            if (equip.slotId === 'TITLE') continue;
+
+            const itemId = equip.itemId;
+            const setItemId = equip.setItemId;
+            let fusionItemId = null;
+
+            if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
+                fusionItemId = equip.upgradeInfo.itemId;
+            }
+
+            const queryText = `
+          INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
+          VALUES ($1, $2, $3, $4, $5)
+        `;
+            await client.query(queryText, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
+        }
+
+        res.status(200).json({ message: 'Equipment data fetched and stored successfully' });
+    } catch (error) {
+        console.error('Error fetching equipment data:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// GET endpoint to retrieve stored equipment data for a given character
+app.get('/api/equipment/:characterId', async (req, res) => {
+    const { characterId } = req.params;
+    try {
+        const result = await client.query(
+            'SELECT * FROM character_equipment WHERE character_id = $1',
+            [characterId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error retrieving equipment data:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
