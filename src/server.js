@@ -123,13 +123,10 @@ app.get('/api/buff/:serverId/:characterId', async (req, res) => {
 app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
     const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-        `?&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
+        `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
 
     // const response = await axios.get(url);
     // res.json(response.data);
-
-    // Slayer 40132cbc8b2b5eedfe035e35c322472e
-    // Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 
     try {
         const response = await axios.get(url);
@@ -268,8 +265,243 @@ app.get('/api/equipment/:characterId', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port http://localhost:${PORT}`);
+// search with fame and store their equip info
+app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (req, res) => {
+    const { serverId, jobId, jobGrowId } = req.params;
+
+    try {
+        // Step 1: Search for characters by fame
+        const searchUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+            `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
+        const searchResponse = await axios.get(searchUrl);
+        const rows = searchResponse.data.rows;
+
+        // Upsert character details to avoid duplicates
+        const insertCharacterQuery = `
+        INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
+        VALUES ($1, $2, $3, $4)
+        ON CONFLICT (character_id) DO NOTHING;
+      `;
+        for (const row of rows) {
+            await client.query(insertCharacterQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
+        }
+
+        // Step 2: For each character, fetch and store equipment data
+        for (const row of rows) {
+            const characterId = row.characterId;
+            const equipmentUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
+            const equipmentResponse = await axios.get(equipmentUrl);
+            const equipmentData = equipmentResponse.data;
+
+            if (!equipmentData || !equipmentData.equipment) {
+                console.log(`No equipment data found for character ${characterId}`);
+                continue;
+            }
+
+            for (const equip of equipmentData.equipment) {
+                // Skip TITLE parts
+                if (equip.slotId === 'TITLE') continue;
+
+                const itemId = equip.itemId;
+                const setItemId = equip.setItemId;
+                let fusionItemId = null;
+                if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
+                    fusionItemId = equip.upgradeInfo.itemId;
+                }
+
+                // Use ON CONFLICT to avoid duplicates
+                const insertEquipmentQuery = `
+            INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
+            VALUES ($1, $2, $3, $4, $5)
+            ON CONFLICT (character_id, slot_id)
+            DO UPDATE SET 
+              item_id = EXCLUDED.item_id,
+              set_item_id = EXCLUDED.set_item_id,
+              fusion_item_id = EXCLUDED.fusion_item_id;
+          `;
+                await client.query(insertEquipmentQuery, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
+            }
+        }
+
+        res.status(200).json({
+            message: 'Characters and their equipment data fetched and stored successfully',
+            characterIds: rows.map(row => row.characterId)
+        });
+    } catch (error) {
+        console.error('Error processing fetch-characters-equipment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 
+// Slayer 40132cbc8b2b5eedfe035e35c322472e
+// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
+app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
+    const { jobId, jobGrowId } = req.params;
+    const orderedSlots = [
+        "WEAPON", "JACKET", "SHOULDER", "PANTS", "SHOES",
+        "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
+    ];
+
+    try {
+        // 1. Aggregate individual item usage by slot, filtered by class.
+        const itemsQuery = `
+        SELECT ce.slot_id, ce.item_id, COUNT(*) AS usage_count
+        FROM character_equipment ce
+        JOIN characters c ON ce.character_id = c.character_id
+        WHERE c.job_id = $1 AND c.job_grow_id = $2
+        GROUP BY ce.slot_id, ce.item_id
+        ORDER BY ce.slot_id, usage_count DESC;
+      `;
+        const itemsResult = await client.query(itemsQuery, [jobId, jobGrowId]);
+
+        // 2. Aggregate fusion item usage by slot.
+        const fusionQuery = `
+        SELECT ce.slot_id, ce.fusion_item_id, COUNT(*) AS usage_count
+        FROM character_equipment ce
+        JOIN characters c ON ce.character_id = c.character_id
+        WHERE c.job_id = $1 AND c.job_grow_id = $2 AND ce.fusion_item_id IS NOT NULL
+        GROUP BY ce.slot_id, ce.fusion_item_id
+        ORDER BY ce.slot_id, usage_count DESC;
+      `;
+        const fusionResult = await client.query(fusionQuery, [jobId, jobGrowId]);
+
+        // 3. Aggregate effective set usage. For each character (excluding WEAPON),
+        // count pieces per set and select the set with the highest count.
+        const setQuery = `
+        WITH set_counts AS (
+          SELECT ce.character_id, ce.set_item_id, COUNT(*) AS cnt
+          FROM character_equipment ce
+          JOIN characters c ON ce.character_id = c.character_id
+          WHERE ce.slot_id <> 'WEAPON' AND ce.set_item_id IS NOT NULL
+            AND c.job_id = $1 AND c.job_grow_id = $2
+          GROUP BY ce.character_id, ce.set_item_id
+        ),
+        effective_sets AS (
+          SELECT character_id, set_item_id, cnt,
+            ROW_NUMBER() OVER (PARTITION BY character_id ORDER BY cnt DESC) AS rn
+          FROM set_counts
+        )
+        SELECT set_item_id, COUNT(*) AS usage_count
+        FROM effective_sets
+        WHERE rn = 1
+        GROUP BY set_item_id
+        ORDER BY usage_count DESC;
+      `;
+        const setResult = await client.query(setQuery, [jobId, jobGrowId]);
+
+        // 4. Get human-readable names for items and fusion items.
+        // Collect distinct item IDs from both queries.
+        const itemIdsSet = new Set();
+        itemsResult.rows.forEach(row => {
+            if (row.item_id) itemIdsSet.add(row.item_id);
+        });
+        fusionResult.rows.forEach(row => {
+            if (row.fusion_item_id) itemIdsSet.add(row.fusion_item_id);
+        });
+        const itemIds = Array.from(itemIdsSet);
+
+        const itemsWithNames = {};
+        if (itemIds.length > 0) {
+            for (const id of itemIds) {
+                const singleItemUrl = `https://api.dfoneople.com/df/items/${id}?apikey=${apiKey}`;
+                try {
+                    const response = await axios.get(singleItemUrl);
+                    // Assume response.data.itemName contains the human-readable name.
+                    if (response.data && response.data.itemName) {
+                        itemsWithNames[id] = response.data.itemName;
+                    } else {
+                        itemsWithNames[id] = null;
+                    }
+                } catch (e) {
+                    console.error(`Error fetching item info for ${id}:`, e.message);
+                    itemsWithNames[id] = null;
+                }
+            }
+        }
+
+        // 5. Get human-readable names for set items.
+        const setItemIdsSet = new Set();
+        setResult.rows.forEach(row => {
+            if (row.set_item_id) setItemIdsSet.add(row.set_item_id);
+        });
+        const setItemIds = Array.from(setItemIdsSet);
+        const setItemsWithNames = {};
+        if (setItemIds.length > 0) {
+            const chunkSize = 15;
+            for (let i = 0; i < setItemIds.length; i += chunkSize) {
+                const chunk = setItemIds.slice(i, i + chunkSize);
+                const idsParam = chunk.join(',');
+                const multiSetUrl = `https://api.dfoneople.com/df/multi/items?itemIds=${idsParam}&apikey=${apiKey}`;
+                try {
+                    const response = await axios.get(multiSetUrl);
+                    if (response.data && response.data.items) {
+                        response.data.items.forEach(item => {
+                            // Assume the response returns objects with itemId and itemName.
+                            setItemsWithNames[item.itemId] = item.itemName;
+                        });
+                    }
+                } catch (e) {
+                    console.error(`Error fetching set item info for chunk ${chunk}:`, e.message);
+                    // Assign null for any IDs in this chunk that failed.
+                    chunk.forEach(id => setItemsWithNames[id] = null);
+                }
+            }
+        }
+
+        // 6. Attach human-readable names to the aggregated stats.
+        const itemsWithStats = itemsResult.rows.map(row => ({
+            slot: row.slot_id,
+            item_id: row.item_id,
+            usage_count: row.usage_count,
+            item_name: itemsWithNames[row.item_id] || null
+        }));
+
+        const fusionItemsWithStats = fusionResult.rows.map(row => ({
+            slot: row.slot_id,
+            fusion_item_id: row.fusion_item_id,
+            usage_count: row.usage_count,
+            item_name: itemsWithNames[row.fusion_item_id] || null
+        }));
+
+        const setUsageWithNames = setResult.rows.map(row => ({
+            set_item_id: row.set_item_id,
+            usage_count: row.usage_count,
+            set_item_name: setItemsWithNames[row.set_item_id] || null
+        }));
+
+        // 7. Group normal items and fusion items by slot (using the defined order).
+        const itemsBySlot = {};
+        const fusionItemsBySlot = {};
+        orderedSlots.forEach(slot => {
+            itemsBySlot[slot] = [];
+            fusionItemsBySlot[slot] = [];
+        });
+        itemsWithStats.forEach(item => {
+            if (orderedSlots.includes(item.slot)) {
+                itemsBySlot[item.slot].push(item);
+            }
+        });
+        fusionItemsWithStats.forEach(item => {
+            // Skip fusion items for WEAPON slot.
+            if (item.slot === "WEAPON") return;
+            if (orderedSlots.includes(item.slot)) {
+                fusionItemsBySlot[item.slot].push(item);
+            }
+        });
+
+        // 8. Return the final aggregated statistics.
+        res.status(200).json({
+            itemsBySlot,
+            fusionItemsBySlot,
+            setUsage: setUsageWithNames
+        });
+    } catch (error) {
+        console.error('Error fetching stats:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server listening on port http://localhost:${PORT}`);
+});
