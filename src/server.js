@@ -8,35 +8,35 @@ const PORT = process.env.PORT
 app.set('json spaces', 2);
 
 // PostgreSQL
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
-const client = new Client({
-    user: process.env.PG_USER,
-    host: process.env.PG_HOST,
-    database: process.env.PG_DB,
-    password: process.env.PG_PASSWORD,
-    port: process.env.PG_PORT,
-});
+// const client = new Client({
+//     user: process.env.PG_USER,
+//     host: process.env.PG_HOST,
+//     database: process.env.PG_DB,
+//     password: process.env.PG_PASSWORD,
+//     port: process.env.PG_PORT,
+// });
 
-async function connectDB() {
-    try {
-        await client.connect();
-        console.log('Connected to PostgreSQL successfully!');
+// async function connectDB() {
+//     try {
+//         await client.connect();
+//         console.log('Connected to PostgreSQL successfully!');
 
-        const res = await client.query('SELECT version();');
-        console.log('PostgreSQL version:', res.rows[0]);
-    } catch (err) {
-        console.error('Connection error:', err.stack);
-    }
-}
+//         const res = await client.query('SELECT version();');
+//         console.log('PostgreSQL version:', res.rows[0]);
+//     } catch (err) {
+//         console.error('Connection error:', err.stack);
+//     }
+// }
 
-connectDB();
+// connectDB();
 
-process.on('SIGINT', async () => {
-    await client.end();
-    console.log('Database connection closed gracefully.');
-    process.exit();
-});
+// process.on('SIGINT', async () => {
+//     await client.end();
+//     console.log('Database connection closed gracefully.');
+//     process.exit();
+// });
 
 app.get('', (req, res) => {
     res.send("DFO STATS COMING SOON :)");
@@ -119,40 +119,98 @@ app.get('/api/buff/:serverId/:characterId', async (req, res) => {
     res.json(response.data);
 });
 
+// Slayer 40132cbc8b2b5eedfe035e35c322472e
+// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // searching characters with fame, store character ID
+// app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
+//     const { serverId, jobId, jobGrowId } = req.params;
+//     const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+//         `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
+
+//     // const response = await axios.get(url);
+//     // res.json(response.data);
+
+//     try {
+//         const response = await axios.get(url);
+
+//         // Extract character IDs (and other details if needed)
+//         const rows = response.data.rows;
+//         const characterIds = rows.map(row => row.characterId);
+
+//         // Prepare the SQL insert query.
+//         // ON CONFLICT ensures that if the character already exists (by character_id), it won't be inserted again.
+//         const insertQuery = `
+//           INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
+//           VALUES ($1, $2, $3, $4)
+//           ON CONFLICT (character_id) DO NOTHING;
+//         `;
+
+//         // Insert each character into the table.
+//         for (const row of rows) {
+//             await client.query(insertQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
+//         }
+
+//         res.json(characterIds);
+//     } catch (error) {
+//         console.error('Error retrieving or storing characters:', error.message);
+//         res.status(500).json({ error: 'Failed to fetch or store data' });
+//     }
+// });
+
+// Search 100 characters from the highest fame and display the character IDs
 app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
-    const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-        `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
 
-    // const response = await axios.get(url);
-    // res.json(response.data);
-
+    // Get the highest fame value in the game.
+    const urlForHighest = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+        `?jobId=${jobId}&jobGrowId=${jobGrowId}&limit=1&apikey=${apiKey}`;
+    let currentMaxFame;
     try {
-        const response = await axios.get(url);
-
-        // Extract character IDs (and other details if needed)
-        const rows = response.data.rows;
-        const characterIds = rows.map(row => row.characterId);
-
-        // Prepare the SQL insert query.
-        // ON CONFLICT ensures that if the character already exists (by character_id), it won't be inserted again.
-        const insertQuery = `
-          INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
-          VALUES ($1, $2, $3, $4)
-          ON CONFLICT (character_id) DO NOTHING;
-        `;
-
-        // Insert each character into the table.
-        for (const row of rows) {
-            await client.query(insertQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
-        }
-
-        res.json(characterIds);
+        const initialResponse = await axios.get(urlForHighest);
+        currentMaxFame = initialResponse.data.fame.max;
     } catch (error) {
-        console.error('Error retrieving or storing characters:', error.message);
-        res.status(500).json({ error: 'Failed to fetch or store data' });
+        console.error('Error retrieving highest fame:', error.message);
+        return res.status(500).json({ error: 'Failed to fetch highest fame' });
     }
+
+    const targetCount = 100;
+    let accumulatedCharacterIds = [];
+
+    // Query in descending fame brackets (each of 2000 fame) until we have 100 character IDs.
+    while (accumulatedCharacterIds.length < targetCount && currentMaxFame > 0) {
+        const currentMinFame = currentMaxFame - 2000;
+        const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+            `?minFame=${currentMinFame}&maxFame=${currentMaxFame}` +
+            `&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=200&apikey=${apiKey}`;
+
+        try {
+            const response = await axios.get(url);
+            const rows = response.data.rows;
+
+            // Add each unique characterId to our accumulator.
+            rows.forEach(row => {
+                if (!accumulatedCharacterIds.includes(row.characterId)) {
+                    accumulatedCharacterIds.push(row.characterId);
+                }
+            });
+
+            // Prepare to query the next fame bracket.
+            currentMaxFame = currentMinFame;
+
+            // Stop if no characters are returned for the current fame bracket.
+            if (rows.length === 0) {
+                break;
+            }
+        } catch (error) {
+            console.error('Error retrieving characters:', error.message);
+            return res.status(500).json({ error: 'Failed to fetch data' });
+        }
+    }
+
+    // Ensure we only return 100 character IDs.
+    accumulatedCharacterIds = accumulatedCharacterIds.slice(0, targetCount);
+
+    res.json(accumulatedCharacterIds);
 });
 
 // retrieve character ID
