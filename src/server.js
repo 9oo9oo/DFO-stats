@@ -8,35 +8,35 @@ const PORT = process.env.PORT
 app.set('json spaces', 2);
 
 // PostgreSQL
-// const { Client } = require('pg');
+const { Client } = require('pg');
 
-// const client = new Client({
-//     user: process.env.PG_USER,
-//     host: process.env.PG_HOST,
-//     database: process.env.PG_DB,
-//     password: process.env.PG_PASSWORD,
-//     port: process.env.PG_PORT,
-// });
+const client = new Client({
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DB,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
+});
 
-// async function connectDB() {
-//     try {
-//         await client.connect();
-//         console.log('Connected to PostgreSQL successfully!');
+async function connectDB() {
+    try {
+        await client.connect();
+        console.log('Connected to PostgreSQL successfully!');
 
-//         const res = await client.query('SELECT version();');
-//         console.log('PostgreSQL version:', res.rows[0]);
-//     } catch (err) {
-//         console.error('Connection error:', err.stack);
-//     }
-// }
+        const res = await client.query('SELECT version();');
+        console.log('PostgreSQL version:', res.rows[0]);
+    } catch (err) {
+        console.error('Connection error:', err.stack);
+    }
+}
 
-// connectDB();
+connectDB();
 
-// process.on('SIGINT', async () => {
-//     await client.end();
-//     console.log('Database connection closed gracefully.');
-//     process.exit();
-// });
+process.on('SIGINT', async () => {
+    await client.end();
+    console.log('Database connection closed gracefully.');
+    process.exit();
+});
 
 app.get('', (req, res) => {
     res.send("DFO STATS COMING SOON :)");
@@ -119,100 +119,6 @@ app.get('/api/buff/:serverId/:characterId', async (req, res) => {
     res.json(response.data);
 });
 
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
-// searching characters with fame, store character ID
-// app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
-//     const { serverId, jobId, jobGrowId } = req.params;
-//     const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-//         `?&maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
-
-//     // const response = await axios.get(url);
-//     // res.json(response.data);
-
-//     try {
-//         const response = await axios.get(url);
-
-//         // Extract character IDs (and other details if needed)
-//         const rows = response.data.rows;
-//         const characterIds = rows.map(row => row.characterId);
-
-//         // Prepare the SQL insert query.
-//         // ON CONFLICT ensures that if the character already exists (by character_id), it won't be inserted again.
-//         const insertQuery = `
-//           INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
-//           VALUES ($1, $2, $3, $4)
-//           ON CONFLICT (character_id) DO NOTHING;
-//         `;
-
-//         // Insert each character into the table.
-//         for (const row of rows) {
-//             await client.query(insertQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
-//         }
-
-//         res.json(characterIds);
-//     } catch (error) {
-//         console.error('Error retrieving or storing characters:', error.message);
-//         res.status(500).json({ error: 'Failed to fetch or store data' });
-//     }
-// });
-
-// Search 100 characters from the highest fame and display the character IDs
-app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
-    const { serverId, jobId, jobGrowId } = req.params;
-
-    // Get the highest fame value in the game.
-    const urlForHighest = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-        `?jobId=${jobId}&jobGrowId=${jobGrowId}&limit=1&apikey=${apiKey}`;
-    let currentMaxFame;
-    try {
-        const initialResponse = await axios.get(urlForHighest);
-        currentMaxFame = initialResponse.data.fame.max;
-    } catch (error) {
-        console.error('Error retrieving highest fame:', error.message);
-        return res.status(500).json({ error: 'Failed to fetch highest fame' });
-    }
-
-    const targetCount = 100;
-    let accumulatedCharacterIds = [];
-
-    // Query in descending fame brackets (each of 2000 fame) until we have 100 character IDs.
-    while (accumulatedCharacterIds.length < targetCount && currentMaxFame > 0) {
-        const currentMinFame = currentMaxFame - 2000;
-        const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-            `?minFame=${currentMinFame}&maxFame=${currentMaxFame}` +
-            `&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=200&apikey=${apiKey}`;
-
-        try {
-            const response = await axios.get(url);
-            const rows = response.data.rows;
-
-            // Add each unique characterId to our accumulator.
-            rows.forEach(row => {
-                if (!accumulatedCharacterIds.includes(row.characterId)) {
-                    accumulatedCharacterIds.push(row.characterId);
-                }
-            });
-
-            // Prepare to query the next fame bracket.
-            currentMaxFame = currentMinFame;
-
-            // Stop if no characters are returned for the current fame bracket.
-            if (rows.length === 0) {
-                break;
-            }
-        } catch (error) {
-            console.error('Error retrieving characters:', error.message);
-            return res.status(500).json({ error: 'Failed to fetch data' });
-        }
-    }
-
-    // Ensure we only return 100 character IDs.
-    accumulatedCharacterIds = accumulatedCharacterIds.slice(0, targetCount);
-
-    res.json(accumulatedCharacterIds);
-});
-
 // retrieve character ID
 app.get('/api/stored-characters', async (req, res) => {
     try {
@@ -229,136 +135,120 @@ app.get('/api/stored-characters', async (req, res) => {
     }
 });
 
-// POST endpoint to store equipment data from a received payload
-app.post('/api/equipment', async (req, res) => {
-    const { characterId, equipment } = req.body;
 
-    // Validate incoming payload
-    if (!characterId || !Array.isArray(equipment)) {
-        return res.status(400).json({ error: 'Invalid payload. Required: characterId and equipment array.' });
-    }
+// Slayer 40132cbc8b2b5eedfe035e35c322472e
+// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
+// search and store 100 character IDs sorted with fame
+app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
+    const { serverId, jobId, jobGrowId } = req.params;
 
+    // Step 1: Get the highest fame value in the game.
+    const urlForHighest = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+        `?jobId=${jobId}&jobGrowId=${jobGrowId}&limit=1&apikey=${apiKey}`;
+    let currentMaxFame;
     try {
-        // Loop through each equipment item
-        for (const equip of equipment) {
-            // Skip TITLE parts
-            if (equip.slotId === 'TITLE') continue;
-
-            const itemId = equip.itemId;
-            const setItemId = equip.setItemId;
-            let fusionItemId = null;
-
-            // For parts other than WEAPON, check for a fusion option (using upgradeInfo)
-            if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
-                fusionItemId = equip.upgradeInfo.itemId;
-            }
-
-            // Insert the extracted data into the PostgreSQL table
-            const queryText = `
-          INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
-          VALUES ($1, $2, $3, $4, $5)
-        `;
-            await client.query(queryText, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
-        }
-        res.status(200).json({ message: 'Equipment data stored successfully' });
+        const initialResponse = await axios.get(urlForHighest);
+        currentMaxFame = initialResponse.data.fame.max;
     } catch (error) {
-        console.error('Error storing equipment data:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error retrieving highest fame:', error.message);
+        return res.status(500).json({ error: 'Failed to fetch highest fame' });
     }
+
+    const targetCount = 100;
+    let accumulatedCharacterIds = [];
+    let accumulatedRows = [];
+
+    // Step 2: Query in descending fame brackets (2000 fame each) until 100 unique character IDs are gathered.
+    while (accumulatedCharacterIds.length < targetCount && currentMaxFame > 0) {
+        const currentMinFame = currentMaxFame - 2000;
+        const url = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
+            `?minFame=${currentMinFame}&maxFame=${currentMaxFame}` +
+            `&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=200&apikey=${apiKey}`;
+
+        try {
+            const response = await axios.get(url);
+            const rows = response.data.rows;
+
+            // Accumulate unique character IDs.
+            rows.forEach(row => {
+                if (!accumulatedCharacterIds.includes(row.characterId)) {
+                    accumulatedCharacterIds.push(row.characterId);
+                    accumulatedRows.push(row);
+                }
+            });
+
+            // Update the fame range for the next iteration.
+            currentMaxFame = currentMinFame;
+            if (rows.length === 0) break;
+        } catch (error) {
+            console.error('Error retrieving characters:', error.message);
+            return res.status(500).json({ error: 'Failed to fetch character data' });
+        }
+    }
+
+    // Limit the arrays to exactly 100 entries.
+    accumulatedCharacterIds = accumulatedCharacterIds.slice(0, targetCount);
+    accumulatedRows = accumulatedRows.slice(0, targetCount);
+
+    // Step 3: Insert the 100 character IDs into the database.
+    const insertQuery = `
+      INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
+      VALUES ($1, $2, $3, $4)
+      ON CONFLICT (character_id) DO NOTHING;
+    `;
+    try {
+        for (const row of accumulatedRows) {
+            await client.query(insertQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
+        }
+    } catch (error) {
+        console.error('Error storing characters in DB:', error.message);
+        return res.status(500).json({ error: 'Failed to store character data' });
+    }
+
+    // Step 4: Return a simple success message.
+    res.json({ message: '100 character IDs inserted successfully' });
 });
 
-// GET endpoint to fetch equipment data from the external API,
-// extract the required fields, and store them in the database.
-app.get('/api/fetch-equipment/:serverId/:characterId', async (req, res) => {
-    const { serverId, characterId } = req.params;
 
-    try {
-        // Build the request URL using the provided parameters
-        const url = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
-        const response = await axios.get(url);
-        const equipmentData = response.data;
-
-        if (!equipmentData || !equipmentData.equipment) {
-            return res.status(404).json({ error: 'No equipment data found' });
-        }
-
-        // Process and store each equipment item
-        for (const equip of equipmentData.equipment) {
-            if (equip.slotId === 'TITLE') continue;
-
-            const itemId = equip.itemId;
-            const setItemId = equip.setItemId;
-            let fusionItemId = null;
-
-            if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
-                fusionItemId = equip.upgradeInfo.itemId;
-            }
-
-            const queryText = `
-          INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
-          VALUES ($1, $2, $3, $4, $5)
-        `;
-            await client.query(queryText, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
-        }
-
-        res.status(200).json({ message: 'Equipment data fetched and stored successfully' });
-    } catch (error) {
-        console.error('Error fetching equipment data:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// GET endpoint to retrieve stored equipment data for a given character
-app.get('/api/equipment/:characterId', async (req, res) => {
-    const { characterId } = req.params;
-    try {
-        const result = await client.query(
-            'SELECT * FROM character_equipment WHERE character_id = $1',
-            [characterId]
-        );
-        res.status(200).json(result.rows);
-    } catch (error) {
-        console.error('Error retrieving equipment data:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// search with fame and store their equip info
+// Slayer 40132cbc8b2b5eedfe035e35c322472e
+// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
+// fetch equipment info for each class and store them
 app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
 
-    // minFame=<minFame>&maxFame=<maxFame>&, max fame - min fame = 2000
     try {
-        // Step 1: Search for characters by fame
-        const searchUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters-fame` +
-            `?maxFame=50000&jobId=${jobId}&jobGrowId=${jobGrowId}&limit=10&apikey=${apiKey}`;
-        const searchResponse = await axios.get(searchUrl);
-        const rows = searchResponse.data.rows;
-
-        // Upsert character details to avoid duplicates
-        const insertCharacterQuery = `
-        INSERT INTO characters (character_id, server_id, job_id, job_grow_id)
-        VALUES ($1, $2, $3, $4)
-        ON CONFLICT (character_id) DO NOTHING;
-      `;
-        for (const row of rows) {
-            await client.query(insertCharacterQuery, [row.characterId, row.serverId, row.jobId, row.jobGrowId]);
+        // Step 1: Retrieve character IDs from the database for the specified server and class.
+        const getCharacterIdsQuery = `
+            SELECT character_id 
+            FROM characters
+            WHERE server_id = $1 AND job_id = $2 AND job_grow_id = $3;
+        `;
+        const { rows } = await client.query(getCharacterIdsQuery, [serverId, jobId, jobGrowId]);
+        
+        if (!rows.length) {
+            return res.status(404).json({ message: 'No character IDs found for the specified class.' });
         }
 
-        // Step 2: For each character, fetch and store equipment data
+        // Step 2: For each character ID from the DB, fetch and store equipment data.
         for (const row of rows) {
-            const characterId = row.characterId;
+            const characterId = row.character_id;
             const equipmentUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
-            const equipmentResponse = await axios.get(equipmentUrl);
+            let equipmentResponse;
+            try {
+                equipmentResponse = await axios.get(equipmentUrl);
+            } catch (error) {
+                console.error(`Error fetching equipment for ${characterId}:`, error.message);
+                continue;
+            }
+            
             const equipmentData = equipmentResponse.data;
-
             if (!equipmentData || !equipmentData.equipment) {
                 console.log(`No equipment data found for character ${characterId}`);
                 continue;
             }
 
             for (const equip of equipmentData.equipment) {
-                // Skip TITLE parts
+                // Skip TITLE parts.
                 if (equip.slotId === 'TITLE') continue;
 
                 const itemId = equip.itemId;
@@ -368,26 +258,28 @@ app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (re
                     fusionItemId = equip.upgradeInfo.itemId;
                 }
 
-                // Use ON CONFLICT to avoid duplicates
                 const insertEquipmentQuery = `
-            INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
-            VALUES ($1, $2, $3, $4, $5)
-            ON CONFLICT (character_id, slot_id)
-            DO UPDATE SET 
-              item_id = EXCLUDED.item_id,
-              set_item_id = EXCLUDED.set_item_id,
-              fusion_item_id = EXCLUDED.fusion_item_id;
-          `;
-                await client.query(insertEquipmentQuery, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
+                    INSERT INTO character_equipment (character_id, slot_id, item_id, set_item_id, fusion_item_id)
+                    VALUES ($1, $2, $3, $4, $5)
+                    ON CONFLICT (character_id, slot_id)
+                    DO UPDATE SET 
+                        item_id = EXCLUDED.item_id,
+                        set_item_id = EXCLUDED.set_item_id,
+                        fusion_item_id = EXCLUDED.fusion_item_id;
+                `;
+                try {
+                    await client.query(insertEquipmentQuery, [characterId, equip.slotId, itemId, setItemId, fusionItemId]);
+                } catch (error) {
+                    console.error(`Error inserting equipment for ${characterId} (slot ${equip.slotId}):`, error.message);
+                }
             }
         }
 
         res.status(200).json({
-            message: 'Characters and their equipment data fetched and stored successfully',
-            characterIds: rows.map(row => row.characterId)
+            message: 'Equipment data fetched and stored successfully for the retrieved character IDs.',
         });
     } catch (error) {
-        console.error('Error processing fetch-characters-equipment:', error);
+        console.error('Error processing equipment data:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
@@ -395,6 +287,7 @@ app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (re
 
 // Slayer 40132cbc8b2b5eedfe035e35c322472e
 // Neo Blade Master ba2ae3598c3af10c26562e073bc92060
+// return the equipment statistics
 app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
     const { jobId, jobGrowId } = req.params;
     const orderedSlots = [
@@ -449,46 +342,37 @@ app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
       `;
         const setResult = await client.query(setQuery, [jobId, jobGrowId]);
 
-        // 4. (Disabled) Getting human-readable names for normal items and fusion items.
-        // For now, we simply set these mappings to an empty object so that later item_name remains null.
-        const itemsWithNames = {};
-        // 5. (Disabled) Getting human-readable names for set items.
-        const setItemsWithNames = {};
-
-        // 6. Attach human-readable names to the aggregated stats.
-        const itemsWithStats = itemsResult.rows.map(row => ({
+        // 4. Map the results to a simplified structure without human-readable names.
+        const itemsStats = itemsResult.rows.map(row => ({
             slot: row.slot_id,
             item_id: row.item_id,
-            usage_count: row.usage_count,
-            item_name: itemsWithNames[row.item_id] || null
+            usage_count: parseInt(row.usage_count, 10)
         }));
 
-        const fusionItemsWithStats = fusionResult.rows.map(row => ({
+        const fusionItemsStats = fusionResult.rows.map(row => ({
             slot: row.slot_id,
             fusion_item_id: row.fusion_item_id,
-            usage_count: row.usage_count,
-            item_name: itemsWithNames[row.fusion_item_id] || null
+            usage_count: parseInt(row.usage_count, 10)
         }));
 
-        const setUsageWithNames = setResult.rows.map(row => ({
+        const setUsageStats = setResult.rows.map(row => ({
             set_item_id: row.set_item_id,
-            usage_count: row.usage_count,
-            set_item_name: setItemsWithNames[row.set_item_id] || null
+            usage_count: parseInt(row.usage_count, 10)
         }));
 
-        // 7. Group normal items and fusion items by slot (using the defined order).
+        // 5. Group normal items and fusion items by slot based on the defined order.
         const itemsBySlot = {};
         const fusionItemsBySlot = {};
         orderedSlots.forEach(slot => {
             itemsBySlot[slot] = [];
             fusionItemsBySlot[slot] = [];
         });
-        itemsWithStats.forEach(item => {
+        itemsStats.forEach(item => {
             if (orderedSlots.includes(item.slot)) {
                 itemsBySlot[item.slot].push(item);
             }
         });
-        fusionItemsWithStats.forEach(item => {
+        fusionItemsStats.forEach(item => {
             // Skip fusion items for WEAPON slot.
             if (item.slot === "WEAPON") return;
             if (orderedSlots.includes(item.slot)) {
@@ -496,11 +380,17 @@ app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
             }
         });
 
-        // 8. Return the final aggregated statistics.
+        // 6. Limit the list for each slot to the Top 10 entries.
+        for (const slot of orderedSlots) {
+            itemsBySlot[slot] = itemsBySlot[slot].slice(0, 10);
+            fusionItemsBySlot[slot] = fusionItemsBySlot[slot].slice(0, 10);
+        }
+
+        // 7. Return the final aggregated statistics.
         res.status(200).json({
             itemsBySlot,
             fusionItemsBySlot,
-            setUsage: setUsageWithNames
+            setUsage: setUsageStats
         });
     } catch (error) {
         console.error('Error fetching stats:', error);
