@@ -38,6 +38,10 @@ process.on('SIGINT', async () => {
     process.exit();
 });
 
+app.listen(PORT, () => {
+    console.log(`Server listening on port http://localhost:${PORT}`);
+});
+
 app.get('', (req, res) => {
     res.send("DFO STATS COMING SOON :)");
 })
@@ -135,9 +139,6 @@ app.get('/api/stored-characters', async (req, res) => {
     }
 });
 
-
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // search and store 100 character IDs sorted with fame
 app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
@@ -217,9 +218,6 @@ app.get('/api/characters/:serverId/:jobId/:jobGrowId', async (req, res) => {
     res.json({ message: '100 character IDs inserted successfully for the given class.' });
 });
 
-
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // fetch equipment info for each class and store them
 app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
@@ -292,9 +290,6 @@ app.get('/api/fetch-characters-equipment/:serverId/:jobId/:jobGrowId', async (re
     }
 });
 
-
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // return the equipment statistics
 app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
     const { jobId, jobGrowId } = req.params;
@@ -406,8 +401,6 @@ app.get('/api/stats/:jobId/:jobGrowId', async (req, res) => {
     }
 });
 
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // fetch creature info for each class and store them
 app.get('/api/fetch-characters-creature/:serverId/:jobId/:jobGrowId', async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
@@ -491,8 +484,6 @@ app.get('/api/fetch-characters-creature/:serverId/:jobId/:jobGrowId', async (req
     }
 });
 
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 // return the creature statistics
 app.get('/api/stats/creature/:jobId/:jobGrowId', async (req, res) => {
     const { jobId, jobGrowId } = req.params;
@@ -592,7 +583,3 @@ Creature, artifacts
 Talisman 
 Title
 */
-
-app.listen(PORT, () => {
-    console.log(`Server listening on port http://localhost:${PORT}`);
-});

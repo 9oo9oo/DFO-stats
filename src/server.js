@@ -32,3 +32,12 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
 });
+
+
+/* 
+To add
+Skill tree
+Avatar, aura, emblem
+Talisman 
+Title - just include this with equip, it is part of equip lol
+*/
