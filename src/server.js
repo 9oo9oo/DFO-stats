@@ -40,6 +40,4 @@ app.listen(PORT, () => {
 To add
 Skill tree
 Avatar, aura, emblem
-Talisman 
-Title - just include this with equip, it is part of equip lol
 */

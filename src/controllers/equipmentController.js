@@ -35,7 +35,6 @@ exports.fetchEquipment = async (req, res) => {
       }
 
       for (const equip of equipmentData.equipment) {
-        if (equip.slotId === 'TITLE') continue;
         const itemId = equip.itemId;
         const setItemId = equip.setItemId;
         let fusionItemId = null;
@@ -72,7 +71,7 @@ exports.fetchEquipment = async (req, res) => {
 exports.getEquipmentStats = async (req, res) => {
   const { jobId, jobGrowId } = req.params;
   const orderedSlots = [
-    "WEAPON", "JACKET", "SHOULDER", "PANTS", "SHOES",
+    "TITLE", "WEAPON", "JACKET", "SHOULDER", "PANTS", "SHOES",
     "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
   ];
 
