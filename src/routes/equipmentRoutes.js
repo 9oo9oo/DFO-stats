@@ -10,4 +10,3 @@ router.get('/fetch/:serverId/:jobId/:jobGrowId', equipmentController.fetchEquipm
 router.get('/stats/:jobId/:jobGrowId', equipmentController.getEquipmentStats);
 
 module.exports = router;
-    
