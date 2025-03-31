@@ -14,6 +14,7 @@ const serverRoutes = require('./routes/serverRoutes');
 const characterRoutes = require('./routes/characterRoutes');
 const equipmentRoutes = require('./routes/equipmentRoutes');
 const creatureRoutes = require('./routes/creatureRoutes');
+const talismanRoutes = require('./routes/talismanRoutes');
 
 // Mount routes
 // Slayer 40132cbc8b2b5eedfe035e35c322472e
@@ -22,6 +23,7 @@ app.use('/api/servers', serverRoutes);
 app.use('/api/character', characterRoutes);
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/creature', creatureRoutes);
+app.use('/api/talisman', talismanRoutes);
 
 // Default route
 app.get('/', (req, res) => {
