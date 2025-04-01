@@ -32,6 +32,14 @@ app.get('/', (req, res) => {
   res.send("DFO STATS COMING SOON :)");
 });
 
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from the backend!' });
+});
+
+app.get('/api/main', (req, res) => {
+  res.json({ message: 'main page' });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
