@@ -18,8 +18,6 @@ const talismanRoutes = require('./routes/talismanRoutes');
 const skillRoutes = require('./routes/skillRoutes');
 
 // Mount routes
-// Slayer 40132cbc8b2b5eedfe035e35c322472e
-// Neo Blade Master ba2ae3598c3af10c26562e073bc92060
 app.use('/api/servers', serverRoutes);
 app.use('/api/character', characterRoutes);
 app.use('/api/equipment', equipmentRoutes);
