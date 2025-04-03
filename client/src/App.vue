@@ -5,7 +5,6 @@
       <nav>
         <router-link to="/">Home</router-link>
         <router-link to="/servers">Servers</router-link>
-        <router-link :to="`/equipment/stats/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060`">Slayer equip</router-link>
       </nav>
     </header>
     <main>
