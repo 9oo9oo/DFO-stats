@@ -1,37 +1,39 @@
+<!-- src/App.vue -->
 <template>
-  <div>
-    <p>{{ message }}</p>
+  <div id="app">
+    <header>
+      <nav>
+        <router-link to="/">Home</router-link>
+        <router-link to="/servers">Servers</router-link>
+        <router-link :to="`/equipment/stats/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060`">Slayer equip</router-link>
+      </nav>
+    </header>
+    <main>
+      <router-view></router-view>
+    </main>
+    <footer>
+    </footer>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
-  data() {
-    return {
-      message: ''
-    }
-  },
-  mounted() {
-    axios.get('/api/main')
-      .then(response => {
-        this.message = response.data.message;
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }
-}
+  name: 'App'
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style scoped>
+h1 {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>
