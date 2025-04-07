@@ -6,6 +6,7 @@ import EquipmentStats from '@/views/EquipmentStats.vue';
 import CreatureStats from '@/views/CreatureStats.vue';
 import TalismanStats from '@/views/TalismanStats.vue';
 import SkillStats from '@/views/SkillStats.vue';
+import AvatarStats from '@/views/AvatarStats.vue';
 
 const routes = [
     { path: '/', name: 'Home', component: HomePage },
@@ -13,7 +14,8 @@ const routes = [
     { path: '/equipment/stats/:jobId/:jobGrowId', name: 'EquipmentStats', component: EquipmentStats },
     { path: '/creature/stats/:jobId/:jobGrowId', name: 'CreatureStats', component: CreatureStats },
     { path: '/talisman/stats/:jobId/:jobGrowId', name: 'TalismanStats', component: TalismanStats },
-    { path: '/skill/stats/:jobId/:jobGrowId', name: 'SkillStats', component: SkillStats }
+    { path: '/skill/stats/:jobId/:jobGrowId', name: 'SkillStats', component: SkillStats },
+    { path: '/avatar/stats/:jobId/:jobGrowId', name: 'AvatarStats', component: AvatarStats }
 ];
 
 const router = createRouter({

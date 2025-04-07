@@ -15,6 +15,9 @@
         <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
           <button>Skill</button>
         </router-link>
+        <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
+          <button>Avatar</button>
+        </router-link>
       </div>
   
       <h1>Talisman & Rune Statistics for {{ jobFriendlyName }}</h1>

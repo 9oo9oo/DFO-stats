@@ -16,6 +16,8 @@ const equipmentRoutes = require('./routes/equipmentRoutes');
 const creatureRoutes = require('./routes/creatureRoutes');
 const talismanRoutes = require('./routes/talismanRoutes');
 const skillRoutes = require('./routes/skillRoutes');
+const avatarRoutes = require('./routes/avatarRoutes');
+
 
 // Mount routes
 app.use('/api/servers', serverRoutes);
@@ -24,6 +26,7 @@ app.use('/api/equipment', equipmentRoutes);
 app.use('/api/creature', creatureRoutes);
 app.use('/api/talisman', talismanRoutes);
 app.use('/api/skill', skillRoutes);
+app.use('/api/avatar', avatarRoutes);
 
 // Default route
 app.get('/', (req, res) => {
@@ -43,9 +46,3 @@ app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
 });
 
-
-/* 
-To add
-Skill tree
-Avatar, aura, emblem
-*/

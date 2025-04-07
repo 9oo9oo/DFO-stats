@@ -84,7 +84,6 @@ exports.fetchEquipment = async (req, res) => {
   }
 };
 
-
 exports.getEquipmentStats = async (req, res) => {
   const { jobId, jobGrowId } = req.params;
   const orderedSlots = [
