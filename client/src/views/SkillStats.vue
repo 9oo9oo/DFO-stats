@@ -27,7 +27,6 @@
           <table>
             <thead>
               <tr>
-                <th>Skill ID</th>
                 <th>Skill Name</th>
                 <th>Required Level</th>
                 <th>Average Level</th>
@@ -36,7 +35,6 @@
             </thead>
             <tbody>
               <tr v-for="skill in stats.skillStats" :key="skill.skill_id">
-                <td>{{ skill.skill_id }}</td>
                 <td>{{ skill.skill_name }}</td>
                 <td>{{ skill.required_level }}</td>
                 <td>{{ skill.average_level.toFixed(2) }}</td>

@@ -1,84 +1,72 @@
 <!-- src/views/CreatureStats.vue -->
 <template>
-    <div class="creature-stats">
-      <!-- Navigation Buttons -->
-      <div class="stats-nav">
-        <router-link :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }">
-          <button>Equipment</button>
-        </router-link>
-        <router-link :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }">
-          <button class="active">Creature</button>
-        </router-link>
-        <router-link :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }">
-          <button>Talisman</button>
-        </router-link>
-        <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
-          <button>Skill</button>
-        </router-link>
-      </div>
-  
-      <h1>Creature Statistics for {{ jobFriendlyName }}</h1>
-  
-      <!-- Display stats only when a jobGrowId is set -->
-      <div v-if="jobGrowId">
-        <div v-if="loading">Loading creature stats...</div>
-        <div v-if="error">Error: {{ error }}</div>
-        <div v-if="stats">
-          <!-- Creature Main Items Section -->
-          <div class="section">
-            <h2>Creature Main Items</h2>
-            <ul>
-              <li
-                v-for="item in stats.creatureStats"
-                :key="item.creature_item_id"
-              >
-                Item ID: {{ item.creature_item_id }} - Usage: {{ item.usage_count }}
-              </li>
-            </ul>
-          </div>
-  
-          <!-- Artifact RED Items Section -->
-          <div class="section">
-            <h2>Artifact Red Items</h2>
-            <ul>
-              <li
-                v-for="item in stats.artifactRedStats"
-                :key="item.artifact_item_id"
-              >
-                Item ID: {{ item.artifact_item_id }} - Usage: {{ item.usage_count }}
-              </li>
-            </ul>
-          </div>
-  
-          <!-- Artifact BLUE Items Section -->
-          <div class="section">
-            <h2>Artifact Blue Items</h2>
-            <ul>
-              <li
-                v-for="item in stats.artifactBlueStats"
-                :key="item.artifact_item_id"
-              >
-                Item ID: {{ item.artifact_item_id }} - Usage: {{ item.usage_count }}
-              </li>
-            </ul>
-          </div>
-  
-          <!-- Artifact GREEN Items Section -->
-          <div class="section">
-            <h2>Artifact Green Items</h2>
-            <ul>
-              <li
-                v-for="item in stats.artifactGreenStats"
-                :key="item.artifact_item_id"
-              >
-                Item ID: {{ item.artifact_item_id }} - Usage: {{ item.usage_count }}
-              </li>
-            </ul>
-          </div>
+  <div class="creature-stats">
+    <!-- Navigation Buttons -->
+    <div class="stats-nav">
+      <router-link :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }">
+        <button>Equipment</button>
+      </router-link>
+      <router-link :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }">
+        <button class="active">Creature</button>
+      </router-link>
+      <router-link :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }">
+        <button>Talisman</button>
+      </router-link>
+      <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
+        <button>Skill</button>
+      </router-link>
+    </div>
+
+    <h1>Creature Statistics for {{ jobFriendlyName }}</h1>
+
+    <!-- Display stats only when a jobGrowId is set -->
+    <div v-if="jobGrowId">
+      <div v-if="loading">Loading creature stats...</div>
+      <div v-if="error">Error: {{ error }}</div>
+      <div v-if="stats">
+        <!-- Creature Main Items Section -->
+        <div class="section">
+          <h2>Creature Main Items</h2>
+          <ul>
+            <li v-for="item in stats.creatureStats" :key="item.creature_item_id">
+              {{ item.creature_item_name }} - Usage: {{ item.usage_count }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Artifact RED Items Section -->
+        <div class="section">
+          <h2>Artifact Red Items</h2>
+          <ul>
+            <li v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
+              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Artifact BLUE Items Section -->
+        <div class="section">
+          <h2>Artifact Blue Items</h2>
+          <ul>
+            <li v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
+              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Artifact GREEN Items Section -->
+        <div class="section">
+          <h2>Artifact Green Items</h2>
+          <ul>
+            <li v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
+              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
   import axios from 'axios';

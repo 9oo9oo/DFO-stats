@@ -32,7 +32,7 @@
                 v-for="item in stats.talismanStats"
                 :key="item.talisman_item_id"
               >
-                {{ item.talisman_item_name }} (ID: {{ item.talisman_item_id }}) - Usage: {{ item.usage_count }}
+                {{ item.talisman_item_name }} - Usage: {{ item.usage_count }}
               </li>
             </ul>
           </div>
@@ -45,7 +45,7 @@
                 v-for="item in stats.runeStats"
                 :key="item.rune_item_id"
               >
-                {{ item.rune_item_name }} (ID: {{ item.rune_item_id }}) - Usage: {{ item.usage_count }}
+                {{ item.rune_item_name }} - Usage: {{ item.usage_count }}
               </li>
             </ul>
           </div>
