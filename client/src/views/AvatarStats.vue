@@ -85,6 +85,18 @@
         return jobMappings[this.jobId] || {};
       },
       jobFriendlyName() {
+        // Check if a jobGrowId exists and the mapping contains finalJobGrows.
+        if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
+          // Look for the jobGrow that matches the jobGrowId.
+          const growMapping = this.jobMapping.finalJobGrows.find(
+            (item) => item.jobGrowId === this.jobGrowId
+          );
+          // If found, return the jobGrowName.
+          if (growMapping && growMapping.jobGrowName) {
+            return growMapping.jobGrowName;
+          }
+        }
+        // If no matching jobGrow is found, return the default jobName.
         return this.jobMapping.jobName || 'Unknown Job';
       },
       // Group emblem stats by slot_color.

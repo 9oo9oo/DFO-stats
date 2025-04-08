@@ -74,7 +74,7 @@
   <script>
   import axios from 'axios';
   import jobMappings from '@/config/jobMappings.js';
-  
+
   export default {
     name: 'CreatureStats',
     data() {
@@ -97,6 +97,18 @@
         return jobMappings[this.jobId] || {};
       },
       jobFriendlyName() {
+        // Check if a jobGrowId exists and the mapping contains finalJobGrows.
+        if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
+          // Look for the jobGrow that matches the jobGrowId.
+          const growMapping = this.jobMapping.finalJobGrows.find(
+            (item) => item.jobGrowId === this.jobGrowId
+          );
+          // If found, return the jobGrowName.
+          if (growMapping && growMapping.jobGrowName) {
+            return growMapping.jobGrowName;
+          }
+        }
+        // If no matching jobGrow is found, return the default jobName.
         return this.jobMapping.jobName || 'Unknown Job';
       }
     },
@@ -130,18 +142,20 @@
       }
     }
   };
-  </script>
+</script>
   
   <style scoped>
   .creature-stats {
     padding: 20px;
   }
+
   .stats-nav {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin-bottom: 20px;
   }
+
   .stats-nav button {
     padding: 10px 15px;
     border: none;
@@ -151,11 +165,13 @@
     cursor: pointer;
     transition: background-color 0.2s;
   }
+
   .stats-nav button:hover {
     background-color: #0056b3;
   }
+
   .stats-nav button.active {
     background-color: #0056b3;
   }
-  </style>
+</style>
   
