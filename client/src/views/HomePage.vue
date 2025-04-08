@@ -2,27 +2,34 @@
 <template>
   <div class="home">
     <h1>Welcome to the DFO Stats Website</h1>
-    <p>Click on a character to view their equipment stats:</p>
-    <div class="character-buttons">
-      <!-- Loop over each job mapping -->
-      <div
-        v-for="(mapping, jobId) in jobMappings"
-        :key="jobId"
-        class="job-group"
-      >
-        <h2>{{ mapping.jobName }}</h2>
-        <div class="buttons">
-          <!-- Loop over the final job grows for the job -->
-          <router-link
-            v-for="finalGrow in mapping.finalJobGrows"
-            :key="finalGrow.jobGrowId"
-            :to="{ name: 'EquipmentStats', params: { jobId: jobId, jobGrowId: finalGrow.jobGrowId } }"
-          >
-            <button>{{ finalGrow.jobGrowName }}</button>
-          </router-link>
-        </div>
-      </div>
-    </div>
+    <p>Click on a character awakening to view their equipment stats:</p>
+    <table class="awakening-table">
+      <tbody>
+        <!-- For each job mapping (class) create a row -->
+        <tr v-for="(mapping, jobId) in jobMappings" :key="jobId">
+          <td class="class-name">{{ mapping.jobName }}</td>
+          <!-- For each character awakening available (assuming max 5 per class) -->
+          <td v-for="characterIndex in 5" :key="characterIndex">
+            <router-link
+              v-if="mapping.finalJobGrows[characterIndex - 1]"
+              :to="{ 
+                name: 'EquipmentStats', 
+                params: { 
+                  jobId: jobId, 
+                  jobGrowId: mapping.finalJobGrows[characterIndex - 1].jobGrowId 
+                } 
+              }"
+            >
+              <img
+                :src="mapping.finalJobGrows[characterIndex - 1].imgSrc || 'https://via.placeholder.com/100'"
+                :alt="mapping.finalJobGrows[characterIndex - 1].jobGrowName"
+                class="awakening-img"
+              />
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -33,9 +40,9 @@ export default {
   name: "HomePage",
   data() {
     return {
-      jobMappings
+      jobMappings,
     };
-  }
+  },
 };
 </script>
 
@@ -44,38 +51,34 @@ export default {
   text-align: center;
   padding: 20px;
 }
-.character-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+
+.awakening-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
 }
-.job-group {
+
+.awakening-table th,
+.awakening-table td {
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  width: 250px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 10px;
 }
-.job-group h2 {
-  margin-bottom: 10px;
-  font-size: 1.2em;
+
+.class-name {
+  font-weight: bold;
+  background-color: #e0e0e0;
 }
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
+
+/* Image styling for clickable images */
+.awakening-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: opacity 0.2s;
 }
-button:hover {
-  background-color: #0056b3;
+
+.awakening-img:hover {
+  opacity: 0.8;
 }
 </style>

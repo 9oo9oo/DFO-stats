@@ -93,20 +93,6 @@ export default {
             { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Dimension Walker" }
         ]
     },
-    // Dark Knight
-    "4b3bc88bb6337d2e23ed3411b2435068": {
-        jobName: "Dark Knight",
-        finalJobGrows: [
-            { jobGrowId: "632b3965398c1c7526657cea3fd16bf5", jobGrowName: "Neo: Dark Knight" }
-        ]
-    },
-    // Creator
-    "c95dfe0d42b6c71bc8019fcca0b3eccd": {
-        jobName: "Creator",
-        finalJobGrows: [
-            { jobGrowId: "632b3965398c1c7526657cea3fd16bf5", jobGrowName: "Neo: Creator" }
-        ]
-    },
     // Slayer (F)
     "08cf6465c8dfcdbf5a896b40a2811007": {
         jobName: "Slayer (F)",
@@ -166,6 +152,20 @@ export default {
             { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Traveler" },
             { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Hunter" },
             { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Vigilante" }
+        ]
+    },
+    // Dark Knight
+    "4b3bc88bb6337d2e23ed3411b2435068": {
+        jobName: "Dark Knight",
+        finalJobGrows: [
+            { jobGrowId: "632b3965398c1c7526657cea3fd16bf5", jobGrowName: "Neo: Dark Knight" }
+        ]
+    },
+    // Creator
+    "c95dfe0d42b6c71bc8019fcca0b3eccd": {
+        jobName: "Creator",
+        finalJobGrows: [
+            { jobGrowId: "632b3965398c1c7526657cea3fd16bf5", jobGrowName: "Neo: Creator" }
         ]
     }
 }

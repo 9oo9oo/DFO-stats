@@ -21,15 +21,27 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+/* Global styles */
+body {
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
+  font-family: 'Noto Sans', sans-serif;
   text-align: center;
 }
+
 ul {
+  font-family: 'Noto Sans', sans-serif;
   list-style-type: none;
   padding: 0;
 }
+
 li {
+  font-family: 'Noto Sans', sans-serif;
   margin: 10px 0;
   padding: 10px;
   border: 1px solid #ccc;
