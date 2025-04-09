@@ -1,13 +1,27 @@
 <template>
   <div class="home">
-    <h1>DFO class stats</h1>
+    <h1>DFO Class Stats</h1>
     <p>Click on a character awakening to view their equipment stats:</p>
-    <!-- Iterate over each job mapping -->
-    <div class="job-group" v-for="(mapping, jobId) in jobMappings" :key="jobId">
-      <!-- Display the job name above the images -->
+    <!-- Buttons at the top to navigate to each character section -->
+    <div class="job-buttons">
+      <button
+        v-for="(mapping, jobId) in jobMappings"
+        :key="jobId"
+        class="job-button"
+        @click="scrollToJobGroup(jobId)"
+      >
+        {{ mapping.jobName }}
+      </button>
+    </div>
+    <!-- Render each job group (character section) with a unique id -->
+    <div
+      class="job-group"
+      v-for="(mapping, jobId) in jobMappings"
+      :key="jobId"
+      :id="jobId"
+    >
       <h2 class="job-name">{{ mapping.jobName }}</h2>
       <div class="job-images">
-        <!-- Iterate over each class (finalJobGrow) for the current mapping -->
         <router-link
           v-for="(jobGrow, localIndex) in mapping.finalJobGrows"
           :key="jobGrow.jobGrowId"
@@ -39,32 +53,34 @@ export default {
   },
   methods: {
     // Compute a global sequential index for each class image
-    // currentJobId: the key for the current character mapping
-    // currentLocalIndex: the index of the class in the finalJobGrows array (0-indexed)
+    // currentJobId: key for the current character mapping
+    // currentLocalIndex: the index within mapping.finalJobGrows (0-indexed)
     getSequentialIndex(currentJobId, currentLocalIndex) {
       let count = 0;
-      // Iterate over job mappings in insertion order
       for (const [jobId, mapping] of Object.entries(this.jobMappings)) {
         if (jobId === currentJobId) {
-          // Add the local index (+1 for 1-indexed image file naming)
           return count + currentLocalIndex + 1;
         }
-        // Add the count for each character's classes
         count += mapping.finalJobGrows.length;
       }
-      // Fallback value if not found (should not occur)
-      return 0;
+      return 0; // Fallback (should not occur)
     },
 
-    // Using the computed sequential index, build the image path
+    // Build the dynamic image path based on the sequential index.
     getImageSrc(jobId, localIndex) {
       const seqIndex = this.getSequentialIndex(jobId, localIndex);
       try {
-        // Dynamically require the image file based on the sequence index
         return require(`@/assets/classImages/${seqIndex}.jpg`);
       } catch (error) {
-        // If the image isn't found, fallback to a placeholder image
         return 'https://via.placeholder.com/100';
+      }
+    },
+
+    // Scroll smoothly to the job group identified by jobId.
+    scrollToJobGroup(jobId) {
+      const target = document.getElementById(jobId);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
       }
     }
   },
@@ -77,24 +93,50 @@ export default {
   padding: 20px;
 }
 
-.awakening-table {
-  width: 100%;
-  margin: 0 auto;
-  border-collapse: collapse;
+/* Styling for the navigation buttons */
+.job-buttons {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.awakening-table th,
-.awakening-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.job-button {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #007acc;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
-.class-name {
-  font-weight: bold;
-  background-color: #e0e0e0;
+.job-button:hover {
+  background-color: #005fa3;
 }
 
-/* Image styling for clickable images */
+/* Each job group (character section) */
+.job-group {
+  margin-bottom: 40px;
+}
+
+/* Job name header style */
+.job-name {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Container for class images */
+.job-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Style for clickable images */
 .awakening-img {
   width: 200px;
   height: 200px;
