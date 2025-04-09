@@ -162,18 +162,19 @@
   margin-bottom: 20px;
 }
 .stats-nav button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
+  padding: 8px 12px;
+  font-size: 16px;
   cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid white;
+  border-radius: 4px;
   transition: background-color 0.2s;
 }
 .stats-nav button:hover {
-  background-color: #0056b3;
+  background-color: #e56717;
 }
 .stats-nav button.active {
-  background-color: #0056b3;
+  background-color: #e56717;
 }
 </style>

@@ -1,23 +1,19 @@
 <!-- src/App.vue -->
 <template>
   <div id="app">
-    <header>
-      <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/servers">Servers</router-link>
-      </nav>
-    </header>
-    <main>
-      <router-view></router-view>
-    </main>
-    <footer>
-    </footer>
+    <Header></Header>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Header from "@/components/Header.vue";
+
 export default {
-  name: 'App'
+  name: "App",
+  components: {
+    Header,
+  },
 };
 </script>
 
