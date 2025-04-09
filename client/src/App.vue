@@ -20,8 +20,9 @@ export default {
 <style>
 /* Global styles */
 body {
+  max-width:1600px;
   font-family: 'Noto Sans', sans-serif;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   background-color: #201F24;
   color: #FFFFFF;

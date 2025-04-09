@@ -29,35 +29,39 @@
 
     <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
 
-    <!-- Display the stats if a jobGrowId is set -->
-    <div v-if="jobGrowId">
+<!-- Display the stats if a jobGrowId is set -->
+<div v-if="jobGrowId">
       <div v-if="loading">Loading equipment stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
-        <!-- Loop through each slot -->
-        <div v-for="slot in orderedSlots" :key="slot" class="slot">
-          <h2>{{ slot }} Items</h2>
-          <ul>
-            <li v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
-              <!-- Display item name and usage count -->
-              {{ item.item_name }} - Usage: {{ item.usage_count }}
-            </li>
-          </ul>
-          <!-- Fusion items (if any) -->
-          <h2 v-if="stats.fusionItemsBySlot[slot].length">Fusion {{ slot }} Items</h2>
-          <ul>
-            <li v-for="fusionItem in stats.fusionItemsBySlot[slot]" :key="fusionItem.fusion_item_id">
-              <!-- Display fusion item name and usage count -->
-              {{ fusionItem.fusion_item_name }} - Usage: {{ fusionItem.usage_count }}
-            </li>
-          </ul>
+        <!-- Wrap the equipment slot displays in a flex container -->
+        <div class="tables-container">
+          <!-- Loop through each slot -->
+          <div v-for="slot in orderedSlots" :key="slot" class="slot">
+            <h2>{{ slot }} Items</h2>
+            <ul>
+              <li v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
+                <!-- Display item name and usage count -->
+                {{ item.item_name }} - Usage: {{ item.usage_count }}
+              </li>
+            </ul>
+            <!-- Fusion items (if any) -->
+            <div v-if="stats.fusionItemsBySlot[slot].length">
+              <h2>Fusion {{ slot }} Items</h2>
+              <ul>
+                <li v-for="fusionItem in stats.fusionItemsBySlot[slot]" :key="fusionItem.fusion_item_id">
+                  {{ fusionItem.fusion_item_name }} - Usage: {{ fusionItem.usage_count }}
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
+        <!-- Optionally, you can wrap the Set Usage Stats in a similar container or leave it as is -->
         <div class="set-usage">
           <h2>Set Usage Stats</h2>
           <ul>
             <li v-for="set in stats.setUsage" :key="set.set_item_id">
-              <!-- Display set item name and usage count -->
               {{ set.set_item_name }} - Usage: {{ set.usage_count }}
             </li>
           </ul>
@@ -98,20 +102,20 @@ export default {
       return jobMappings[this.jobId] || {};
     },
     jobFriendlyName() {
-        // Check if a jobGrowId exists and the mapping contains finalJobGrows.
-        if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-          // Look for the jobGrow that matches the jobGrowId.
-          const growMapping = this.jobMapping.finalJobGrows.find(
-            (item) => item.jobGrowId === this.jobGrowId
-          );
-          // If found, return the jobGrowName.
-          if (growMapping && growMapping.jobGrowName) {
-            return growMapping.jobGrowName;
-          }
+      // Check if a jobGrowId exists and the mapping contains finalJobGrows.
+      if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
+        // Look for the jobGrow that matches the jobGrowId.
+        const growMapping = this.jobMapping.finalJobGrows.find(
+          (item) => item.jobGrowId === this.jobGrowId
+        );
+        // If found, return the jobGrowName.
+        if (growMapping && growMapping.jobGrowName) {
+          return growMapping.jobGrowName;
         }
-        // If no matching jobGrow is found, return the default jobName.
-        return this.jobMapping.jobName || 'Unknown Job';
-      },
+      }
+      // If no matching jobGrow is found, return the default jobName.
+      return this.jobMapping.jobName || 'Unknown Job';
+    },
     finalJobGrows() {
       return this.jobMapping.finalJobGrows || [];
     }
@@ -151,20 +155,20 @@ export default {
 </script>
 
   
-  <style scoped>
-  .equipment-stats {
-    padding: 20px;
-  }
-  
-  /* Stats navigation buttons */
-  .stats-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .stats-nav button {
+<style scoped>
+.equipment-stats {
+  padding: 20px;
+}
+
+/* Navigation button styling remains unchanged */
+.stats-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stats-nav button {
   padding: 8px 12px;
   font-size: 16px;
   cursor: pointer;
@@ -174,21 +178,33 @@ export default {
   border-radius: 4px;
   transition: background-color 0.2s;
 }
+
 .stats-nav button:hover {
   background-color: #e56717;
 }
+
 .stats-nav button.active {
   background-color: #e56717;
 }
-  
-  .slot {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
-  }
-  
-  .set-usage {
-    margin-top: 40px;
-  }
-  </style>
-  
+
+/* Flex container to arrange multiple tables horizontally */
+.tables-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Each equipment slot table styling */
+.tables-container .slot {
+  flex: 1 1 300px;
+  /* Grow and shrink with a minimum width of 300px; adjust as needed */
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Styling for the Set Usage section */
+.set-usage {
+  margin-top: 40px;
+}
+</style>
