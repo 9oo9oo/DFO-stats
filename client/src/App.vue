@@ -27,6 +27,8 @@ body {
   font-family: 'Noto Sans', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #201F24;
+  color: #FFFFFF;
 }
 
 h1 {
