@@ -23,49 +23,87 @@
         <button>Skill</button>
       </router-link>
       <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
-          <button>Avatar</button>
-        </router-link>
+        <button>Avatar</button>
+      </router-link>
     </div>
 
     <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
 
-<!-- Display the stats if a jobGrowId is set -->
-<div v-if="jobGrowId">
+    <!-- Display the stats if a jobGrowId is set -->
+    <div v-if="jobGrowId">
       <div v-if="loading">Loading equipment stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
-        <!-- Wrap the equipment slot displays in a flex container -->
-        <div class="tables-container">
-          <!-- Loop through each slot -->
-          <div v-for="slot in orderedSlots" :key="slot" class="slot">
-            <h2>{{ slot }} Items</h2>
-            <ul>
-              <li v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
-                <!-- Display item name and usage count -->
-                {{ item.item_name }} - Usage: {{ item.usage_count }}
-              </li>
-            </ul>
-            <!-- Fusion items (if any) -->
-            <div v-if="stats.fusionItemsBySlot[slot].length">
-              <h2>Fusion {{ slot }} Items</h2>
-              <ul>
-                <li v-for="fusionItem in stats.fusionItemsBySlot[slot]" :key="fusionItem.fusion_item_id">
-                  {{ fusionItem.fusion_item_name }} - Usage: {{ fusionItem.usage_count }}
-                </li>
-              </ul>
+        <!-- Normal Equipment Items Section -->
+        <section class="normal-items">
+          <h2>Normal Equipment Items</h2>
+          <div class="tables-container">
+            <!-- Loop through each normal equipment slot -->
+            <div v-for="slot in orderedSlots" :key="slot" class="slot">
+              <!-- Use the custom display name for each slot -->
+              <h3>{{ slotDisplayNames[slot] || slot }}</h3>
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Equipment Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.usage_rate }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- Optionally, you can wrap the Set Usage Stats in a similar container or leave it as is -->
-        <div class="set-usage">
+        <!-- Fusion Equipment Items Section -->
+        <section class="fusion-items">
+          <h2>Fusion Equipment Items</h2>
+          <div class="tables-container">
+            <!-- Loop through each fusion equipment slot -->
+            <div v-for="slot in fusionOrderedSlots" :key="slot" class="slot">
+              <!-- Use the custom display name for each slot -->
+              <h3>Fusion {{ slotDisplayNames[slot] || slot }}</h3>
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Equipment Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="fusionItem in stats.fusionItemsBySlot[slot]" :key="fusionItem.fusion_item_id">
+                    <td>{{ fusionItem.fusion_item_name }}</td>
+                    <td>{{ fusionItem.usage_rate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Set Usage Stats Section -->
+        <section class="set-usage">
           <h2>Set Usage Stats</h2>
-          <ul>
-            <li v-for="set in stats.setUsage" :key="set.set_item_id">
-              {{ set.set_item_name }} - Usage: {{ set.usage_count }}
-            </li>
-          </ul>
-        </div>
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Equipment Name</th>
+                <th>Usage Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="set in stats.setUsage" :key="set.set_item_id">
+                <td>{{ set.set_item_name }}</td>
+                <td>{{ set.usage_rate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
   </div>
@@ -82,52 +120,69 @@ export default {
       stats: null,
       loading: false,
       error: null,
-      // Define the order of equipment slots (must match your backend's ordering)
+      // All equipment slots for normal items (total 13)
       orderedSlots: [
         "TITLE", "WEAPON", "JACKET", "SHOULDER", "PANTS", "SHOES",
+        "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
+      ],
+      // Fusion equipment slots (11 slots; adjust as needed)
+      fusionOrderedSlots: [
+        "JACKET", "SHOULDER", "PANTS", "SHOES",
         "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
       ]
     };
   },
   computed: {
-    // Grab the route parameters for jobId and jobGrowId
+    // Route parameters for jobId and jobGrowId
     jobId() {
       return this.$route.params.jobId;
     },
     jobGrowId() {
       return this.$route.params.jobGrowId;
     },
-    // Use the jobMappings file to get friendly names and final job grow options
+    // Retrieve the job mapping information
     jobMapping() {
       return jobMappings[this.jobId] || {};
     },
     jobFriendlyName() {
-      // Check if a jobGrowId exists and the mapping contains finalJobGrows.
       if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-        // Look for the jobGrow that matches the jobGrowId.
         const growMapping = this.jobMapping.finalJobGrows.find(
           (item) => item.jobGrowId === this.jobGrowId
         );
-        // If found, return the jobGrowName.
         if (growMapping && growMapping.jobGrowName) {
           return growMapping.jobGrowName;
         }
       }
-      // If no matching jobGrow is found, return the default jobName.
       return this.jobMapping.jobName || 'Unknown Job';
     },
     finalJobGrows() {
       return this.jobMapping.finalJobGrows || [];
+    },
+    // Mapping of in-game slot IDs to user-friendly display names
+    slotDisplayNames() {
+      return {
+        "TITLE": "Title",
+        "WEAPON": "Weapon",
+        "JACKET": "Top",
+        "SHOULDER": "Head/Shoulder",
+        "PANTS": "Bottom",
+        "SHOES": "Shoes",
+        "WAIST": "Belt",
+        "AMULET": "Necklace",
+        "WRIST": "Bracelet",
+        "RING": "Ring",
+        "SUPPORT": "Sub-Equipment",
+        "MAGIC_STON": "Magic Stone",
+        "EARRING": "Earrings"
+      };
     }
   },
   mounted() {
-    // If a jobGrowId is present, fetch the equipment stats.
     if (this.jobGrowId) {
       this.fetchEquipmentStats();
     }
   },
   watch: {
-    // If the jobGrowId changes (via route update), refetch stats.
     '$route.params.jobGrowId'(newVal, oldVal) {
       if (newVal !== oldVal) {
         this.fetchEquipmentStats();
@@ -139,7 +194,6 @@ export default {
       if (!this.jobGrowId) return;
       this.loading = true;
       try {
-        // Construct the URL using the route parameters
         const response = await axios.get(`/api/equipment/stats/${this.jobId}/${this.jobGrowId}`);
         this.stats = response.data;
       } catch (err) {
@@ -154,13 +208,12 @@ export default {
 };
 </script>
 
-  
 <style scoped>
 .equipment-stats {
   padding: 20px;
 }
 
-/* Navigation button styling remains unchanged */
+/* Navigation styling */
 .stats-nav {
   display: flex;
   justify-content: center;
@@ -187,24 +240,46 @@ export default {
   background-color: #e56717;
 }
 
-/* Flex container to arrange multiple tables horizontally */
+/* Container for tables */
 .tables-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  margin: 40px;
 }
 
-/* Each equipment slot table styling */
+/* Each slot container styling */
 .tables-container .slot {
-  flex: 1 1 300px;
-  /* Grow and shrink with a minimum width of 300px; adjust as needed */
+  flex: 0 0 calc(33.33% - 20px); /* For 3 tables per row */
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 4px;
 }
 
-/* Styling for the Set Usage section */
+/* Table styling */
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.stats-table th,
+.stats-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.stats-table th {
+  background-color: #f2f2f2;
+  color: #e56717;
+}
+
+/* Set usage section styling */
 .set-usage {
-  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 40px;
 }
 </style>

@@ -1,4 +1,3 @@
-<!-- src/views/CreatureStats.vue -->
 <template>
   <div class="creature-stats">
     <!-- Navigation Buttons -->
@@ -16,7 +15,7 @@
         <button>Skill</button>
       </router-link>
       <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
-          <button>Avatar</button>
+        <button>Avatar</button>
       </router-link>
     </div>
 
@@ -28,135 +27,174 @@
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
         <!-- Creature Main Items Section -->
-        <div class="section">
-          <h2>Creature Main Items</h2>
-          <ul>
-            <li v-for="item in stats.creatureStats" :key="item.creature_item_id">
-              {{ item.creature_item_name }} - Usage: {{ item.usage_count }}
-            </li>
-          </ul>
-        </div>
+        <section class="stat-section">
+          <h2>Creature</h2>
+          <div class="tables-container full-width">
+            <div class="slot">
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in stats.creatureStats" :key="item.creature_item_id">
+                    <td>{{ item.creature_item_name }}</td>
+                    <td>{{ item.usage_count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
-        <!-- Artifact RED Items Section -->
-        <div class="section">
-          <h2>Artifact Red Items</h2>
-          <ul>
-            <li v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
-              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
-            </li>
-          </ul>
-        </div>
+        <!-- Artifact Items Section: Red, Blue, and Green side by side -->
+        <section class="stat-section">
+          <h2>Artifact</h2>
+          <div class="tables-container artifact-container">
+            <!-- Artifact Red Items -->
+            <div class="slot">
+              <h3>Artifact Red</h3>
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
+                    <td>{{ item.artifact_item_name }}</td>
+                    <td>{{ item.usage_count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Artifact Blue Items -->
+            <div class="slot">
+              <h3>Artifact Blue</h3>
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
+                    <td>{{ item.artifact_item_name }}</td>
+                    <td>{{ item.usage_count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Artifact Green Items -->
+            <div class="slot">
+              <h3>Artifact Green</h3>
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
+                    <td>{{ item.artifact_item_name }}</td>
+                    <td>{{ item.usage_count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
 
-        <!-- Artifact BLUE Items Section -->
-        <div class="section">
-          <h2>Artifact Blue Items</h2>
-          <ul>
-            <li v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
-              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
-            </li>
-          </ul>
-        </div>
-
-        <!-- Artifact GREEN Items Section -->
-        <div class="section">
-          <h2>Artifact Green Items</h2>
-          <ul>
-            <li v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
-              {{ item.artifact_item_name }} - Usage: {{ item.usage_count }}
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>
 </template>
-  
-  <script>
-  import axios from 'axios';
-  import jobMappings from '@/config/jobMappings.js';
 
-  export default {
-    name: 'CreatureStats',
-    data() {
-      return {
-        stats: null,
-        loading: false,
-        error: null
-      };
+<script>
+import axios from 'axios';
+import jobMappings from '@/config/jobMappings.js';
+
+export default {
+  name: 'CreatureStats',
+  data() {
+    return {
+      stats: null,
+      loading: false,
+      error: null
+    };
+  },
+  computed: {
+    jobId() {
+      return this.$route.params.jobId;
     },
-    computed: {
-      // Retrieve jobId and jobGrowId from route parameters.
-      jobId() {
-        return this.$route.params.jobId;
-      },
-      jobGrowId() {
-        return this.$route.params.jobGrowId;
-      },
-      // Use jobMappings to get the friendly job name.
-      jobMapping() {
-        return jobMappings[this.jobId] || {};
-      },
-      jobFriendlyName() {
-        // Check if a jobGrowId exists and the mapping contains finalJobGrows.
-        if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-          // Look for the jobGrow that matches the jobGrowId.
-          const growMapping = this.jobMapping.finalJobGrows.find(
-            (item) => item.jobGrowId === this.jobGrowId
-          );
-          // If found, return the jobGrowName.
-          if (growMapping && growMapping.jobGrowName) {
-            return growMapping.jobGrowName;
-          }
+    jobGrowId() {
+      return this.$route.params.jobGrowId;
+    },
+    jobMapping() {
+      return jobMappings[this.jobId] || {};
+    },
+    jobFriendlyName() {
+      if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
+        const growMapping = this.jobMapping.finalJobGrows.find(
+          (item) => item.jobGrowId === this.jobGrowId
+        );
+        if (growMapping && growMapping.jobGrowName) {
+          return growMapping.jobGrowName;
         }
-        // If no matching jobGrow is found, return the default jobName.
-        return this.jobMapping.jobName || 'Unknown Job';
       }
-    },
-    mounted() {
-      if (this.jobGrowId) {
+      return this.jobMapping.jobName || 'Unknown Job';
+    }
+  },
+  mounted() {
+    if (this.jobGrowId) {
+      this.fetchCreatureStats();
+    }
+  },
+  watch: {
+    '$route.params.jobGrowId'(newVal, oldVal) {
+      if (newVal !== oldVal) {
         this.fetchCreatureStats();
       }
-    },
-    watch: {
-      '$route.params.jobGrowId'(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.fetchCreatureStats();
-        }
-      }
-    },
-    methods: {
-      async fetchCreatureStats() {
-        if (!this.jobGrowId) return;
-        this.loading = true;
-        try {
-          // Use the jobId and jobGrowId to fetch creature stats from your backend.
-          const response = await axios.get(`/api/creature/stats/${this.jobId}/${this.jobGrowId}`);
-          this.stats = response.data;
-        } catch (err) {
-          this.error = err.response && err.response.data && err.response.data.error
-            ? err.response.data.error
-            : err.message;
-        } finally {
-          this.loading = false;
-        }
+    }
+  },
+  methods: {
+    async fetchCreatureStats() {
+      if (!this.jobGrowId) return;
+      this.loading = true;
+      try {
+        const response = await axios.get(`/api/creature/stats/${this.jobId}/${this.jobGrowId}`);
+        this.stats = response.data;
+      } catch (err) {
+        this.error = err.response && err.response.data && err.response.data.error
+          ? err.response.data.error
+          : err.message;
+      } finally {
+        this.loading = false;
       }
     }
-  };
+  }
+};
 </script>
-  
-  <style scoped>
-  .creature-stats {
-    padding: 20px;
-  }
 
-  .stats-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-  }
+<style scoped>
+.creature-stats {
+  padding: 20px;
+}
 
-  .stats-nav button {
+/* Navigation styling */
+.stats-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stats-nav button {
   padding: 8px 12px;
   font-size: 16px;
   cursor: pointer;
@@ -166,11 +204,63 @@
   border-radius: 4px;
   transition: background-color 0.2s;
 }
+
 .stats-nav button:hover {
   background-color: #e56717;
 }
+
 .stats-nav button.active {
   background-color: #e56717;
 }
+
+/* Section styling */
+.stat-section {
+  margin-bottom: 40px;
+}
+
+/* Tables container styling */
+.tables-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* For full-width table sections */
+.full-width .slot {
+  flex: 0 0 100%;
+}
+
+/* For artifact items: display three tables per row */
+.artifact-container .slot {
+  flex: 0 0 calc(33.33% - 20px);
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* General slot styling (fallback) */
+.tables-container .slot {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Table styling */
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.stats-table th,
+.stats-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.stats-table th {
+  background-color: #f2f2f2;
+  color: #e56717;
+}
 </style>
-  
