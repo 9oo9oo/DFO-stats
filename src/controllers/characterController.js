@@ -32,14 +32,23 @@ exports.getCharacter = async (req, res) => {
         try {
             const response = await axios.get(url);
             const rows = response.data.rows;
+
+            // If rows are found, add unique character IDs
             rows.forEach(row => {
                 if (!accumulatedCharacterIds.includes(row.characterId)) {
                     accumulatedCharacterIds.push(row.characterId);
                     accumulatedRows.push(row);
                 }
             });
+
+            // Update currentMaxFame regardless of whether any rows were returned.
+            // This lets the loop continue down to lower fame ranges instead of terminating early.
             currentMaxFame = currentMinFame;
-            if (rows.length === 0) break;
+
+            // Logging for transparency. No break is used even if rows.length === 0.
+            if (rows.length === 0) {
+                console.log(`No characters found in fame range [${currentMinFame}, ${currentMaxFame + 2000}]. Continuing search...`);
+            }
         } catch (error) {
             console.error('Error retrieving characters:', error.message);
             return res.status(500).json({ error: 'Failed to fetch character data' });
