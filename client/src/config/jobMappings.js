@@ -10,6 +10,27 @@ export default {
             { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Ghostblade" }
         ]
     },
+    // Slayer (F)
+    "08cf6465c8dfcdbf5a896b40a2811007": {
+        jobName: "Slayer (F)",
+        finalJobGrows: [
+            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Sword Master" },
+            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Dark Templar" },
+            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Demon Slayer" },
+            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Vagabond" },
+            { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Spectre" }
+        ]
+    },
+    // Fighter (M)
+    "cb572073a5db60ca7f245363a79d1f22": {
+        jobName: "Fighter (M)",
+        finalJobGrows: [
+            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Nen Master" },
+            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Striker" },
+            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Brawler" },
+            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Grappler" }
+        ]
+    },
     // Fighter (F)
     "18ccc1f38ad764c77ec52dbaefce0c2e": {
         jobName: "Fighter (F)",
@@ -29,6 +50,27 @@ export default {
             { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Mechanic" },
             { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Spitfire" },
             { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Blitz" }
+        ]
+    },
+    // Gunner (F)
+    "8b680595b273a488997441eee3f7176f": {
+        jobName: "Gunner (F)",
+        finalJobGrows: [
+            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Ranger" },
+            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Launcher" },
+            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Mechanic" },
+            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Spitfire" }
+        ]
+    },
+    // Mage (M)
+    "3c67a7b71273c8452c9f68adb4004215": {
+        jobName: "Mage (M)",
+        finalJobGrows: [
+            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Elemental Bomber" },
+            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Glacial Master" },
+            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Blood Mage" },
+            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Swift Master" },
+            { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Dimension Walker" }
         ]
     },
     // Mage (F)
@@ -52,14 +94,14 @@ export default {
             { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Avenger" }
         ]
     },
-    // Gunner (F)
-    "8b680595b273a488997441eee3f7176f": {
-        jobName: "Gunner (F)",
+    // Priest (F)
+    "2ae47d662a9b18848c5e314966765bd7": {
+        jobName: "Priest (F)",
         finalJobGrows: [
-            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Ranger" },
-            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Launcher" },
-            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Mechanic" },
-            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Spitfire" }
+            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Crusader" },
+            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Inquisitor" },
+            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Shaman" },
+            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Mistress" }
         ]
     },
     // Thief
@@ -70,38 +112,6 @@ export default {
             { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Necromancer" },
             { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Kunoichi" },
             { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Shadow Dancer" }
-        ]
-    },
-    // Fighter (M)
-    "cb572073a5db60ca7f245363a79d1f22": {
-        jobName: "Fighter (M)",
-        finalJobGrows: [
-            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Nen Master" },
-            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Striker" },
-            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Brawler" },
-            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Grappler" }
-        ]
-    },
-    // Mage (M)
-    "3c67a7b71273c8452c9f68adb4004215": {
-        jobName: "Mage (M)",
-        finalJobGrows: [
-            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Elemental Bomber" },
-            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Glacial Master" },
-            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Blood Mage" },
-            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Swift Master" },
-            { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Dimension Walker" }
-        ]
-    },
-    // Slayer (F)
-    "08cf6465c8dfcdbf5a896b40a2811007": {
-        jobName: "Slayer (F)",
-        finalJobGrows: [
-            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Sword Master" },
-            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Dark Templar" },
-            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Demon Slayer" },
-            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Vagabond" },
-            { jobGrowId: "5dff544828c42d8fc109f2f747d50c7f", jobGrowName: "Neo: Spectre" }
         ]
     },
     // Knight
@@ -122,16 +132,6 @@ export default {
             { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Skirmisher" },
             { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Dragoon" },
             { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Impaler" }
-        ]
-    },
-    // Priest (F)
-    "2ae47d662a9b18848c5e314966765bd7": {
-        jobName: "Priest (F)",
-        finalJobGrows: [
-            { jobGrowId: "ba2ae3598c3af10c26562e073bc92060", jobGrowName: "Neo: Crusader" },
-            { jobGrowId: "53632e641719388657407af4f9c063ac", jobGrowName: "Neo: Inquisitor" },
-            { jobGrowId: "0f12d512a825d52e75d87120f39ba4cb", jobGrowName: "Neo: Shaman" },
-            { jobGrowId: "ec6a93f4d14bb36ccc541183291197a7", jobGrowName: "Neo: Mistress" }
         ]
     },
     // Agent
