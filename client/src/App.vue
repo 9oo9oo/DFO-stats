@@ -3,16 +3,19 @@
   <div id="app">
     <Header></Header>
     <router-view></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "App",
   components: {
     Header,
+    Footer
   },
 };
 </script>
@@ -20,7 +23,7 @@ export default {
 <style>
 /* Global styles */
 body {
-  max-width:1600px;
+  max-width: 1600px;
   font-family: 'Noto Sans', sans-serif;
   margin: 0 auto;
   padding: 0;
