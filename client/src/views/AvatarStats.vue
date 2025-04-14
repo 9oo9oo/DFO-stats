@@ -1,17 +1,25 @@
 <template>
-  <div class="avatar-stats">
-    <!-- Navigation Buttons -->
+  <div class="equipment-stats">
+    <!-- Stats Type Navigation -->
     <div class="stats-nav">
-      <router-link :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }">
+      <router-link
+        :to="{ name: 'EquipmentStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
+      >
         <button>Equipment</button>
       </router-link>
-      <router-link :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }">
+      <router-link
+        :to="{ name: 'CreatureStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
+      >
         <button>Creature</button>
       </router-link>
-      <router-link :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }">
+      <router-link
+        :to="{ name: 'TalismanStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
+      >
         <button>Talisman</button>
       </router-link>
-      <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
+      <router-link
+        :to="{ name: 'SkillStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
+      >
         <button>Skill</button>
       </router-link>
       <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
@@ -21,7 +29,6 @@
 
     <h1>Avatar Statistics for {{ jobFriendlyName }}</h1>
 
-    <!-- Display stats only when a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading avatar stats...</div>
       <div v-if="error">Error: {{ error }}</div>
@@ -30,22 +37,39 @@
         <section class="stat-section">
           <h2>Avatar Equipment Items</h2>
           <div class="tables-container">
-            <div v-for="slot in orderedSlots" :key="slot" class="slot">
-              <h3>{{ slot }} Avatar Items</h3>
+            <div
+              v-for="slot in orderedSlots"
+              :key="slot"
+              :class="{
+                slot: true,
+                'half-width': (slot === 'WEAPON' || slot === 'AURORA'),
+                'third-width': (slot !== 'WEAPON' && slot !== 'AURORA')
+              }"
+            >
+              <h3>{{ convertSlotName(slot) }} Avatar Items</h3>
               <table class="stats-table">
                 <thead>
-                  <tr>
+                  <!-- For WEAPON and AURORA, display only two columns -->
+                  <tr v-if="slot === 'WEAPON' || slot === 'AURORA'">
                     <th>Item Name</th>
+                    <th>Usage Rate</th>
+                  </tr>
+                  <!-- For other slots, display two columns: Option and Usage Rate -->
+                  <tr v-else>
                     <th>Option</th>
                     <th>Usage Rate</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in stats.avatarStatsBySlot[slot]" :key="item.item_id">
-                    <td>{{ item.item_name }}</td>
-                    <!-- If option_ability is undefined or null, display a dash -->
-                    <td>{{ item.option_ability || '-' }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
+                      <td>{{ item.item_name }}</td>
+                      <td>{{ item.usage_count }}</td>
+                    </template>
+                    <template v-else>
+                      <td>{{ item.option_ability || '-' }}</td>
+                      <td>{{ item.usage_count }}</td>
+                    </template>
                   </tr>
                 </tbody>
               </table>
@@ -67,10 +91,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="emblem in emblemStatsByColor[color] || []"
-                    :key="emblem.item_id"
-                  >
+                  <tr v-for="emblem in stats.emblemStatsByColor[color] || []" :key="emblem.item_name">
                     <td>{{ emblem.item_name }}</td>
                     <td>{{ emblem.usage_count }}</td>
                   </tr>
@@ -87,7 +108,7 @@
 <script>
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
-  
+
 export default {
   name: 'AvatarStats',
   data() {
@@ -95,21 +116,21 @@ export default {
       stats: null,
       loading: false,
       error: null,
-      // Define the order of avatar slots; adjust as necessary.
-      orderedSlots: ["AURORA", "HEADGEAR", "HAIR", "FACE", "BREAST", "JACKET", "PANTS", "WAIST", "SHOES"],
-      // Define the desired emblem color order (all in lowercase for grouping).
-      orderedEmblemColors: ["multicoloured", "platinum", "blue", "yellow", "green", "red"]
+      // Slot IDs remain as-is
+      orderedSlots: [
+        "WEAPON", "AURORA", "HEADGEAR", "HAIR", "FACE",
+        "BREAST", "JACKET", "PANTS", "WAIST", "SHOES", "SKIN"
+      ],
+      orderedEmblemColors: ["multicolored", "platinum", "blue", "yellow", "green", "red"]
     };
   },
   computed: {
-    // Retrieve jobId and jobGrowId from route parameters.
     jobId() {
       return this.$route.params.jobId;
     },
     jobGrowId() {
       return this.$route.params.jobGrowId;
     },
-    // Use jobMappings to get the friendly job name.
     jobMapping() {
       return jobMappings[this.jobId] || {};
     },
@@ -124,7 +145,6 @@ export default {
       }
       return this.jobMapping.jobName || 'Unknown Job';
     },
-    // Group emblem stats by slot_color.
     emblemStatsByColor() {
       const groups = {};
       if (this.stats && this.stats.emblemStats) {
@@ -156,7 +176,6 @@ export default {
       if (!this.jobGrowId) return;
       this.loading = true;
       try {
-        // Fetch avatar stats from your backend API.
         const response = await axios.get(`/api/avatar/stats/${this.jobId}/${this.jobGrowId}`);
         this.stats = response.data;
       } catch (err) {
@@ -170,6 +189,23 @@ export default {
     capitalize(str) {
       if (!str) return '';
       return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    // Function to map slot IDs to friendly names
+    convertSlotName(slot) {
+      const slotMapping = {
+        WEAPON: 'Weapon',
+        AURORA: 'Aura',
+        HEADGEAR: 'Hat',
+        HAIR: 'Hair',
+        FACE: 'Face',
+        BREAST: 'Torso',
+        JACKET: 'Top',
+        PANTS: 'Bottom',
+        WAIST: 'Waist',
+        SHOES: 'Shoes',
+        SKIN: 'Skin'
+      };
+      return slotMapping[slot] || slot.toLowerCase();
     }
   }
 };
@@ -206,12 +242,10 @@ export default {
   background-color: #e56717;
 }
 
-/* Section styling */
 .stat-section {
   margin-bottom: 40px;
 }
 
-/* Tables container styling */
 .tables-container {
   display: flex;
   flex-wrap: wrap;
@@ -219,27 +253,20 @@ export default {
   margin-top: 20px;
 }
 
-/* Each slot container will be rendered in a flexible box.
-   For avatar equipment, you might want full width (change if needed),
-   while for emblem stats we use three columns per row. */
 .tables-container .slot {
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 4px;
 }
 
-/* For avatar equipment items, let each slot take full width */
 .stat-section:first-of-type .tables-container .slot {
-  flex: 0 0 100%;
   margin-bottom: 20px;
 }
 
-/* For emblem statistics, use three columns per row */
 .emblem-container .slot {
   flex: 0 0 calc(33.33% - 20px);
 }
 
-/* Table styling */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -255,5 +282,14 @@ export default {
 .stats-table th {
   background-color: #f2f2f2;
   color: #e56717;
+}
+
+/* New styling classes for equipment items */
+.half-width {
+  flex: 0 0 calc(50% - 20px);
+}
+
+.third-width {
+  flex: 0 0 calc(33.33% - 20px);
 }
 </style>

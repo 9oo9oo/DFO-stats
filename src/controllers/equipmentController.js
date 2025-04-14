@@ -94,11 +94,18 @@ exports.getEquipmentStats = async (req, res) => {
   try {
     // Query to aggregate individual item usage by slot.
     const itemsQuery = `
-      SELECT ce.slot_id, ce.item_id, ce.item_name, COUNT(*) AS usage_count
+      SELECT 
+        ce.slot_id,
+        CASE WHEN ce.slot_id = 'TITLE' THEN ce.item_name ELSE ce.item_id END as item_key,
+        ce.item_name,
+        COUNT(*) AS usage_count
       FROM character_equipment ce
       JOIN characters c ON ce.character_id = c.character_id
       WHERE c.job_id = $1 AND c.job_grow_id = $2
-      GROUP BY ce.slot_id, ce.item_id, ce.item_name
+      GROUP BY 
+        ce.slot_id,
+        CASE WHEN ce.slot_id = 'TITLE' THEN ce.item_name ELSE ce.item_id END,
+        ce.item_name
       ORDER BY ce.slot_id, usage_count DESC;
     `;
     const itemsResult = await client.query(itemsQuery, [jobId, jobGrowId]);

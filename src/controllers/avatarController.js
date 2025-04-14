@@ -121,31 +121,45 @@ exports.getAvatar = async (req, res) => {
 exports.getAvatarStats = async (req, res) => {
     const { jobId, jobGrowId } = req.params;
     // Define the order of avatar slots; adjust as necessary.
-    const orderedSlots = ["AURORA", "HEADGEAR", "HAIR", "FACE", "BREAST", "JACKET", "PANTS", "WAIST", "SHOES"];
+    const orderedSlots = ["WEAPON", "AURORA", "HEADGEAR", "HAIR", "FACE", "BREAST", "JACKET", "PANTS", "WAIST", "SHOES", "SKIN"];
 
     try {
-        // Aggregate main avatar usage by slot.
+        // Aggregate avatar usage by slot.
+        // For WEAPON and AURORA, group by item_id and item_name.
+        // For all other slots, group solely by option_ability.
         const avatarQuery = `
-        SELECT ca.slot_id, ca.item_id, ca.item_name, ca.option_ability, COUNT(*) AS usage_count
+        SELECT 
+          ca.slot_id, 
+          CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END as item_name,
+          ca.option_ability,
+          COUNT(*) AS usage_count
         FROM character_avatar ca
         JOIN characters c ON ca.character_id = c.character_id
         WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY ca.slot_id, ca.item_id, ca.item_name, ca.option_ability
+        GROUP BY 
+          ca.slot_id,
+          CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END,
+          ca.option_ability
         ORDER BY ca.slot_id, usage_count DESC;
       `;
+      
         const avatarResult = await client.query(avatarQuery, [jobId, jobGrowId]);
 
-        // Aggregate emblem usage (across all avatar slots) with custom sorting for slot_color.
+        // Updated Emblem Query:
+        // Group only by slot_color and item_name so that items with the same name aggregate together.
         const emblemQuery = `
-        SELECT cae.slot_color, cae.item_id, cae.item_name, COUNT(*) AS usage_count
+        SELECT 
+            cae.slot_color, 
+            cae.item_name, 
+            COUNT(*) AS usage_count
         FROM character_avatar_emblems cae
         JOIN character_avatar ca ON cae.character_avatar_id = ca.id
         JOIN characters c ON ca.character_id = c.character_id
         WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY cae.slot_color, cae.item_id, cae.item_name
+        GROUP BY cae.slot_color, cae.item_name
         ORDER BY 
           CASE 
-            WHEN lower(cae.slot_color) = 'multicoloured' THEN 1
+            WHEN lower(cae.slot_color) = 'multicolored' THEN 1
             WHEN lower(cae.slot_color) = 'platinum' THEN 2
             WHEN lower(cae.slot_color) = 'blue' THEN 3
             WHEN lower(cae.slot_color) = 'yellow' THEN 4
@@ -157,7 +171,7 @@ exports.getAvatarStats = async (req, res) => {
       `;
         const emblemResult = await client.query(emblemQuery, [jobId, jobGrowId]);
 
-        // Map avatar stats.
+        // Process avatar stats.
         const avatarStats = avatarResult.rows.map(row => ({
             slot: row.slot_id,
             item_id: row.item_id,
@@ -181,21 +195,36 @@ exports.getAvatarStats = async (req, res) => {
             avatarStatsBySlot[slot] = avatarStatsBySlot[slot].slice(0, 10);
         }
 
-        // Map emblem stats.
-        const emblemStats = emblemResult.rows.map(row => ({
+        // Process emblem stats.
+        const emblemStatsRaw = emblemResult.rows.map(row => ({
             slot_color: row.slot_color,
-            item_id: row.item_id,
             item_name: row.item_name,
             usage_count: parseInt(row.usage_count, 10)
         }));
 
+        // Group emblems by color
+        const emblemStatsByColor = {};
+        emblemStatsRaw.forEach(item => {
+            // Normalize color key (can be adjusted if needed)
+            const color = item.slot_color.toLowerCase();
+            if (!emblemStatsByColor[color]) {
+                emblemStatsByColor[color] = [];
+            }
+            emblemStatsByColor[color].push(item);
+        });
+
+        // For each color group, sort by usage_count (descending) and pick the top 10.
+        for (const color in emblemStatsByColor) {
+            emblemStatsByColor[color].sort((a, b) => b.usage_count - a.usage_count);
+            emblemStatsByColor[color] = emblemStatsByColor[color].slice(0, 10);
+        }
+
         res.status(200).json({
             avatarStatsBySlot,
-            emblemStats
+            emblemStatsByColor
         });
     } catch (error) {
         console.error('Error fetching avatar stats:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
