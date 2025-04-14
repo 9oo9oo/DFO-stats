@@ -6,7 +6,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd src && nodemon server.js",
     "client": "cd client && npm run serve",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "automation:characters": "node scripts/automationFetchCharacterIds.js",
+    "automation:equipment": "node scripts/automationFetchEquipment.js",
+    "automation:creature": "node scripts/automationFetchCreature.js",
+    "automation:talisman": "node scripts/automationFetchTalisman.js",
+    "automation:skills": "node scripts/automationFetchSkills.js",
+    "automation:avatar": "node scripts/automationFetchAvatar.js",
+    "automation:all": "npm run automation:characters && npm run automation:equipment && npm run automation:creature && npm run automation:talisman && npm run automation:skills && npm run automation:avatar"
   },
   "repository": {
     "type": "git",

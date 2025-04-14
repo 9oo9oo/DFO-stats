@@ -2,7 +2,6 @@
     <header class="app-header">
       <nav class="navbar">
         <router-link to="/" class="nav-link">Home</router-link>
-        <router-link to="/servers" class="nav-link">Server</router-link>
       </nav>
     </header>
   </template>

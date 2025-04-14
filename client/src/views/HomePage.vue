@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>DFO Class Stats</h1>
-    <p>Click on a character awakening to view their equipment stats:</p>
+    <p>Click on a class image to view their equipment stats:</p>
 
     <!-- Buttons at the top to navigate to each character section -->
     <div class="job-buttons">
