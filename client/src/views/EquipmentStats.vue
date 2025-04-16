@@ -1,46 +1,101 @@
 <template>
   <div class="equipment-stats">
-    <!-- Stats Type Navigation -->
-    <div class="stats-nav">
-      <router-link
-        :to="{ name: 'EquipmentStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
-      >
-        <button class="active">Equipment</button>
-      </router-link>
-      <router-link
-        :to="{ name: 'CreatureStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
-      >
-        <button>Creature</button>
-      </router-link>
-      <router-link
-        :to="{ name: 'TalismanStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
-      >
-        <button>Talisman</button>
-      </router-link>
-      <router-link
-        :to="{ name: 'SkillStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
-      >
-        <button>Skill</button>
-      </router-link>
-      <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
-        <button>Avatar</button>
-      </router-link>
+    <div class="equipment-wrapper">
+      <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
+      <div class="equipment-tabs">
+        <router-link
+          :to="{ name: 'EquipmentStats', params: { jobId: jobId, jobGrowId: jobGrowId } }"
+          class="tab-button"
+          :class="{ active: isActiveRoute('EquipmentStats') }"
+        >
+          Equipment
+        </router-link>
+
+        <router-link
+          :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }"
+          class="tab-button"
+          :class="{ active: isActiveRoute('AvatarStats') }"
+        >
+          Avatar
+        </router-link>
+
+        <router-link
+          :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }"
+          class="tab-button"
+          :class="{ active: isActiveRoute('CreatureStats') }"
+        >
+          Creature
+        </router-link>
+
+        <router-link
+          :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }"
+          class="tab-button"
+          :class="{ active: isActiveRoute('TalismanStats') }"
+        >
+          Talisman
+        </router-link>
+
+        <router-link
+          :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }"
+          class="tab-button"
+          :class="{ active: isActiveRoute('SkillStats') }"
+        >
+          Skill
+        </router-link>
+      </div>
+
+      <!-- Big Square Equipment Slot Buttons Container -->
+      <div class="equipment-square">
+        <!-- Left side -->
+        <div class="side left">
+          <div class="column column-one">
+            <div v-for="slot in leftColumnOne" :key="slot" class="slot-button" @click="scrollToSlot(slot)">
+              {{ slotDisplayNames[slot] || slot }}
+            </div>
+          </div>
+          <div class="column column-two">
+            <div v-for="slot in leftColumnTwo" :key="slot" class="slot-button" @click="scrollToSlot(slot)">
+              {{ slotDisplayNames[slot] || slot }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Newly added center area with the image -->
+        <div class="center">
+          <img src="@/assets/character-silhouette.png" alt="Character Image" />
+        </div>
+
+        <!-- Right side -->
+        <div class="side right">
+          <div class="column column-one">
+            <div v-for="slot in rightColumnOne" :key="slot" class="slot-button" @click="scrollToSlot(slot)">
+              {{ slotDisplayNames[slot] || slot }}
+            </div>
+          </div>
+          <div class="column column-two">
+            <div v-for="slot in rightColumnTwo" :key="slot" class="slot-button" @click="scrollToSlot(slot)">
+              {{ slotDisplayNames[slot] || slot }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- You can keep the rest of your equipment stats content below -->
     <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
-
-    <!-- Display the stats if a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading equipment stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
         <!-- Normal Equipment Items Section -->
-        <section class="normal-items">
+        <section class="normal-items" ref="TITLE">
           <h2>Normal Equipment Items</h2>
           <div class="tables-container">
-            <!-- Loop through each normal equipment slot -->
-            <div v-for="slot in orderedSlots" :key="slot" class="slot">
-              <!-- Use the custom display name for each slot -->
+            <div
+              v-for="slot in orderedSlots"
+              :key="slot"
+              class="slot"
+            >
               <h3>{{ slotDisplayNames[slot] || slot }}</h3>
               <table class="stats-table">
                 <thead>
@@ -64,9 +119,11 @@
         <section class="fusion-items">
           <h2>Fusion Equipment Items</h2>
           <div class="tables-container">
-            <!-- Loop through each fusion equipment slot -->
-            <div v-for="slot in fusionOrderedSlots" :key="slot" class="slot">
-              <!-- Use the custom display name for each slot -->
+            <div
+              v-for="slot in fusionOrderedSlots"
+              :key="slot"
+              class="slot"
+            >
               <h3>Fusion {{ slotDisplayNames[slot] || slot }}</h3>
               <table class="stats-table">
                 <thead>
@@ -76,7 +133,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="fusionItem in stats.fusionItemsBySlot[slot]" :key="fusionItem.fusion_item_id">
+                  <tr
+                    v-for="fusionItem in stats.fusionItemsBySlot[slot]"
+                    :key="fusionItem.fusion_item_id"
+                  >
                     <td>{{ fusionItem.fusion_item_name }}</td>
                     <td>{{ fusionItem.usage_rate }}</td>
                   </tr>
@@ -120,12 +180,11 @@ export default {
       stats: null,
       loading: false,
       error: null,
-      // All equipment slots for normal items (total 13)
+      // Full ordered slots as before
       orderedSlots: [
         "TITLE", "WEAPON", "JACKET", "SHOULDER", "PANTS", "SHOES",
         "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
       ],
-      // Fusion equipment slots (11 slots; adjust as needed)
       fusionOrderedSlots: [
         "JACKET", "SHOULDER", "PANTS", "SHOES",
         "WAIST", "AMULET", "WRIST", "RING", "SUPPORT", "MAGIC_STON", "EARRING"
@@ -133,14 +192,12 @@ export default {
     };
   },
   computed: {
-    // Route parameters for jobId and jobGrowId
     jobId() {
       return this.$route.params.jobId;
     },
     jobGrowId() {
       return this.$route.params.jobGrowId;
     },
-    // Retrieve the job mapping information
     jobMapping() {
       return jobMappings[this.jobId] || {};
     },
@@ -155,26 +212,38 @@ export default {
       }
       return this.jobMapping.jobName || 'Unknown Job';
     },
-    finalJobGrows() {
-      return this.jobMapping.finalJobGrows || [];
-    },
-    // Mapping of in-game slot IDs to user-friendly display names
     slotDisplayNames() {
       return {
-        "TITLE": "Title",
-        "WEAPON": "Weapon",
-        "JACKET": "Top",
-        "SHOULDER": "Head/Shoulder",
-        "PANTS": "Bottom",
-        "SHOES": "Shoes",
-        "WAIST": "Belt",
-        "AMULET": "Necklace",
-        "WRIST": "Bracelet",
-        "RING": "Ring",
-        "SUPPORT": "Sub-Equipment",
-        "MAGIC_STON": "Magic Stone",
-        "EARRING": "Earrings"
+        TITLE: 'Title',
+        WEAPON: 'Weapon',
+        JACKET: 'Top',
+        SHOULDER: 'Head/Shoulder',
+        PANTS: 'Bottom',
+        SHOES: 'Shoes',
+        WAIST: 'Belt',
+        AMULET: 'Necklace',
+        WRIST: 'Bracelet',
+        RING: 'Ring',
+        SUPPORT: 'Sub-Equipment',
+        MAGIC_STON: 'Magic Stone',
+        EARRING: 'Earrings'
       };
+    },
+    // Define left side layout: 5 slots
+    leftColumnOne() {
+      // First 3 slots for left column
+      return ["SHOULDER", "PANTS", "SHOES"];
+    },
+    leftColumnTwo() {
+      // Next 2 slots for left side second column
+      return ["JACKET", "WAIST"];
+    },
+    // Define right side layout: 8 slots split into 2 columns of 4 each
+    rightColumnOne() {
+      return ["WEAPON", "WRIST", "SUPPORT", "EARRING"];
+    },
+    rightColumnTwo() {
+      return ["TITLE", "RING", "AMULET", "MAGIC_STON"];
     }
   },
   mounted() {
@@ -203,6 +272,16 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    isActiveRoute(name) {
+      return this.$route.name === name;
+    },
+    // Example scrollToSlot method (adjust based on how you structure your page)
+    scrollToSlot(slot) {
+      const element = this.$refs[slot];
+      if (element && element[0]) {
+        element[0].scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 };
@@ -211,36 +290,133 @@ export default {
 <style scoped>
 .equipment-stats {
   padding: 20px;
-}
-
-/* Navigation styling */
-.stats-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.stats-nav button {
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: transparent;
   color: #fff;
-  border: 2px solid white;
+}
+
+.equipment-wrapper {
+  width: 700px; /* Same as your equipment-square width */
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+/* Tabs styling */
+.equipment-tabs {
+  width: 95%;        /* 95% of the square's width */
+  margin: 0 auto;    /* Center horizontally */
+  display: flex;
+  background: #222;
+  border: 2px solid #fff;
+  border-bottom: none;   /* Merge with the square */
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+  border-right: 1px solid #fff;  
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button:last-child {
+  border-right: none;
+}
+
+.equipment-tabs .tab-button:hover {
+  background-color: #e56717;
+}
+
+.equipment-tabs .tab-button.active {
+  background-color: #e56717;
+}
+
+/* Big square container for all equipment slot buttons */
+.equipment-square {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  /* Remove any top margin so it abuts the tabs */
+  margin-top: 0;
+  border: 2px solid #fff;
+  box-sizing: border-box;
   border-radius: 4px;
+}
+
+/* Each half (left/right) takes half of the square */
+.equipment-square .side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Columns inside each side */
+.equipment-square .column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Separate the two columns with some space */
+.equipment-square .side.left {
+  flex-direction: row;
+}
+
+.equipment-square .side.right {
+  flex-direction: row;
+}
+
+.equipment-square .side.left .column,
+.equipment-square .side.right .column {
+  /* Replace center with flex-start */
+  justify-content: flex-start;
+  /* If you have an existing rule like this, update it accordingly */
+}
+
+/* New center area styling */
+.equipment-square .center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+/* Ensure the image fits well within the center container */
+.equipment-square .center img {
+  width: 250px;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* Equipment slot button styling */
+.slot-button {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  background-color: #222;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
   transition: background-color 0.2s;
 }
 
-.stats-nav button:hover {
+.slot-button:hover {
   background-color: #e56717;
 }
 
-.stats-nav button.active {
-  background-color: #e56717;
-}
-
-/* Container for tables */
+/* Tables container and table styling (unchanged) */
 .tables-container {
   display: flex;
   flex-wrap: wrap;
@@ -248,15 +424,13 @@ export default {
   margin: 40px;
 }
 
-/* Each slot container styling */
 .tables-container .slot {
-  flex: 0 0 calc(33.33% - 20px); /* For 3 tables per row */
+  flex: 0 0 calc(33.33% - 20px);
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 4px;
 }
 
-/* Table styling */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -275,7 +449,6 @@ export default {
   color: #e56717;
 }
 
-/* Set usage section styling */
 .set-usage {
   display: flex;
   flex-wrap: wrap;
