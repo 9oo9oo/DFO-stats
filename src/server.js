@@ -1,8 +1,12 @@
 // server.js
 require('dotenv').config();
 const express = require('express');
+const fs = require('fs');
+const https = require('https');
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+app.use(express.static('../client/dist'));
 
 // Middleware
 app.use(express.json());
@@ -45,4 +49,3 @@ app.get('/api/main', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
 });
-
