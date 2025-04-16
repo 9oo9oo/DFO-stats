@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <h1>DFO Class Stats</h1>
-    <p>Click on a class image to view their equipment stats:</p>
+    <div class="home-text">
+      <h1>DFO stats</h1>
+      <p>Click on a class image to view their top equipment picks</p>
+      <p>Updated daily with the latest stats</p>
+    </div>
 
     <!-- Buttons at the top to navigate to each character section -->
     <div class="job-buttons">
@@ -96,8 +99,13 @@ export default {
 .home {
   text-align: left;
   padding: 20px;
-  max-width: 1600px;          /* Optional: limits overall page width */
-  margin: 0 auto; 
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.home-text {
+  padding: 20px;
+  text-align: center;
 }
 
 .img-container {
@@ -156,7 +164,7 @@ export default {
 /* Each job group (character section) */
 .job-group {
   margin-bottom: 40px;
-  text-align: left;
+  text-align: left;  
 }
 
 /* Job name header style */
@@ -164,6 +172,7 @@ export default {
   font-size: 1.5rem;
   margin-bottom: 10px;
   text-align: left;
+  color: #e56717;
 }
 
 /* Container for class images */
@@ -171,17 +180,20 @@ export default {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px;
+  border-top: 2px solid #e56717; /* Add a top border */
+  padding-top: 15px;           /* Create some spacing between the border and the images */
 }
 
 /* Style for clickable images */
 .awakening-img {
-  width: 300px;
-  height: 250px;
+  width: 280px;
+  height: 240px;
   object-fit: cover;
   cursor: pointer;
   transition: opacity 0.2s;
-  padding: 10px;
+  border-radius: 15px;
+  /* border: solid #e56717 1px; */
 }
 
 .awakening-img:hover {
