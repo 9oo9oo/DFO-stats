@@ -1,5 +1,6 @@
 <template>
   <div class="equipment-stats">
+    <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
     <div class="equipment-wrapper">
       <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
       <div class="equipment-tabs">
@@ -86,7 +87,7 @@
     </div>
 
     <!-- You can keep the rest of your equipment stats content below -->
-    <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
+    
     <div v-if="jobGrowId">
       <div v-if="loading">Loading equipment stats...</div>
       <div v-if="error">Error: {{ error }}</div>
@@ -326,16 +327,16 @@ export default {
 </script>
 
 <style scoped>
-.equipment-stats {
+/* .equipment-stats {
   padding: 20px;
   color: #fff;
-}
+} */
 
 .equipment-wrapper {
   width: 700px;
-  /* Same as your equipment-square width */
   margin: 0 auto 40px;
   position: relative;
+  padding-top: 20px;
 }
 
 /* Tabs styling */
