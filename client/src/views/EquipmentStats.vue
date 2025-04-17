@@ -62,7 +62,11 @@
 
         <!-- Newly added center area with the image -->
         <div class="center">
-          <img src="@/assets/character-silhouette.png" alt="Character Image" />
+          <img
+            :src="centerImgSrc"
+            :alt="jobFriendlyName"
+            class="awakening-img"
+          />
         </div>
 
         <!-- Right side -->
@@ -87,83 +91,90 @@
       <div v-if="loading">Loading equipment stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
-        <!-- Normal Equipment Items Section -->
-        <section class="normal-items" ref="TITLE">
-          <h2>Normal Equipment Items</h2>
-          <div class="tables-container">
-            <div
-              v-for="slot in orderedSlots"
-              :key="slot"
-              class="slot"
-            >
-              <h3>{{ slotDisplayNames[slot] || slot }}</h3>
-              <table class="stats-table">
-                <thead>
-                  <tr>
-                    <th>Equipment Name</th>
-                    <th>Usage Rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
-                    <td>{{ item.item_name }}</td>
-                    <td>{{ item.usage_rate }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- Fusion Equipment Items Section -->
-        <section class="fusion-items">
-          <h2>Fusion Equipment Items</h2>
-          <div class="tables-container">
-            <div
-              v-for="slot in fusionOrderedSlots"
-              :key="slot"
-              class="slot"
-            >
-              <h3>Fusion {{ slotDisplayNames[slot] || slot }}</h3>
-              <table class="stats-table">
-                <thead>
-                  <tr>
-                    <th>Equipment Name</th>
-                    <th>Usage Rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="fusionItem in stats.fusionItemsBySlot[slot]"
-                    :key="fusionItem.fusion_item_id"
-                  >
-                    <td>{{ fusionItem.fusion_item_name }}</td>
-                    <td>{{ fusionItem.usage_rate }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- Set Usage Stats Section -->
+        <!-- === SET USAGE AT THE TOP === -->
         <section class="set-usage">
           <h2>Set Usage Stats</h2>
           <table class="stats-table">
             <thead>
               <tr>
-                <th>Equipment Name</th>
+                <th>Set Name</th>
                 <th>Usage Rate</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="set in stats.setUsage" :key="set.set_item_id">
                 <td>{{ set.set_item_name }}</td>
-                <td>{{ set.usage_rate }}</td>
+                <td>{{ set.usage_count }}%</td>
               </tr>
             </tbody>
           </table>
         </section>
+
+        <!-- === COMBINED NORMAL + FUSION PER SLOT === -->
+        <div class="slot-by-slot">
+          <section
+            v-for="slot in orderedSlots"
+            :key="slot"
+            :ref="slot"
+            :class="[
+              'slot-section',
+              (slot === 'TITLE' || slot === 'WEAPON') ? 'half-width' : 'full-width'
+            ]"
+          >
+            <!-- Slot Heading -->
+            <h2>{{ slotDisplayNames[slot] || slot }}</h2>
+
+            <!-- Normal Items Table -->
+            <div class="tables-pair">
+              <div class="table-wrapper">
+                <h3>Normal Equipment</h3>
+                <table class="stats-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Usage Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="item in stats.itemsBySlot[slot]"
+                      :key="item.item_id"
+                    >
+                      <td>{{ item.item_name }}</td>
+                      <td>{{ item.usage_count }}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Fusion Items Table -->
+              <div
+                class="table-wrapper"
+                v-if="stats.fusionItemsBySlot[slot] && stats.fusionItemsBySlot[slot].length"
+              >
+                <h3>Fusion Equipment</h3>
+                <table class="stats-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Usage Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="fusionItem in stats.fusionItemsBySlot[slot]"
+                      :key="fusionItem.fusion_item_id"
+                    >
+                      <td>{{ fusionItem.fusion_item_name }}</td>
+                      <td>{{ fusionItem.usage_count }}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+
       </div>
     </div>
   </div>
@@ -244,6 +255,15 @@ export default {
     },
     rightColumnTwo() {
       return ["TITLE", "RING", "AMULET", "MAGIC_STON"];
+    },
+    centerImgSrc() {
+      const grows = this.jobMapping.finalJobGrows || [];
+      const idx = grows.findIndex(g => g.jobGrowId === this.jobGrowId);
+      if (idx !== -1) {
+        // if mapping already has an imgSrc, use it; otherwise build via require
+        return grows[idx].imgSrc || this.getImageSrc(this.jobId, idx);
+      }
+      return ''; // fallback
     }
   },
   mounted() {
@@ -282,6 +302,24 @@ export default {
       if (element && element[0]) {
         element[0].scrollIntoView({ behavior: 'smooth' });
       }
+    },
+    getSequentialIndex(currentJobId, currentLocalIndex) {
+      let count = 0;
+      for (const [jid, mapping] of Object.entries(jobMappings)) {
+        if (jid === currentJobId) {
+          return count + currentLocalIndex + 1;
+        }
+        count += mapping.finalJobGrows.length;
+      }
+      return 0;
+    },
+    getImageSrc(jobId, localIndex) {
+      const seq = this.getSequentialIndex(jobId, localIndex);
+      try {
+        return require(`@/assets/classImages/${seq}.jpg`);
+      } catch {
+        return 'https://via.placeholder.com/250x400';
+      }
     }
   }
 };
@@ -294,19 +332,23 @@ export default {
 }
 
 .equipment-wrapper {
-  width: 700px; /* Same as your equipment-square width */
+  width: 700px;
+  /* Same as your equipment-square width */
   margin: 0 auto 40px;
   position: relative;
 }
 
 /* Tabs styling */
 .equipment-tabs {
-  width: 95%;        /* 95% of the square's width */
-  margin: 0 auto;    /* Center horizontally */
+  width: 95%;
+  /* 95% of the square's width */
+  margin: 0 auto;
+  /* Center horizontally */
   display: flex;
   background: #222;
   border: 2px solid #fff;
-  border-bottom: none;   /* Merge with the square */
+  border-bottom: none;
+  /* Merge with the square */
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   box-sizing: border-box;
@@ -318,7 +360,7 @@ export default {
   padding: 10px;
   text-decoration: none;
   color: #fff;
-  border-right: 1px solid #fff;  
+  border-right: 1px solid #fff;
   box-sizing: border-box;
 }
 
@@ -454,5 +496,42 @@ export default {
   flex-wrap: wrap;
   gap: 20px;
   margin: 40px;
+}
+
+/* Wrapper around each slot’s two tables */
+.tables-pair {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Each table in the pair shares the available width */
+.table-wrapper {
+  flex: 1;
+}
+
+/* Reuse your existing .stats-table styles for consistent look */
+.slot-by-slot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.slot-section h2 {
+  color: #e56717;
+}
+
+/* Default: each slot takes the full row */
+.slot-section.full-width {
+  width: 100%;
+}
+
+/* Title & Weapon get half the row, so they sit side by side */
+.slot-section.half-width {
+  width: calc(50% - 10px);
+}
+
+.set-usage h2 {
+  color: #e56717;
 }
 </style>

@@ -28,13 +28,13 @@
       <h2 class="job-name">{{ mapping.jobName }}</h2>
       <div class="job-images">
         <router-link
-  v-for="(jobGrow, localIndex) in mapping.finalJobGrows"
-  :key="jobGrow.jobGrowId"
-  :to="{
-    name: 'EquipmentStats',
-    params: { jobId: jobId, jobGrowId: jobGrow.jobGrowId }
-  }"
->
+        v-for="(jobGrow, localIndex) in mapping.finalJobGrows"
+        :key="jobGrow.jobGrowId"
+        :to="{
+          name: 'EquipmentStats',
+          params: { jobId: jobId, jobGrowId: jobGrow.jobGrowId }
+        }"
+      >
   <div class="img-container">
     <img
       :src="jobGrow.imgSrc || getImageSrc(jobId, localIndex)"
