@@ -297,12 +297,33 @@ export default {
     isActiveRoute(name) {
       return this.$route.name === name;
     },
-    // Example scrollToSlot method (adjust based on how you structure your page)
     scrollToSlot(slot) {
-      const element = this.$refs[slot];
-      if (element && element[0]) {
-        element[0].scrollIntoView({ behavior: 'smooth' });
-      }
+      let el = this.$refs[slot];
+      if (Array.isArray(el)) el = el[0];
+      if (!el) return;
+
+      // how much space you want above the slot
+      const offset = 20; 
+
+      // compute the element's absolute top and subtract offset
+      const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
+
+      // smooth‑scroll there
+      window.scrollTo({ top, behavior: 'smooth' });
+
+      // once it's in view, flash it
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            el.classList.add('flash');
+            // remove after your flash duration (e.g. 1.5s)
+            setTimeout(() => el.classList.remove('flash'), 1500);
+            obs.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(el);
     },
     getSequentialIndex(currentJobId, currentLocalIndex) {
       let count = 0;
@@ -513,26 +534,52 @@ export default {
 
 /* Reuse your existing .stats-table styles for consistent look */
 .slot-by-slot {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
+.slot-section {
+  padding-left: 20px;   /* adds space between adjacent slots */
+  padding-right: 20px;
+}
+
 .slot-section h2 {
+  margin-bottom: 12px;              
+  padding-bottom: 4px;            
+  border-bottom: 2px solid #e56717;
   color: #e56717;
 }
 
 /* Default: each slot takes the full row */
-.slot-section.full-width {
-  width: 100%;
+.slot-section.full-width .tables-pair {
+  flex-direction: column;
+  row-gap: 20px;
 }
 
-/* Title & Weapon get half the row, so they sit side by side */
-.slot-section.half-width {
-  width: calc(50% - 10px);
+.slot-section.full-width .tables-pair .table-wrapper {
+  width: 100%;
 }
 
 .set-usage h2 {
   color: #e56717;
+}
+
+@keyframes flashEffect {
+  0% {
+    box-shadow: 0 0 0px #e56717;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 5px #e56717;
+  }
+
+  100% {
+    box-shadow: 0 0 0px #e56717;
+  }
+}
+
+.flash {
+  animation: flashEffect 2s ease-out;
 }
 </style>
