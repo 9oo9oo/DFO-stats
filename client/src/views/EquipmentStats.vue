@@ -94,7 +94,7 @@
       <div v-if="stats">
         <!-- === SET USAGE AT THE TOP === -->
         <section class="set-usage">
-          <h2>Set Usage Stats</h2>
+          <h2>Set Usage</h2>
           <table class="stats-table">
             <thead>
               <tr>
@@ -520,6 +520,14 @@ export default {
   margin: 40px;
 }
 
+.set-usage h2 {
+  flex-basis: 100%;
+  margin-bottom: 16px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #e56717;
+  color: #e56717;
+}
+
 /* Wrapper around each slot’s two tables */
 .tables-pair {
   display: flex;
@@ -559,10 +567,6 @@ export default {
 
 .slot-section.full-width .tables-pair .table-wrapper {
   width: 100%;
-}
-
-.set-usage h2 {
-  color: #e56717;
 }
 
 @keyframes flashEffect {

@@ -1,6 +1,5 @@
 <template>
   <h1>Avatar Statistics for {{ jobFriendlyName }}</h1>
-
   <div class="equipment-wrapper">
     <!-- Top Tabs -->
     <div class="equipment-tabs">
@@ -43,7 +42,7 @@
             :key="slot"
             class="slot-button"
             @click="scrollToSlot(slot)"
-            :style="{ color: slotFontColors[slot] || 'inherit' }"
+            :style="{ border: `1px solid ${slotFontColors[slot] || '#666'}` }"
           >
             {{ convertSlotName(slot) }}
           </div>
@@ -204,8 +203,8 @@ export default {
     },
     slotFontColors() {
       return {
-        HEADGEAR: 'red',  // “Hat”
-        HAIR: 'red',
+        HEADGEAR: '#c0392b',  // “Hat”
+        HAIR: '#c0392b',
         FACE: '#f5c32c',
         BREAST: '#f5c32c', // “Torso”
         JACKET: '#3cb043',  // “Top”
@@ -463,7 +462,8 @@ export default {
   height: 100px;
   margin: 5px;
   background-color: #222;
-  border: 1px solid #666;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
@@ -493,7 +493,7 @@ section[class^="group-"] h2 {
 
 /* Color each section via its class */
 .group-red h2 {
-  color: red;
+  color: #c0392b;
 }
 
 .group-yellow h2 {
