@@ -1,5 +1,6 @@
 <template>
-      <h1>Avatar Statistics for {{ jobFriendlyName }}</h1>
+  <h1>Avatar Statistics for {{ jobFriendlyName }}</h1>
+
   <div class="equipment-wrapper">
     <!-- Top Tabs -->
     <div class="equipment-tabs">
@@ -7,50 +8,34 @@
         :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
         class="tab-button"
         :class="{ active: isActiveRoute('EquipmentStats') }"
-      >
-        Equipment
-      </router-link>
+      >Equipment</router-link>
       <router-link
         :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }"
         class="tab-button"
         :class="{ active: isActiveRoute('AvatarStats') }"
-      >
-        Avatar
-      </router-link>
+      >Avatar</router-link>
       <router-link
         :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }"
         class="tab-button"
         :class="{ active: isActiveRoute('CreatureStats') }"
-      >
-        Creature
-      </router-link>
+      >Creature</router-link>
       <router-link
         :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }"
         class="tab-button"
         :class="{ active: isActiveRoute('TalismanStats') }"
-      >
-        Talisman
-      </router-link>
+      >Talisman</router-link>
       <router-link
         :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }"
         class="tab-button"
         :class="{ active: isActiveRoute('SkillStats') }"
-      >
-        Skill
-      </router-link>
+      >Skill</router-link>
     </div>
 
     <!-- Square container: left image, right buttons -->
     <div class="equipment-square">
-      <!-- Left side: Awakening image -->
       <div class="side left">
-        <img
-          :src="centerImgSrc"
-          :alt="jobFriendlyName"
-          class="awakening-img"
-        />
+        <img :src="centerImgSrc" :alt="jobFriendlyName" class="awakening-img" />
       </div>
-      <!-- Right side: Slot buttons grid -->
       <div class="side right">
         <div class="avatar-buttons-grid">
           <div
@@ -58,49 +43,50 @@
             :key="slot"
             class="slot-button"
             @click="scrollToSlot(slot)"
+            :style="{ color: slotFontColors[slot] || 'inherit' }"
           >
             {{ convertSlotName(slot) }}
           </div>
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
-    <!-- Avatar stats sections placed outside of the square -->
-    <div class="avatar-stats">
-      <div v-if="jobGrowId">
-        <div v-if="loading">Loading avatar stats...</div>
-        <div v-if="error">Error: {{ error }}</div>
-        <div v-if="stats">
-          <!-- Avatar Equipment Items Section -->
-          <section class="stat-section">
-            <h2>Avatar</h2>
-            <div class="tables-container">
+  <div class="avatar-stats">
+    <div v-if="jobGrowId">
+      <div v-if="loading">Loading avatar stats...</div>
+      <div v-if="error">Error: {{ error }}</div>
+      <div v-if="stats">
+        <!-- Grouped by equip color -->
+        <section
+          v-for="group in equipGroups"
+          :key="group.color"
+          :ref="`group-${group.color}`"
+          :class="`group-${group.color}`"
+        >
+          <h2>{{ group.name }} Emblem Socketed Avatars </h2>
+          <div class="group-grid">
+            <!-- Avatar tables -->
+            <div class="avatar-tables">
               <div
-                v-for="slot in orderedSlots"
+                v-for="slot in group.slots"
                 :key="slot"
-                :id="slot"
-                :class="{
-                  slot: true,
-                  'half-width': slot === 'WEAPON' || slot === 'AURORA',
-                  'third-width': slot !== 'WEAPON' && slot !== 'AURORA'
-                }"
+                :ref="slot"
+                class="slot-table-block"
               >
                 <h3>{{ convertSlotName(slot) }}</h3>
                 <table class="stats-table">
                   <thead>
                     <tr v-if="slot === 'WEAPON' || slot === 'AURORA'">
-                      <th>Item Name</th>
-                      <th>Usage Rate</th>
+                      <th>Item Name</th><th>Usage Rate</th>
                     </tr>
                     <tr v-else>
-                      <th>Option</th>
-                      <th>Usage Rate</th>
+                      <th>Option</th><th>Usage Rate</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in stats.avatarStatsBySlot[slot]"
+                      v-for="item in stats.avatarStatsBySlot[slot] || []"
                       :key="item.item_id"
                     >
                       <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
@@ -116,42 +102,38 @@
                 </table>
               </div>
             </div>
-          </section>
 
-          <!-- Emblem Statistics Section -->
-          <section class="stat-section">
-            <h2>Emblem</h2>
-            <div class="tables-container emblem-container">
+            <!-- Emblem tables -->
+            <div class="emblem-tables">
               <div
-                v-for="color in orderedEmblemColors"
-                :key="color"
-                class="slot"
+                v-for="emColor in group.emblemColors"
+                :key="emColor"
+                class="emblem-table-block"
               >
-                <h3>{{ capitalize(color) }}</h3>
+                <h3>{{ capitalize(emColor) }} Emblems</h3>
                 <table class="stats-table">
                   <thead>
-                    <tr>
-                      <th>Item Name</th>
-                      <th>Usage Rate</th>
-                    </tr>
+                    <tr><th>Item Name</th><th>Usage Rate</th></tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="emblem in stats.emblemStatsByColor[color] || []"
-                      :key="emblem.item_name"
+                      v-for="em in stats.emblemStatsByColor[emColor] || []"
+                      :key="em.item_name"
                     >
-                      <td>{{ emblem.item_name }}</td>
-                      <td>{{ emblem.usage_count }}</td>
+                      <td>{{ em.item_name }}</td>
+                      <td>{{ em.usage_count }}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
     </div>
+  </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -183,6 +165,13 @@ export default {
       ],
       orderedEmblemColors: [
         'platinum', 'multicolored', 'blue', 'yellow', 'green', 'red'
+      ],
+      equipGroups: [
+        { color: 'red', name: 'Red', slots: ['HEADGEAR', 'HAIR'], emblemColors: ['red'] },
+        { color: 'yellow', name: 'Yellow', slots: ['FACE', 'BREAST'], emblemColors: ['yellow'] },
+        { color: 'green', name: 'Green & Platinum', slots: ['JACKET', 'PANTS'], emblemColors: ['green', 'platinum'] },
+        { color: 'blue', name: 'Blue', slots: ['WAIST', 'SHOES'], emblemColors: ['blue'] },
+        { color: 'multicolor', name: 'Multicolor', slots: ['WEAPON', 'SKIN', 'AURORA'], emblemColors: ['multicolored'] }
       ]
     };
   },
@@ -212,6 +201,18 @@ export default {
         return grows[idx].imgSrc || this.getImageSrc(this.jobId, idx);
       }
       return ''; // fallback
+    },
+    slotFontColors() {
+      return {
+        HEADGEAR: 'red',  // “Hat”
+        HAIR: 'red',
+        FACE: '#f5c32c',
+        BREAST: '#f5c32c', // “Torso”
+        JACKET: '#3cb043',  // “Top”
+        PANTS: '#3cb043',  // “Bottom”
+        WAIST: '#4a90e2',
+        SHOES: '#4a90e2'
+      };
     },
     emblemStatsByColor() {
       const groups = {};
@@ -287,8 +288,37 @@ export default {
       }
     },
     scrollToSlot(slot) {
-      const el = document.getElementById(slot)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      // 1) find the group object for this slot
+      const group = this.equipGroups.find(g => g.slots.includes(slot));
+      if (!group) return;
+
+      // 2) grab the group section via its ref
+      let sectionEl = this.$refs[`group-${group.color}`];
+      if (Array.isArray(sectionEl)) sectionEl = sectionEl[0];
+      if (!sectionEl) return;
+
+      // 3) scroll just above the group header
+      const offset = 20;
+      const top    = window.pageYOffset + sectionEl.getBoundingClientRect().top - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+
+      // 4) once the group is in view, flash the specific slot block
+      const obs = new IntersectionObserver((entries, o) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            // find that slot’s block via its ref
+            let slotBlock = this.$refs[slot];
+            if (Array.isArray(slotBlock)) slotBlock = slotBlock[0];
+            if (slotBlock) {
+              slotBlock.classList.add('flash');
+              setTimeout(() => slotBlock.classList.remove('flash'), 2000);
+            }
+            o.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      obs.observe(sectionEl);
     }
   }
 };
@@ -445,5 +475,68 @@ export default {
 
 .slot-button:hover {
   background-color: #e56717;
+}
+
+/* Section underline colored per group */
+section[class^="group-"] h2 {
+  padding-bottom: 4px;
+  border-bottom: 3px solid currentColor;
+}
+
+/* Grid: two columns, avatar on left, emblem on right */
+.group-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 60px;
+  margin-bottom: 40px;
+}
+
+/* Color each section via its class */
+.group-red h2 {
+  color: red;
+}
+
+.group-yellow h2 {
+  color: #f5c32c;
+}
+
+.group-green h2 {
+  color: #3cb043;
+}
+
+.group-blue h2 {
+  color: #4a90e2;
+}
+
+.slot-table-block,
+.emblem-table-block {
+
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
+}
+
+.slot-table-block h3,
+.emblem-table-block h3 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #e56717;
+}
+
+@keyframes flashEffect {
+  0% {
+    box-shadow: 0 0 0px #e56717;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 5px #e56717;
+  }
+
+  100% {
+    box-shadow: 0 0 0px #e56717;
+  }
+}
+
+.flash {
+  animation: flashEffect 2s ease-out;
 }
 </style>
