@@ -1,37 +1,52 @@
 <template>
-  <div class="talisman-stats">
-    <!-- Navigation Buttons -->
-    <div class="stats-nav">
-      <router-link :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }">
-        <button>Equipment</button>
-      </router-link>
-      <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
-        <button>Avatar</button>
-      </router-link>
-      <router-link :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }">
-        <button>Creature</button>
-      </router-link>
-      <router-link :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }">
-        <button class="active">Talisman</button>
-      </router-link>
-      <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
-        <button>Skill</button>
-      </router-link>
-      
-    </div>
-
     <h1>Talisman & Rune Statistics for {{ jobFriendlyName }}</h1>
+    <div class="equipment-wrapper">
+     <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
+     <div class="equipment-tabs">
+       <router-link
+         :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('EquipmentStats') }"
+       >Equipment</router-link>
+       <router-link
+         :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('AvatarStats') }"
+       >Avatar</router-link>
+       <router-link
+         :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('CreatureStats') }"
+       >Creature</router-link>
+       <router-link
+         :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('TalismanStats') }"
+       >Talisman</router-link>
+       <router-link
+         :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('SkillStats') }"
+       >Skill</router-link>
+     </div>
+
+     <!-- Big Square (buttons omitted for now) -->
+     <div class="equipment-square">
+     </div>
+   </div>
+
 
     <!-- Display stats only when a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading talisman stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
-        <!-- Talisman Items Section -->
+
+        <!-- Combined Talisman & Rune Side‑by‑Side -->
         <section class="stat-section">
-          <h2>Talisman</h2>
-          <div class="tables-container full-width">
+          <div class="tables-container side-by-side">
             <div class="slot">
+              <h2>Talisman</h2>
               <table class="stats-table">
                 <thead>
                   <tr>
@@ -42,19 +57,13 @@
                 <tbody>
                   <tr v-for="item in stats.talismanStats" :key="item.talisman_item_id">
                     <td>{{ item.talisman_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ formatRate(item.usage_count, 3) }}%</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
-        </section>
-
-        <!-- Rune Items Section -->
-        <section class="stat-section">
-          <h2>Rune</h2>
-          <div class="tables-container full-width">
             <div class="slot">
+              <h2>Rune</h2>
               <table class="stats-table">
                 <thead>
                   <tr>
@@ -65,17 +74,15 @@
                 <tbody>
                   <tr v-for="item in stats.runeStats" :key="item.rune_item_id">
                     <td>{{ item.rune_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ formatRate(item.usage_count, 9) }}%</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </section>
-
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -88,7 +95,10 @@ export default {
     return {
       stats: null,
       loading: false,
-      error: null
+      error: null,
+      talismanSlots: [
+        'T1','T2','T3','T4','T5','T6','T7','T8'
+      ]
     };
   },
   computed: {
@@ -142,14 +152,71 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    isActiveRoute(name) {
+      return this.$route.name === name;
+    },
+      formatRate(value, divisor) {
+      return (value / divisor).toFixed(2);
     }
   }
 };
 </script>
 
 <style scoped>
-.talisman-stats {
-  padding: 20px;
+.equipment-wrapper {
+  width: 700px;
+  margin: 0 auto 40px;
+  position: relative;
+  padding-top: 20px;
+}
+
+.equipment-tabs {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  background: #222;
+  border: 2px solid #fff;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  border-right: 1px solid #fff;
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button:last-child {
+  border-right: none;
+}
+
+.equipment-tabs .tab-button:hover,
+.equipment-tabs .tab-button.active {
+  background-color: #e56717;
+}
+
+.equipment-square {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.equipment-square .side,
+.equipment-square .center {
+  flex: 1;
 }
 
 /* Navigation styling */
@@ -180,8 +247,13 @@ export default {
 }
 
 /* Section styling */
-.stat-section {
-  margin-bottom: 40px;
+.slot h2 {
+  padding-bottom: 8px;
+  /* space between text and the line */
+  margin-bottom: 16px;
+  /* space between the line and the table */
+  border-bottom: 2px solid #e56717;
+  color: #e56717;
 }
 
 /* Tables container styling */
@@ -192,6 +264,11 @@ export default {
   margin-top: 20px;
 }
 
+.tables-container.side-by-side {
+  display: flex;
+  gap: 40px;
+}
+
 /* For full-width table sections */
 .full-width .slot {
   flex: 0 0 100%;
@@ -199,9 +276,18 @@ export default {
 
 /* Slot styling */
 .tables-container .slot {
-  border: 1px solid #ddd;
   padding: 10px;
   border-radius: 4px;
+}
+
+.tables-container.side-by-side {
+  display: flex;
+  column-gap: 60px;
+  /* horizontal only */
+}
+
+.tables-container.side-by-side .slot {
+  flex: 1;
 }
 
 /* Table styling */

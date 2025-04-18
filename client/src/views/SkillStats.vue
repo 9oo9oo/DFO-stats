@@ -1,27 +1,41 @@
 <template>
-  <div class="skill-stats">
-    <!-- Navigation Buttons -->
-    <div class="stats-nav">
-      <router-link :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }">
-        <button>Equipment</button>
-      </router-link>
-      <router-link :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }">
-        <button>Avatar</button>
-      </router-link>
-      <router-link :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }">
-        <button>Creature</button>
-      </router-link>
-      <router-link :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }">
-        <button>Talisman</button>
-      </router-link>
-      <router-link :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }">
-        <button class="active">Skill</button>
-      </router-link>
-      
-    </div>
-
     <h1>Skill Statistics for {{ jobFriendlyName }}</h1>
+    <!-- Navigation Buttons -->
+    <div class="equipment-wrapper">
+     <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
+     <div class="equipment-tabs">
+       <router-link
+         :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('EquipmentStats') }"
+       >Equipment</router-link>
+       <router-link
+         :to="{ name: 'AvatarStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('AvatarStats') }"
+       >Avatar</router-link>
+       <router-link
+         :to="{ name: 'CreatureStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('CreatureStats') }"
+       >Creature</router-link>
+       <router-link
+         :to="{ name: 'TalismanStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('TalismanStats') }"
+       >Talisman</router-link>
+       <router-link
+         :to="{ name: 'SkillStats', params: { jobId, jobGrowId } }"
+         class="tab-button"
+         :class="{ active: isActiveRoute('SkillStats') }"
+       >Skill</router-link>
+     </div>
 
+     <!-- Big Square (buttons omitted for now) -->
+     <div class="equipment-square">
+     </div>
+   </div>
+      
     <!-- Display stats only when a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading skill stats...</div>
@@ -57,7 +71,6 @@
         </section>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -139,14 +152,69 @@ export default {
     },
     formatNumber(number) {
       return Number(number).toLocaleString();
+    },
+    isActiveRoute(name) {
+      return this.$route.name === name;
     }
   },
 };
 </script>
 
 <style scoped>
-.skill-stats {
-  padding: 20px;
+
+.equipment-wrapper {
+  width: 700px;
+  margin: 0 auto 40px;
+  position: relative;
+  padding-top: 20px;
+}
+
+.equipment-tabs {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  background: #222;
+  border: 2px solid #fff;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  border-right: 1px solid #fff;
+  box-sizing: border-box;
+}
+
+.equipment-tabs .tab-button:last-child {
+  border-right: none;
+}
+
+.equipment-tabs .tab-button:hover,
+.equipment-tabs .tab-button.active {
+  background-color: #e56717;
+}
+
+.equipment-square {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.equipment-square .side,
+.equipment-square .center {
+  flex: 1;
 }
 
 .stats-nav {

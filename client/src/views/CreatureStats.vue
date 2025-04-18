@@ -1,5 +1,4 @@
 <template>
-  <div class="creature-stats">
     <h1>Creature Statistics for {{ jobFriendlyName }}</h1>
     <div class="equipment-wrapper">
       <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
@@ -70,7 +69,7 @@
                 <tbody>
                   <tr v-for="item in stats.creatureStats" :key="item.creature_item_id">
                     <td>{{ item.creature_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -91,7 +90,7 @@
                 <tbody>
                   <tr v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
                     <td>{{ item.artifact_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -105,7 +104,7 @@
                 <tbody>
                   <tr v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
                     <td>{{ item.artifact_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -119,7 +118,7 @@
                 <tbody>
                   <tr v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
                     <td>{{ item.artifact_item_name }}</td>
-                    <td>{{ item.usage_count }}</td>
+                    <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
               </table>
@@ -128,7 +127,6 @@
         </section>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

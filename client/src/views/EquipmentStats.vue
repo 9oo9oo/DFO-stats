@@ -1,5 +1,4 @@
 <template>
-  <div class="equipment-stats">
     <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
     <div class="equipment-wrapper">
       <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
@@ -178,7 +177,6 @@
 
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -348,10 +346,6 @@ export default {
 </script>
 
 <style scoped>
-/* .equipment-stats {
-  padding: 20px;
-  color: #fff;
-} */
 
 .equipment-wrapper {
   width: 700px;

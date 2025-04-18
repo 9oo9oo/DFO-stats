@@ -90,11 +90,11 @@
                     >
                       <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
                         <td>{{ item.item_name }}</td>
-                        <td>{{ item.usage_count }}</td>
+                        <td>{{ item.usage_count }}%</td>
                       </template>
                       <template v-else>
                         <td>{{ item.option_ability || '-' }}</td>
-                        <td>{{ item.usage_count }}</td>
+                        <td>{{ item.usage_count }}%</td>
                       </template>
                     </tr>
                   </tbody>
@@ -120,7 +120,12 @@
                       :key="em.item_name"
                     >
                       <td>{{ em.item_name }}</td>
-                      <td>{{ em.usage_count }}</td>
+                        <td>
+                        {{ formatRate(
+                            em.usage_count,
+                            emColor === 'multicolored' ? 6 : 4
+                          ) }}%
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -318,6 +323,9 @@ export default {
       }, { threshold: 0.5 });
 
       obs.observe(sectionEl);
+    },
+    formatRate(value, divisor) {
+      return (value / divisor).toFixed(2);
     }
   }
 };
