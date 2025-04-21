@@ -474,25 +474,11 @@ export default {
   background-color: #e56717;
 }
 
-/* Tables container and table styling (unchanged) */
-.tables-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 40px;
-}
-
-.tables-container .slot {
-  flex: 0 0 calc(33.33% - 20px);
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 4px;
-}
-
 .stats-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 15px;
+  table-layout: fixed;  
 }
 
 .stats-table th,
@@ -507,10 +493,16 @@ export default {
   color: #e56717;
 }
 
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  width: 20%;           /* shrink to 25% of table width */
+  text-align: center;   /* center horizontally */
+  vertical-align: middle; /* center vertically */
+}
+
 .set-usage {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   margin: 40px;
 }
 
@@ -542,12 +534,12 @@ export default {
 }
 
 .slot-section {
-  padding-left: 20px;   /* adds space between adjacent slots */
-  padding-right: 20px;
+  padding: 0 20px;
+  margin: 0 20px;
 }
 
 .slot-section h2 {
-  margin-bottom: 12px;              
+  margin-bottom: 16px;              
   padding-bottom: 4px;            
   border-bottom: 2px solid #e56717;
   color: #e56717;

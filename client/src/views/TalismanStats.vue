@@ -249,9 +249,7 @@ export default {
 /* Section styling */
 .slot h2 {
   padding-bottom: 8px;
-  /* space between text and the line */
   margin-bottom: 16px;
-  /* space between the line and the table */
   border-bottom: 2px solid #e56717;
   color: #e56717;
 }
@@ -290,6 +288,10 @@ export default {
   flex: 1;
 }
 
+.stat-section {
+  margin: 40px;
+}
+
 /* Table styling */
 .stats-table {
   width: 100%;
@@ -306,5 +308,12 @@ export default {
 .stats-table th {
   background-color: #f2f2f2;
   color: #e56717;
+}
+
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  width: 20%;           /* shrink to 25% of table width */
+  text-align: center;   /* center horizontally */
+  vertical-align: middle; /* center vertically */
 }
 </style>

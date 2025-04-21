@@ -355,36 +355,9 @@ export default {
 
 /* === Your existing CreatureStats styles === */
 
-/* Navigation styling */
-.stats-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.stats-nav button {
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.stats-nav button:hover {
-  background-color: #e56717;
-}
-
-.stats-nav button.active {
-  background-color: #e56717;
-}
-
 /* Section styling */
 .stat-section {
-  margin-bottom: 40px;
+  margin: 40px;
 }
 
 .stat-section h2 {
@@ -440,6 +413,13 @@ export default {
 .stats-table th {
   background-color: #f2f2f2;
   color: #e56717;
+}
+
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  width: 20%;           /* shrink to 25% of table width */
+  text-align: center;   /* center horizontally */
+  vertical-align: middle; /* center vertically */
 }
 
 @keyframes flashEffect {

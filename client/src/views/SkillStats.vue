@@ -43,31 +43,64 @@
       <div v-if="stats">
         <section class="stat-section">
           <h2>Skill Statistics</h2>
-          <div class="tables-container full-width">
-            <div class="slot">
-              <table class="stats-table">
-                <thead>
-                  <tr>
-                    <th>Skill Name</th>
-                    <th>Required Level</th>
-                    <th>Average Level</th>
-                    <th>Total Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="skill in sortedSkillStats"
-                    :key="skill.skill_id"
-                  >
-                    <td>{{ skill.skill_name }}</td>
-                    <td>{{ skill.required_level }}</td>
-                    <td>{{ skill.average_level.toFixed(2) }}</td>
-                    <td>{{ formatNumber(skill.total_count) }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <table class="stats-table skill-tree">
+            <thead>
+              <tr>
+                <th>Required Level</th>
+                <th>Skills</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template v-for="group in chunkedLevelRows" :key="group.level">
+                <tr v-for="(rowSkills, rowIdx) in group.rows" :key="rowIdx">
+                  <!-- only show the level cell once, spanning all row chunks -->
+                  <td
+                    v-if="rowIdx === 0"
+                    class="level-cell"
+                    :rowspan="group.rows.length"
+                  >{{ group.level }}</td>
+
+                  <!-- our single‑cell grid for up to 5 skills -->
+                  <td>
+                    <div
+                      class="skill-grid-with-labels"
+                      :style="{ gridTemplateColumns: `auto repeat(${rowSkills.length}, 1fr)` }"
+                    >
+                      <!-- names -->
+                      <div class="row-label">Name</div>
+                      <div
+                        v-for="skill in rowSkills"
+                        :key="skill.skill_id"
+                        class="cell"
+                      >
+                        {{ skill.skill_name }}
+                      </div>
+
+                      <!-- usage% -->
+                      <div class="row-label">Usage</div>
+                      <div
+                        v-for="skill in rowSkills"
+                        :key="'rate-'+skill.skill_id"
+                        class="cell"
+                      >
+                        {{ formatNumber(skill.total_count) }}%
+                      </div>
+
+                      <!-- average -->
+                      <div class="row-label">Avg lvl</div>
+                      <div
+                        v-for="skill in rowSkills"
+                        :key="'avg-'+skill.skill_id"
+                        class="cell"
+                      >
+                        {{ skill.average_level.toFixed(2) }}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
         </section>
       </div>
     </div>
@@ -118,6 +151,24 @@ export default {
         }
         return a.required_level - b.required_level;
       });
+    },
+    groupedByLevel() {
+      return this.sortedSkillStats.reduce((acc, skill) => {
+        const lvl = skill.required_level;
+        if (!acc[lvl]) acc[lvl] = [];
+        acc[lvl].push(skill);
+        return acc;
+      }, {});
+    },
+    chunkedLevelRows() {
+      const MAX = 6;
+      return Object.entries(this.groupedByLevel).map(([level, skills]) => {
+        const rows = [];
+        for (let i = 0; i < skills.length; i += MAX) {
+          rows.push(skills.slice(i, i + MAX));
+        }
+        return { level, rows };
+      });
     }
   },
   mounted() {
@@ -161,11 +212,9 @@ export default {
 </script>
 
 <style scoped>
-
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
-  position: relative;
   padding-top: 20px;
 }
 
@@ -212,63 +261,24 @@ export default {
   padding: 10px;
 }
 
-.equipment-square .side,
-.equipment-square .center {
-  flex: 1;
-}
-
-.stats-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.stats-nav button {
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.stats-nav button:hover {
-  background-color: #e56717;
-}
-
-.stats-nav button.active {
-  background-color: #e56717;
-}
-
-/* Section styling */
 .stat-section {
-  margin-bottom: 40px;
+  margin: 40px;
 }
 
-/* Tables container styling */
-.tables-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 20px;
+.stat-section h2 {
+  color: #e56717;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e56717;
 }
 
-/* For full-width table sections */
-.full-width .slot {
-  flex: 0 0 100%;
+.stats-table th:nth-child(1),
+.stats-table td:nth-child(1) {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
 }
 
-/* Slot styling */
-.tables-container .slot {
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 4px;
-}
-
-/* Table styling */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -284,5 +294,98 @@ export default {
 .stats-table th {
   background-color: #f2f2f2;
   color: #e56717;
+}
+
+.stat-section.skill-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 40px;
+}
+
+/* each “level” row */
+.level-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: start;
+}
+
+/* the nested skills table */
+.skill-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.skill-table th,
+.skill-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.skill-table th {
+  background: #f2f2f2;
+  color: #e56717;
+}
+
+.skill-tree {
+  margin: 40px auto;
+}
+
+/* cell for Required Level */
+.skill-tree .level-cell {
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  color: #e56717;
+  padding: 8px;
+  width: 20px;
+  font-size: 30px;
+}
+
+/* the 3‑row inner grid */
+.skill-grid {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  column-gap: 16px;
+  row-gap: 4px;
+}
+
+/* center content in each grid cell */
+.skill-grid>div {
+  text-align: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.skill-tree {
+  table-layout: fixed;
+}
+
+.skill-grid-with-labels {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 12px;
+
+  width: 100%;
+}
+
+/* the row‑labels column */
+.skill-grid-with-labels .row-label {
+  font-weight: bold;
+  text-align: right;
+  padding-right: 6px;
+  color: #e56717;
+}
+
+/* center the data cells */
+.skill-grid-with-labels .cell {
+  text-align: center;
+  padding: 2px 0;
+}
+
+/* 2) put a vertical line before every skill cell */
+.skill-grid-with-labels .cell {
+  border-left: 1px solid #e56717;
 }
 </style>

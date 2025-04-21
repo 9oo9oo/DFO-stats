@@ -122,9 +122,9 @@
                       <td>{{ em.item_name }}</td>
                         <td>
                         {{ formatRate(
-                            em.usage_count,
-                            emColor === 'multicolored' ? 6 : 4
-                          ) }}%
+                          em.usage_count,
+                          emColor === 'multicolored' ? 6 : 4
+                        ) }}%
                       </td>
                     </tr>
                   </tbody>
@@ -303,7 +303,7 @@ export default {
 
       // 3) scroll just above the group header
       const offset = 20;
-      const top    = window.pageYOffset + sectionEl.getBoundingClientRect().top - offset;
+      const top = window.pageYOffset + sectionEl.getBoundingClientRect().top - offset;
       window.scrollTo({ top, behavior: 'smooth' });
 
       // 4) once the group is in view, flash the specific slot block
@@ -403,7 +403,7 @@ export default {
 }
 
 .stat-section {
-  margin-bottom: 40px;
+  margin: 40px;
 }
 
 .tables-container {
@@ -441,6 +441,16 @@ export default {
 .stats-table th {
   background-color: #f2f2f2;
   color: #e56717;
+}
+
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  width: 20%;
+  /* shrink to 25% of table width */
+  text-align: center;
+  /* center horizontally */
+  vertical-align: middle;
+  /* center vertically */
 }
 
 .half-width {
