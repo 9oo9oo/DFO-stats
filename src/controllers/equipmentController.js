@@ -92,22 +92,20 @@ exports.getEquipmentStats = async (req, res) => {
   ];
 
   try {
-    // Query to aggregate individual item usage by slot.
+    // Query to aggregate individual item usage by slot,
+    // selecting both item_id and item_name
     const itemsQuery = `
-      SELECT 
-        ce.slot_id,
-        CASE WHEN ce.slot_id = 'TITLE' THEN ce.item_name ELSE ce.item_id END as item_key,
-        ce.item_name,
-        COUNT(*) AS usage_count
-      FROM character_equipment ce
-      JOIN characters c ON ce.character_id = c.character_id
-      WHERE c.job_id = $1 AND c.job_grow_id = $2
-      GROUP BY 
-        ce.slot_id,
-        CASE WHEN ce.slot_id = 'TITLE' THEN ce.item_name ELSE ce.item_id END,
-        ce.item_name
-      ORDER BY ce.slot_id, usage_count DESC;
-    `;
+        SELECT 
+          ce.slot_id,
+          ce.item_id,
+          ce.item_name,
+          COUNT(*) AS usage_count
+        FROM character_equipment ce
+        JOIN characters c ON ce.character_id = c.character_id
+        WHERE c.job_id = $1 AND c.job_grow_id = $2
+        GROUP BY ce.slot_id, ce.item_id, ce.item_name
+        ORDER BY ce.slot_id, usage_count DESC;
+      `;
     const itemsResult = await client.query(itemsQuery, [jobId, jobGrowId]);
 
     // Query to aggregate fusion item usage by slot.
@@ -189,7 +187,7 @@ exports.getEquipmentStats = async (req, res) => {
     // Parse query results into arrays.
     const itemsStats = itemsResult.rows.map(row => ({
       slot: row.slot_id,
-      item_id: row.item_id,
+      item_id: row.item_id,     // <— both ID and name now available
       item_name: row.item_name,
       usage_count: parseInt(row.usage_count, 10)
     }));

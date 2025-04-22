@@ -136,11 +136,20 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="item in stats.itemsBySlot[slot]"
-                      :key="item.item_id"
+                    <tr 
+                    v-for="item in stats.itemsBySlot[slot]" 
+                    :key="item.item_id"
                     >
-                      <td>{{ item.item_name }}</td>
+                    <td class="item-cell">
+                      <ItemTooltip :id="item.item_id" :name="item.item_name">
+                        <img
+                          :src="getItemImageUrl(item.item_id)"
+                          :alt="item.item_name"
+                          class="item-icon"
+                          loading="lazy"
+                        />
+                      </ItemTooltip>
+                    </td>
                       <td>{{ item.usage_count }}%</td>
                     </tr>
                   </tbody>
@@ -165,7 +174,16 @@
                       v-for="fusionItem in stats.fusionItemsBySlot[slot]"
                       :key="fusionItem.fusion_item_id"
                     >
-                      <td>{{ fusionItem.fusion_item_name }}</td>
+                    <td class="item-cell">
+                    <ItemTooltip :id="fusionItem.fusion_item_id" :name="fusionItem.fusion_item_name">
+                        <img
+                          :src="getItemImageUrl(fusionItem.fusion_item_id)"
+                          :alt="fusionItem.fusion_item_name"
+                          class="item-icon"
+                          loading="lazy"
+                        />
+                      </ItemTooltip>
+                    </td>
                       <td>{{ fusionItem.usage_count }}%</td>
                     </tr>
                   </tbody>
@@ -182,6 +200,7 @@
 <script>
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
+import ItemTooltip from '@/components/ItemTooltip.vue';
 
 export default {
   name: 'EquipmentStats',
@@ -239,16 +258,12 @@ export default {
         EARRING: 'Earrings'
       };
     },
-    // Define left side layout: 5 slots
     leftColumnOne() {
-      // First 3 slots for left column
       return ["SHOULDER", "PANTS", "SHOES"];
     },
     leftColumnTwo() {
-      // Next 2 slots for left side second column
       return ["JACKET", "WAIST"];
     },
-    // Define right side layout: 8 slots split into 2 columns of 4 each
     rightColumnOne() {
       return ["WEAPON", "WRIST", "SUPPORT", "EARRING"];
     },
@@ -300,21 +315,14 @@ export default {
       if (Array.isArray(el)) el = el[0];
       if (!el) return;
 
-      // how much space you want above the slot
-      const offset = 20; 
-
-      // compute the element's absolute top and subtract offset
+      const offset = 20;
       const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
-
-      // smooth‑scroll there
       window.scrollTo({ top, behavior: 'smooth' });
 
-      // once it's in view, flash it
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             el.classList.add('flash');
-            // remove after your flash duration (e.g. 1.5s)
             setTimeout(() => el.classList.remove('flash'), 1500);
             obs.disconnect();
           }
@@ -340,13 +348,16 @@ export default {
       } catch {
         return 'https://via.placeholder.com/250x400';
       }
+    },
+    getItemImageUrl(itemId) {
+      return `https://img-api.dfoneople.com/df/items/${itemId}`;
     }
-  }
+  },
+  components: { ItemTooltip }
 };
 </script>
 
 <style scoped>
-
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
@@ -478,7 +489,7 @@ export default {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 15px;
-  table-layout: fixed;  
+  table-layout: fixed;
 }
 
 .stats-table th,
@@ -495,9 +506,12 @@ export default {
 
 .stats-table th:nth-child(2),
 .stats-table td:nth-child(2) {
-  width: 20%;           /* shrink to 25% of table width */
-  text-align: center;   /* center horizontally */
-  vertical-align: middle; /* center vertically */
+  width: 20%;
+  /* shrink to 25% of table width */
+  text-align: center;
+  /* center horizontally */
+  vertical-align: middle;
+  /* center vertically */
 }
 
 .set-usage {
@@ -539,8 +553,8 @@ export default {
 }
 
 .slot-section h2 {
-  margin-bottom: 16px;              
-  padding-bottom: 4px;            
+  margin-bottom: 16px;
+  padding-bottom: 4px;
   border-bottom: 2px solid #e56717;
   color: #e56717;
 }
@@ -571,5 +585,16 @@ export default {
 
 .flash {
   animation: flashEffect 2s ease-out;
+}
+
+.item-cell {
+  text-align: center;
+  width: 408px;
+}
+
+.item-icon {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: contain;
 }
 </style>

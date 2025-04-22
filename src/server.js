@@ -18,7 +18,7 @@ const creatureRoutes = require('./routes/creatureRoutes');
 const talismanRoutes = require('./routes/talismanRoutes');
 const skillRoutes = require('./routes/skillRoutes');
 const avatarRoutes = require('./routes/avatarRoutes');
-
+const itemRoutes = require('./routes/itemRoutes');
 
 // Mount routes
 app.use('/api/servers', serverRoutes);
@@ -28,18 +28,11 @@ app.use('/api/creature', creatureRoutes);
 app.use('/api/talisman', talismanRoutes);
 app.use('/api/skill', skillRoutes);
 app.use('/api/avatar', avatarRoutes);
+app.use('/api/items', itemRoutes);
 
 // Default route
 app.get('/', (req, res) => {
   res.send("DFO STATS COMING SOON :)");
-});
-
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from the backend!' });
-});
-
-app.get('/api/main', (req, res) => {
-  res.json({ message: 'main page' });
 });
 
 // Start the server
