@@ -86,7 +86,7 @@
         <h2>Set Usage</h2>
         <table class="stats-table">
           <thead>
-            <tr><th>Set Name</th><th>Usage</th></tr>
+            <tr><th>Set</th><th>Usage</th></tr>
           </thead>
           <tbody>
             <tr v-for="set in stats.setUsage" :key="set.set_item_id">
@@ -106,7 +106,7 @@
         <div class="tables-pair">
           <div class="table-wrapper">
             <table class="stats-table">
-              <thead><tr><th>Name</th><th>Usage</th></tr></thead>
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
                 <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
                   <td class="item-cell">
@@ -118,6 +118,7 @@
                           :alt="item.item_name"
                           class="item-icon"
                           loading="lazy"
+                          @error="hideBrokenIcon"
                         />
                       </ItemTooltip>
 
@@ -136,7 +137,7 @@
           >
             <h3>Fusion</h3>
             <table class="stats-table">
-              <thead><tr><th>Name</th><th>Usage</th></tr></thead>
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
                 <tr
                   v-for="fusionItem in stats.fusionItemsBySlot[slot]"
@@ -178,7 +179,7 @@
           <div class="table-wrapper">
             <h3>Normal</h3>
             <table class="stats-table">
-              <thead><tr><th>Name</th><th>Usage</th></tr></thead>
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
                 <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
                   <td class="item-cell">
@@ -203,7 +204,7 @@
           >
             <h3>Fusion</h3>
             <table class="stats-table">
-              <thead><tr><th>Name</th><th>Usage</th></tr></thead>
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
                 <tr
                   v-for="fusionItem in stats.fusionItemsBySlot[slot]"
@@ -237,6 +238,7 @@
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
 import ItemTooltip from '@/components/ItemTooltip.vue';
+import MissingIcon from '@/assets/missingicon.png';
 
 export default {
   name: 'EquipmentStats',
@@ -346,6 +348,12 @@ export default {
     },
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
+    },
+    hideBrokenIcon(event) {
+      const img = event.target;
+      img.onerror = null;           // prevent infinite fallback loop
+      img.src = MissingIcon;
+      img.style.width  = '24px';
     }
   },
   components: { ItemTooltip }
@@ -521,6 +529,9 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+.other-grid .tables-pair {
+  gap: 60px;
 }
 .icon-and-name {
   display: flex;

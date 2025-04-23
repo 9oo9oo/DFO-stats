@@ -62,13 +62,25 @@
               <table class="stats-table">
                 <thead>
                   <tr>
-                    <th>Item Name</th>
-                    <th>Usage Rate</th>
+                    <th>Item</th>
+                    <th>Usage</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in stats.creatureStats" :key="item.creature_item_id">
-                    <td>{{ item.creature_item_name }}</td>
+                    <td class="item-cell">
+                      <div class="icon-and-name">
+                        <ItemTooltip :id="item.creature_item_id">
+                          <img
+                            :src="getItemImageUrl(item.creature_item_id)"
+                            :alt="item.creature_item_name"
+                            class="item-icon"
+                            loading="lazy"
+                          />
+                        </ItemTooltip>
+                        <span class="item-name">{{ item.creature_item_name }}</span>
+                      </div>
+                    </td>
                     <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
@@ -85,11 +97,26 @@
               <h3>Red Artifact </h3>
               <table class="stats-table">
                 <thead>
-                  <tr><th>Item Name</th><th>Usage Rate</th></tr>
+                  <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
-                    <td>{{ item.artifact_item_name }}</td>
+                    <td class="item-cell">
+                      <div class="icon-and-name">
+                        <ItemTooltip
+                          :id="item.artifact_item_id"
+                          :name="item.artifact_item_name"
+                        >
+                          <img
+                            :src="getItemImageUrl(item.artifact_item_id)"
+                            :alt="item.artifact_item_name"
+                            class="item-icon"
+                            loading="lazy"
+                          />
+                        </ItemTooltip>
+                        <span class="item-name">{{ item.artifact_item_name }}</span>
+                      </div>
+                    </td>
                     <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
@@ -99,11 +126,26 @@
               <h3>Blue Artifact</h3>
               <table class="stats-table">
                 <thead>
-                  <tr><th>Item Name</th><th>Usage Rate</th></tr>
+                  <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
-                    <td>{{ item.artifact_item_name }}</td>
+                    <td class="item-cell">
+                      <div class="icon-and-name">
+                        <ItemTooltip
+                          :id="item.artifact_item_id"
+                          :name="item.artifact_item_name"
+                        >
+                          <img
+                            :src="getItemImageUrl(item.artifact_item_id)"
+                            :alt="item.artifact_item_name"
+                            class="item-icon"
+                            loading="lazy"
+                          />
+                        </ItemTooltip>
+                        <span class="item-name">{{ item.artifact_item_name }}</span>
+                      </div>
+                    </td>
                     <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
@@ -113,11 +155,26 @@
               <h3>Green Artifact</h3>
               <table class="stats-table">
                 <thead>
-                  <tr><th>Item Name</th><th>Usage Rate</th></tr>
+                  <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
-                    <td>{{ item.artifact_item_name }}</td>
+                    <td class="item-cell">
+                      <div class="icon-and-name">
+                        <ItemTooltip
+                          :id="item.artifact_item_id"
+                          :name="item.artifact_item_name"
+                        >
+                          <img
+                            :src="getItemImageUrl(item.artifact_item_id)"
+                            :alt="item.artifact_item_name"
+                            class="item-icon"
+                            loading="lazy"
+                          />
+                        </ItemTooltip>
+                        <span class="item-name">{{ item.artifact_item_name }}</span>
+                      </div>
+                    </td>
                     <td>{{ item.usage_count }}%</td>
                   </tr>
                 </tbody>
@@ -132,9 +189,11 @@
 <script>
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
+import ItemTooltip from '@/components/ItemTooltip.vue';
 
 export default {
   name: 'CreatureStats',
+  components: { ItemTooltip },
   data() {
     return {
       stats: null,
@@ -148,7 +207,7 @@ export default {
     jobMapping() { return jobMappings[this.jobId] || {}; },
     jobFriendlyName() {
       if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-        const grow = this.jobMapping.finalJobGrows.find(g => g.jobGrowId===this.jobGrowId);
+        const grow = this.jobMapping.finalJobGrows.find(g => g.jobGrowId === this.jobGrowId);
         return grow?.jobGrowName || this.jobMapping.jobName;
       }
       return this.jobMapping.jobName || 'Unknown Job';
@@ -158,19 +217,19 @@ export default {
     if (this.jobGrowId) this.fetchCreatureStats();
   },
   watch: {
-    '$route.params.jobGrowId'(n,o) { if (n!==o) this.fetchCreatureStats(); }
+    '$route.params.jobGrowId'(n, o) { if (n !== o) this.fetchCreatureStats(); }
   },
   methods: {
-    isActiveRoute(name) { return this.$route.name===name; },
+    isActiveRoute(name) { return this.$route.name === name; },
     async fetchCreatureStats() {
       if (!this.jobGrowId) return;
-      this.loading=true;
+      this.loading = true;
       try {
-        const res=await axios.get(`/api/creature/stats/${this.jobId}/${this.jobGrowId}`);
-        this.stats=res.data;
-      } catch(e) {
-        this.error=e.response?.data?.error||e.message;
-      } finally { this.loading=false; }
+        const res = await axios.get(`/api/creature/stats/${this.jobId}/${this.jobGrowId}`);
+        this.stats = res.data;
+      } catch (e) {
+        this.error = e.response?.data?.error || e.message;
+      } finally { this.loading = false; }
     },
     scrollToSlot(slot) {
       // grab the element (could be the <section> or a .slot div)
@@ -202,6 +261,9 @@ export default {
       }, { threshold: 0.5 });
 
       obs.observe(el);
+    },
+    getItemImageUrl(itemId) {
+      return `https://img-api.dfoneople.com/df/items/${itemId}`;
     }
   }
 };
@@ -287,7 +349,7 @@ export default {
 
 .right-button-container {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -333,23 +395,24 @@ export default {
 }
 
 .slot-purple {
-  border-color:     #8e44ad;
-  color:            white;     /* ensure text shows */
+  border-color: #8e44ad;
+  color: white;
+  /* ensure text shows */
 }
 
 .slot-red {
-  border-color:     #c0392b;
-  color:            white;
+  border-color: #c0392b;
+  color: white;
 }
 
 .slot-blue {
-  border-color:     #4a90e2;
-  color:            white;
+  border-color: #4a90e2;
+  color: white;
 }
 
 .slot-green {
-  border-color:     #3cb043;
-  color:            white;
+  border-color: #3cb043;
+  color: white;
 }
 
 
@@ -365,11 +428,25 @@ export default {
   padding-bottom: 4px;
   border-bottom: 2px solid currentColor;
   margin-bottom: 16px;
+  width: auto;
 }
 
-.artifact-container .slot:nth-child(1) h3 { color: #c0392b; }
-.artifact-container .slot:nth-child(2) h3 { color: #4a90e2; }
-.artifact-container .slot:nth-child(3) h3 { color: #3cb043; }
+.stat-section:nth-of-type(1) {
+  width: fit-content;    /* shrink to fit its contents (the table) */
+  margin: 40px auto;        /* vertical 40px, horizontal auto to center */
+}
+
+.artifact-container .slot:nth-child(1) h3 {
+  color: #c0392b;
+}
+
+.artifact-container .slot:nth-child(2) h3 {
+  color: #4a90e2;
+}
+
+.artifact-container .slot:nth-child(3) h3 {
+  color: #3cb043;
+}
 
 /* Tables container styling */
 .tables-container {
@@ -379,16 +456,24 @@ export default {
   margin-top: 20px;
 }
 
-/* For full-width table sections */
-.full-width .slot {
-  flex: 0 0 100%;
+.tables-container.full-width {
+  display: flex;               /* you already have this */
+  justify-content: center;     /* center the single slot */
 }
 
-/* For artifact items: display three tables per row */
-.artifact-container .slot {
-  flex: 0 0 calc(33.33% - 20px);
-  padding: 10px;
-  border-radius: 4px;
+/* For full-width table sections */
+.tables-container.full-width .slot {
+  flex: 0 0 auto;              /* don’t stretch to 100% any more */
+}
+
+.tables-container.artifact-container {
+  display: flex;               
+  justify-content: space-between; /* spread slots evenly across the row */
+}
+.tables-container.artifact-container .slot {
+  flex: 1 1 auto;              /* allow each slot to grow/shrink equally */
+  max-width: none;             /* remove the calc(33.33% - 20px) */
+  margin: 0 10px;              /* small gutter between each */
 }
 
 /* General slot styling (fallback) */
@@ -399,8 +484,8 @@ export default {
 
 /* Table styling */
 .stats-table {
-  width: 100%;
-  border-collapse: collapse;
+  width: auto;                 /* size to content */
+  margin: 0 auto;              /* center inside its wrapper */
 }
 
 .stats-table th,
@@ -417,15 +502,46 @@ export default {
 
 .stats-table th:nth-child(2),
 .stats-table td:nth-child(2) {
-  width: 20%;           /* shrink to 25% of table width */
-  text-align: center;   /* center horizontally */
-  vertical-align: middle; /* center vertically */
+  text-align: center;
+  vertical-align: middle;
 }
 
 @keyframes flashEffect {
-  0%   { box-shadow:0 0 0px #e56717; }
-  50%  { box-shadow:0 0 10px 5px #e56717; }
-  100% { box-shadow:0 0 0px #e56717; }
+  0% {
+    box-shadow: 0 0 0px #e56717;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 5px #e56717;
+  }
+
+  100% {
+    box-shadow: 0 0 0px #e56717;
+  }
 }
-.flash { animation: flashEffect 2s ease-out; }
+
+.flash {
+  animation: flashEffect 2s ease-out;
+}
+
+.item-cell {
+  display: flex;
+  align-items: center;
+}
+
+.icon-and-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.item-name {
+  font-size: 14px;
+}
 </style>
