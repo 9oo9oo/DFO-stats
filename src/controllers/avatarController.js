@@ -129,7 +129,8 @@ exports.getAvatarStats = async (req, res) => {
         // For all other slots, group solely by option_ability.
         const avatarQuery = `
         SELECT 
-          ca.slot_id, 
+          ca.slot_id,
+          ca.item_id, 
           CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END as item_name,
           ca.option_ability,
           COUNT(*) AS usage_count
@@ -138,25 +139,27 @@ exports.getAvatarStats = async (req, res) => {
         WHERE c.job_id = $1 AND c.job_grow_id = $2
         GROUP BY 
           ca.slot_id,
+          ca.item_id,
           CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END,
           ca.option_ability
         ORDER BY ca.slot_id, usage_count DESC;
       `;
-      
+
         const avatarResult = await client.query(avatarQuery, [jobId, jobGrowId]);
 
         // Updated Emblem Query:
         // Group only by slot_color and item_name so that items with the same name aggregate together.
         const emblemQuery = `
         SELECT 
-            cae.slot_color, 
+            cae.slot_color,
+            cae.item_id, 
             cae.item_name, 
             COUNT(*) AS usage_count
         FROM character_avatar_emblems cae
         JOIN character_avatar ca ON cae.character_avatar_id = ca.id
         JOIN characters c ON ca.character_id = c.character_id
         WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY cae.slot_color, cae.item_name
+        GROUP BY cae.slot_color, cae.item_id, cae.item_name
         ORDER BY 
           CASE 
             WHEN lower(cae.slot_color) = 'multicolored' THEN 1
@@ -198,6 +201,7 @@ exports.getAvatarStats = async (req, res) => {
         // Process emblem stats.
         const emblemStatsRaw = emblemResult.rows.map(row => ({
             slot_color: row.slot_color,
+            item_id: row.item_id,
             item_name: row.item_name,
             usage_count: parseInt(row.usage_count, 10)
         }));

@@ -56,6 +56,63 @@
       <div v-if="loading">Loading avatar stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
+        <!-- Weapon & Aura: show these first -->
+        <div class="weapon-aura-grid">
+          <section ref="WEAPON" class="slot-section">
+            <div class="slot-table-block">
+            <h2>{{ convertSlotName('WEAPON') }}</h2>
+            <table class="stats-table">
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
+              <tbody>
+                <tr v-for="it in stats.avatarStatsBySlot['WEAPON'] || []" :key="it.item_id">
+                  <td class="item-cell">
+                    <div class="icon-and-name">
+                      <ItemTooltip :id="it.item_id" :name="it.item_name">
+                        <img
+                          :src="getItemImageUrl(it.item_id)"
+                          :alt="it.item_name"
+                          class="item-icon"
+                          @error="hideBrokenIcon"
+                        />
+                      </ItemTooltip>
+                      <span class="item-name">{{ it.item_name }}</span>
+                    </div>
+                  </td>
+                  <td>{{ it.usage_count }}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </section>
+
+          <section ref="AURORA" class="slot-section">
+            <div class="slot-table-block">
+            <h2>{{ convertSlotName('AURORA') }}</h2>
+            <table class="stats-table">
+              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
+              <tbody>
+                <tr v-for="it in stats.avatarStatsBySlot['AURORA'] || []" :key="it.item_id">
+                  <td class="item-cell">
+                    <div class="icon-and-name">
+                      <ItemTooltip :id="it.item_id" :name="it.item_name">
+                        <img
+                          :src="getItemImageUrl(it.item_id)"
+                          :alt="it.item_name"
+                          class="item-icon"
+                          @error="hideBrokenIcon"
+                        />
+                      </ItemTooltip>
+                      <span class="item-name">{{ it.item_name }}</span>
+                    </div>
+                  </td>
+                  <td>{{ it.usage_count }}%</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </section>
+        </div>
+
         <!-- Grouped by equip color -->
         <section
           v-for="group in equipGroups"
@@ -77,10 +134,10 @@
                 <table class="stats-table">
                   <thead>
                     <tr v-if="slot === 'WEAPON' || slot === 'AURORA'">
-                      <th>Item Name</th><th>Usage Rate</th>
+                      <th>Item</th><th>Usage</th>
                     </tr>
                     <tr v-else>
-                      <th>Option</th><th>Usage Rate</th>
+                      <th>Option</th><th>Usage</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,8 +145,21 @@
                       v-for="item in stats.avatarStatsBySlot[slot] || []"
                       :key="item.item_id"
                     >
-                      <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
-                        <td>{{ item.item_name }}</td>
+                        <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
+                        <td class="item-cell">
+                          <div class="icon-and-name">
+                            <ItemTooltip :id="item.item_id" :name="item.item_name">
+                              <img
+                                :src="getItemImageUrl(item.item_id)"
+                                :alt="item.item_name"
+                                class="item-icon"
+                                loading="lazy"
+                                @error="hideBrokenIcon"
+                              />
+                            </ItemTooltip>
+                            <span class="item-name">{{ item.item_name }}</span>
+                          </div>
+                        </td>
                         <td>{{ item.usage_count }}%</td>
                       </template>
                       <template v-else>
@@ -112,14 +182,27 @@
                 <h3>{{ capitalize(emColor) }} Emblems</h3>
                 <table class="stats-table">
                   <thead>
-                    <tr><th>Item Name</th><th>Usage Rate</th></tr>
+                    <tr><th>Item</th><th>Usage</th></tr>
                   </thead>
                   <tbody>
                     <tr
                       v-for="em in stats.emblemStatsByColor[emColor] || []"
-                      :key="em.item_name"
+                      :key="em.item_id"
                     >
-                      <td>{{ em.item_name }}</td>
+                    <td class="item-cell">
+                      <div class="icon-and-name">
+                        <ItemTooltip :id="em.item_id">
+                          <img
+                            :src="getItemImageUrl(em.item_id)"
+                            :alt="em.item_name"
+                            class="item-icon"
+                            loading="lazy"
+                            @error="hideBrokenIcon"
+                          />
+                        </ItemTooltip>
+                        <span class="item-name">{{ em.item_name }}</span>
+                      </div>
+                    </td>
                         <td>
                         {{ formatRate(
                           em.usage_count,
@@ -142,9 +225,12 @@
 <script>
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
+import ItemTooltip from '@/components/ItemTooltip.vue';
+import MissingIcon from '@/assets/missingicon.png';
 
 export default {
   name: 'AvatarStats',
+  components: { ItemTooltip },
   data() {
     return {
       stats: null,
@@ -175,7 +261,7 @@ export default {
         { color: 'yellow', name: 'Yellow', slots: ['FACE', 'BREAST'], emblemColors: ['yellow'] },
         { color: 'green', name: 'Green & Platinum', slots: ['JACKET', 'PANTS'], emblemColors: ['green', 'platinum'] },
         { color: 'blue', name: 'Blue', slots: ['WAIST', 'SHOES'], emblemColors: ['blue'] },
-        { color: 'multicolor', name: 'Multicolor', slots: ['WEAPON', 'SKIN', 'AURORA'], emblemColors: ['multicolored'] }
+        { color: 'multicolor', name: 'Multicolor', slots: ['SKIN'], emblemColors: ['multicolored'] }
       ]
     };
   },
@@ -292,40 +378,33 @@ export default {
       }
     },
     scrollToSlot(slot) {
-      // 1) find the group object for this slot
-      const group = this.equipGroups.find(g => g.slots.includes(slot));
-      if (!group) return;
-
-      // 2) grab the group section via its ref
-      let sectionEl = this.$refs[`group-${group.color}`];
-      if (Array.isArray(sectionEl)) sectionEl = sectionEl[0];
-      if (!sectionEl) return;
-
-      // 3) scroll just above the group header
-      const offset = 20;
-      const top = window.pageYOffset + sectionEl.getBoundingClientRect().top - offset;
+      let el = this.$refs[slot];
+      if (Array.isArray(el)) el = el[0];
+      if (!el) return;
+      const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
       window.scrollTo({ top, behavior: 'smooth' });
-
-      // 4) once the group is in view, flash the specific slot block
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            // find that slot’s block via its ref
-            let slotBlock = this.$refs[slot];
-            if (Array.isArray(slotBlock)) slotBlock = slotBlock[0];
-            if (slotBlock) {
-              slotBlock.classList.add('flash');
-              setTimeout(() => slotBlock.classList.remove('flash'), 2000);
-            }
-            o.disconnect();
+      new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            el.classList.add('flash');
+            setTimeout(() => el.classList.remove('flash'), 1500);
+            obs.disconnect();
           }
         });
-      }, { threshold: 0.5 });
-
-      obs.observe(sectionEl);
+      }, { threshold: 0.5 }).observe(el);
     },
     formatRate(value, divisor) {
       return (value / divisor).toFixed(2);
+    },
+    getItemImageUrl(itemId) {
+      return `https://img-api.dfoneople.com/df/items/${itemId}`;
+    },
+    hideBrokenIcon(event) {
+      const img = event.target;
+      img.onerror = null;              // prevent infinite loop
+      img.src = MissingIcon;
+      img.style.width = '24px';
+      img.style.height = '24px';
     }
   }
 };
@@ -496,6 +575,18 @@ export default {
 }
 
 /* Section underline colored per group */
+.weapon-aura-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.weapon-aura-grid h2 {
+  color: #e56717;
+  padding-bottom: 4px;
+}
+
 section[class^="group-"] h2 {
   padding-bottom: 4px;
   border-bottom: 3px solid currentColor;
@@ -528,9 +619,10 @@ section[class^="group-"] h2 {
 
 .slot-table-block,
 .emblem-table-block {
-
-  padding: 0 10px 10px 10px;
+  padding: 0 10px 10px;
+  overflow: hidden;
   box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .slot-table-block h3,
@@ -556,5 +648,19 @@ section[class^="group-"] h2 {
 
 .flash {
   animation: flashEffect 2s ease-out;
+}
+
+.icon-and-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.item-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.item-name {
+  font-size: 14px;
 }
 </style>
