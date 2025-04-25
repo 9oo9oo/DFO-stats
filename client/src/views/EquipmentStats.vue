@@ -183,14 +183,17 @@
               <tbody>
                 <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
                   <td class="item-cell">
-                    <ItemTooltip :id="item.item_id" :name="item.item_name">
-                      <img
-                        :src="getItemImageUrl(item.item_id)"
-                        :alt="item.item_name"
-                        class="item-icon"
-                        loading="lazy"
-                      />
-                    </ItemTooltip>
+                    <div class="icon-and-name">
+                      <ItemTooltip :id="item.item_id" :name="item.item_name">
+                        <img
+                          :src="getItemImageUrl(item.item_id)"
+                          :alt="item.item_name"
+                          class="item-icon"
+                          loading="lazy"
+                        />
+                      </ItemTooltip>
+                      <span class="item-name">{{ item.item_name }}</span>
+                    </div>
                   </td>
                   <td>{{ item.usage_count }}%</td>
                 </tr>
@@ -210,7 +213,8 @@
                   v-for="fusionItem in stats.fusionItemsBySlot[slot]"
                   :key="fusionItem.fusion_item_id"
                 >
-                  <td class="item-cell">
+                <td class="item-cell">
+                  <div class="icon-and-name">
                     <ItemTooltip
                       :id="fusionItem.fusion_item_id"
                       :name="fusionItem.fusion_item_name"
@@ -222,7 +226,9 @@
                         loading="lazy"
                       />
                     </ItemTooltip>
-                  </td>
+                    <span class="item-name">{{ fusionItem.fusion_item_name }}</span>
+                  </div>
+                </td>
                   <td>{{ fusionItem.usage_count }}%</td>
                 </tr>
               </tbody>
@@ -353,7 +359,7 @@ export default {
       const img = event.target;
       img.onerror = null;           // prevent infinite fallback loop
       img.src = MissingIcon;
-      img.style.width  = '24px';
+      img.style.width = '24px';
     }
   },
   components: { ItemTooltip }
@@ -477,11 +483,12 @@ export default {
 }
 
 .stats-table td {
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
-.stats-table :nth-child(2) {
-  text-align: center; 
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  text-align: center;
 }
 
 /* === New Grid Layout === */
@@ -501,6 +508,8 @@ export default {
   color: #e56717;
   border-bottom: 2px solid #e56717;
   padding-bottom: 4px;
+  width: 100%;
+  text-align: left;
 }
 
 .tables-pair {
@@ -521,18 +530,47 @@ export default {
   display: grid;
   gap: 20px;
 }
+
 .first-row-grid {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   margin-bottom: 40px;
 }
+
+.first-row-grid .slot-section,
+.first-row-grid .set-usage {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.first-row-grid .tables-pair {
+  flex: 1;
+  align-self: stretch;   
+}
+
+.first-row-grid .table-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .other-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  margin-bottom: 40px;
 }
+
 .other-grid .tables-pair {
-  gap: 60px;
+  gap: 40px;
+  align-self: stretch;
 }
+
+.other-grid .slot-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
 .icon-and-name {
   display: flex;
   align-items: center;
@@ -541,33 +579,7 @@ export default {
 
 .item-name {
   font-size: 14px;
-}
 
-
-.other-grid .slot-section {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;     
-  justify-content: center;
-}
-
-.first-row-grid .slot-section,
-.first-row-grid .set-usage {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch; 
-}
-
-/* Keep the H2 text centered, and let its bottom border span full width */
-.slot-section h2,
-.set-usage h2 {
-  width: 100%;               /* fill the container */
-  text-align: left;        /* center the text inside */
-}
-
-/* Center the tables within the card if you like */
-.tables-pair {
-  align-self: center;
 }
 
 @keyframes flashEffect {
@@ -587,4 +599,12 @@ export default {
 .flash {
   animation: flashEffect 2s ease-out;
 }
+
+@media (max-width: 1024px) {
+  .other-grid .slot-section {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
 </style>
