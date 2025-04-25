@@ -431,11 +431,9 @@ export default {
   width: auto;
 }
 
-.stat-section:nth-of-type(1) {
-  width: fit-content;    /* shrink to fit its contents (the table) */
-  margin: 40px auto;        /* vertical 40px, horizontal auto to center */
+.artifact-container h3 {
+  font-size: 24px;
 }
-
 .artifact-container .slot:nth-child(1) h3 {
   color: #c0392b;
 }
@@ -457,35 +455,33 @@ export default {
 }
 
 .tables-container.full-width {
-  display: flex;               /* you already have this */
-  justify-content: center;     /* center the single slot */
+  display: flex;
+  justify-content: space-between;  
 }
 
-/* For full-width table sections */
 .tables-container.full-width .slot {
-  flex: 0 0 auto;              /* don’t stretch to 100% any more */
+  flex: 1 1 auto;   
+}
+
+.tables-container.full-width .stats-table {
+  width: 100%;
 }
 
 .tables-container.artifact-container {
   display: flex;               
-  justify-content: space-between; /* spread slots evenly across the row */
-}
-.tables-container.artifact-container .slot {
-  flex: 1 1 auto;              /* allow each slot to grow/shrink equally */
-  max-width: none;             /* remove the calc(33.33% - 20px) */
-  margin: 0 10px;              /* small gutter between each */
+  justify-content: space-between; 
 }
 
 /* General slot styling (fallback) */
 .tables-container .slot {
   padding: 10px;
   border-radius: 4px;
+  margin: 0 10px; 
 }
 
 /* Table styling */
 .stats-table {
-  width: auto;                 /* size to content */
-  margin: 0 auto;              /* center inside its wrapper */
+  width: auto;
 }
 
 .stats-table th,
