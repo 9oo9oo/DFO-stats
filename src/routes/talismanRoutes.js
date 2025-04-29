@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const talismanController = require('../controllers/talismanController');
 
-// Fetch equipment data for characters.
+// Fetch talisman data
 router.get('/fetch/:serverId/:jobId/:jobGrowId', talismanController.fetchTalismanAndRunes);
 
-// Return equipment statistics.
+// Return talisman stats
 router.get('/stats/:jobId/:jobGrowId', talismanController.getTalismanRuneStats);
 
 module.exports = router;

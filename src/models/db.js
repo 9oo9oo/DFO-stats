@@ -21,7 +21,7 @@ client.connect()
     console.error('Connection error:', err.stack);
   });
 
-// Graceful shutdown on SIGINT.
+// Graceful shutdown
 process.on('SIGINT', async () => {
   await client.end();
   console.log('Database connection closed gracefully.');

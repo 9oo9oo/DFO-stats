@@ -30,11 +30,6 @@ app.use('/api/skill', skillRoutes);
 app.use('/api/avatar', avatarRoutes);
 app.use('/api/items', itemRoutes);
 
-// Default route
-app.get('/', (req, res) => {
-  res.send("DFO STATS COMING SOON :)");
-});
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
