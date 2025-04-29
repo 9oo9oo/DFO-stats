@@ -18,10 +18,8 @@ exports.fetchTalismanAndRunes = async (req, res) => {
             return res.status(404).json({ message: 'No character IDs found for the specified class.' });
         }
 
-        // Loop through each character to fetch talisman and rune data
         for (const row of rows) {
             const characterId = row.character_id;
-            // Adjust the URL to the appropriate endpoint for talisman data
             const talismanUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/talisman?apikey=${apiKey}`;
             let talismanResponse;
             try {
@@ -40,7 +38,6 @@ exports.fetchTalismanAndRunes = async (req, res) => {
             // Process each talisman (each representing a talisman slot)
             for (const talismanEntry of talismanData.talismans) {
                 const talisman = talismanEntry.talisman;
-                // Skip if no talisman is equipped in this slot
                 if (!talisman) continue;
 
                 const talismanSlotNo = talisman.slotNo;
@@ -96,8 +93,7 @@ exports.getTalismanRuneStats = async (req, res) => {
     const { jobId, jobGrowId } = req.params;
 
     try {
-        // Aggregate overall talisman usage by item, regardless of slot.
-        // The CTE now qualifies the character_id column to avoid ambiguity.
+        // Aggregate overall talisman usage
         const talismanQuery = `
         WITH unique_talismans AS (
           SELECT DISTINCT ctr.character_id, ctr.talisman_item_id, ctr.talisman_item_name
@@ -115,7 +111,7 @@ exports.getTalismanRuneStats = async (req, res) => {
       `;
         const talismanResult = await client.query(talismanQuery, [jobId, jobGrowId]);
 
-        // Aggregate overall rune usage by item, regardless of slot.
+        // Aggregate overall rune usage
         const runeQuery = `
         SELECT 
           ctr.rune_item_id,
@@ -141,7 +137,7 @@ exports.getTalismanRuneStats = async (req, res) => {
             usage_count: parseInt(row.usage_count, 10)
         }));
 
-        // Optionally limit to Top 10 items overall.
+        // Limit to top 10
         const topTalismanStats = talismanStats.slice(0, 10);
         const topRuneStats = runeStats.slice(0, 10);
 

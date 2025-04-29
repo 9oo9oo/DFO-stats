@@ -6,6 +6,7 @@ const apiKey = process.env.DFO_API_KEY;
 exports.fetchCreature = async (req, res) => {
   const { serverId, jobId, jobGrowId } = req.params;
   try {
+    // Retrieve character IDs for each class
     const getCharacterIdsQuery = `
       SELECT character_id 
       FROM characters
@@ -17,6 +18,7 @@ exports.fetchCreature = async (req, res) => {
       return res.status(404).json({ message: 'No character IDs found for the specified class.' });
     }
 
+    // Fetch creature and artifact data for each character ID
     for (const row of rows) {
       const characterId = row.character_id;
       const creatureUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/creature?apikey=${apiKey}`;
@@ -61,6 +63,7 @@ exports.fetchCreature = async (req, res) => {
         }
       }
 
+      // Upsert into character_creature table in DB
       const insertCreatureQuery = `
         INSERT INTO character_creature (
           character_id, 
@@ -107,7 +110,7 @@ exports.fetchCreature = async (req, res) => {
 exports.getCreatureStats = async (req, res) => {
   const { jobId, jobGrowId } = req.params;
   try {
-    // 1. Creature main item usage (unchanged)
+    // Creature main item usage
     const creatureQuery = `
       SELECT creature_item_id, creature_item_name, COUNT(*) AS usage_count
       FROM character_creature cc
@@ -120,7 +123,7 @@ exports.getCreatureStats = async (req, res) => {
     `;
     const creatureResult = await client.query(creatureQuery, [jobId, jobGrowId]);
 
-    // 2. Artifact RED: group by name and pick representative ID
+    // Artifact RED: group by name (duplicate issue))
     const artifactRedQuery = `
       WITH red_counts AS (
         SELECT
@@ -141,7 +144,7 @@ exports.getCreatureStats = async (req, res) => {
     `;
     const artifactRedResult = await client.query(artifactRedQuery, [jobId, jobGrowId]);
 
-    // 3. Artifact BLUE
+    // Artifact BLUE: group by name
     const artifactBlueQuery = `
       WITH blue_counts AS (
         SELECT
@@ -162,7 +165,7 @@ exports.getCreatureStats = async (req, res) => {
     `;
     const artifactBlueResult = await client.query(artifactBlueQuery, [jobId, jobGrowId]);
 
-    // 4. Artifact GREEN
+    // Artifact GREEN: group by name
     const artifactGreenQuery = `
       WITH green_counts AS (
         SELECT
@@ -183,7 +186,7 @@ exports.getCreatureStats = async (req, res) => {
     `;
     const artifactGreenResult = await client.query(artifactGreenQuery, [jobId, jobGrowId]);
 
-    // 5. Map to JS
+    // Map to JS
     const creatureStats = creatureResult.rows.map(r => ({
       creature_item_id: r.creature_item_id,
       creature_item_name: r.creature_item_name,
@@ -206,7 +209,6 @@ exports.getCreatureStats = async (req, res) => {
       usage_count: parseInt(r.usage_count, 10)
     }));
 
-    // 6. Return JSON
     res.status(200).json({
       creatureStats,
       artifactRedStats,

@@ -5,7 +5,7 @@ const apiKey = process.env.DFO_API_KEY;
 exports.getAvatar = async (req, res) => {
     const { serverId, jobId, jobGrowId } = req.params;
     try {
-        // Query to get character IDs based on server, job, and jobGrow
+        // Query to get character ID based on class
         const getCharacterIdsQuery = `
         SELECT character_id 
         FROM characters
@@ -34,7 +34,6 @@ exports.getAvatar = async (req, res) => {
                 continue;
             }
 
-            // Loop through each avatar equipment entry
             for (const avatar of avatarData.avatar) {
                 const slotId = avatar.slotId;
                 const slotName = avatar.slotName;
@@ -43,8 +42,7 @@ exports.getAvatar = async (req, res) => {
                 const itemRarity = avatar.itemRarity;
                 const optionAbility = avatar.optionAbility; // May be null
 
-                // Insert/update the main avatar record for this character and slot.
-                // The query returns the inserted/updated record's id (avatarRecordId)
+                // Upsert the main avatar record for this character and slot
                 const insertAvatarQuery = `
             INSERT INTO character_avatar (
               character_id, slot_id, slot_name, item_id, item_name, item_rarity, option_ability
@@ -71,7 +69,7 @@ exports.getAvatar = async (req, res) => {
                 // Retrieve the avatar record's ID to associate with emblems
                 const avatarRecordId = avatarInsertResult.rows[0].id;
 
-                // Clear existing emblems for this avatar record so that we can re-insert the current ones.
+                // Clear existing emblems for this avatar record for re-inserting current emblems
                 const deleteEmblemsQuery = `
             DELETE FROM character_avatar_emblems
             WHERE character_avatar_id = $1;
@@ -126,7 +124,7 @@ exports.getAvatarStats = async (req, res) => {
     ];
   
     try {
-      // 1. Aggregate WEAPON & AURORA by name, picking a representative ID
+      // Aggregate WEAPON & AURORA by name (separated due to duplicate issue)
       const wepAurQuery = `
         WITH wea_counts AS (
           SELECT
@@ -152,7 +150,7 @@ exports.getAvatarStats = async (req, res) => {
       `;
       const wepAurResult = await client.query(wepAurQuery, [jobId, jobGrowId]);
   
-      // 2. Aggregate other avatar slots by option_ability only
+      // Aggregate other avatar slots by option ability
       const optQuery = `
         SELECT
           ca.slot_id,
@@ -170,7 +168,7 @@ exports.getAvatarStats = async (req, res) => {
       `;
       const optResult = await client.query(optQuery, [jobId, jobGrowId]);
   
-      // 3. Emblems: group by name, pick a representative ID
+      // Aggregate emblems by name (also due to duplicate issue)
       const emblemQuery = `
         WITH em_counts AS (
           SELECT
@@ -205,11 +203,10 @@ exports.getAvatarStats = async (req, res) => {
       `;
       const emblemResult = await client.query(emblemQuery, [jobId, jobGrowId]);
   
-      // 4. Combine and dynamically group rows by slot
+      // Combine and dynamically group rows by slot
       const rawAvatar = [...wepAurResult.rows, ...optResult.rows];
       const avatarStatsBySlot = {};
   
-      // build groups dynamically
       rawAvatar.forEach(row => {
         const slot = row.slot_id;
         if (!avatarStatsBySlot[slot]) avatarStatsBySlot[slot] = [];
@@ -222,13 +219,13 @@ exports.getAvatarStats = async (req, res) => {
         });
       });
   
-      // ensure all ordered slots exist and limit to top 10
+      // Ensure all ordered slots exist and limit top 10
       orderedSlots.forEach(slot => {
         if (!avatarStatsBySlot[slot]) avatarStatsBySlot[slot] = [];
         avatarStatsBySlot[slot] = avatarStatsBySlot[slot].slice(0, 10);
       });
   
-      // 5. Process emblems by color, limit top 10 each
+      // Process emblems by color, limit top 10 each
       const emblemStatsByColor = {};
       emblemResult.rows.forEach(row => {
         const color = row.slot_color.toLowerCase();
@@ -244,7 +241,6 @@ exports.getAvatarStats = async (req, res) => {
         emblemStatsByColor[color] = emblemStatsByColor[color].slice(0, 10);
       });
   
-      // 6. Return JSON payload
       res.json({ avatarStatsBySlot, emblemStatsByColor });
     } catch (err) {
       console.error('Error fetching avatar stats:', err);

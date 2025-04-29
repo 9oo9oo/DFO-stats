@@ -6,6 +6,7 @@ const apiKey = process.env.DFO_API_KEY;
 exports.fetchEquipment = async (req, res) => {
   const { serverId, jobId, jobGrowId } = req.params;
   try {
+    // Retrieve character IDs for specified class
     const getCharacterIdsQuery = `
       SELECT character_id 
       FROM characters
@@ -17,6 +18,7 @@ exports.fetchEquipment = async (req, res) => {
       return res.status(404).json({ message: 'No character IDs found for the specified class.' });
     }
 
+    // Fetch equipment data for each character ID
     for (const row of rows) {
       const characterId = row.character_id;
       const equipmentUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
@@ -34,6 +36,7 @@ exports.fetchEquipment = async (req, res) => {
         continue;
       }
 
+      // Iterate through each equipment slot and upsert into DB
       for (const equip of equipmentData.equipment) {
         const itemId = equip.itemId;
         const itemName = equip.itemName;
@@ -41,6 +44,8 @@ exports.fetchEquipment = async (req, res) => {
         const setItemName = equip.setItemName;
         let fusionItemId = null;
         let fusionItemName = null;
+        
+        // WEAPON does not have fusion item
         if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
           fusionItemId = equip.upgradeInfo.itemId;
           fusionItemName = equip.upgradeInfo.itemName;
@@ -92,7 +97,7 @@ exports.getEquipmentStats = async (req, res) => {
   ];
 
   try {
-    // 1. Aggregate TITLE items by name and pick one representative ID
+    // Aggregate TITLE (separated due to duplicate issue)
     const titleQuery = `
       WITH title_counts AS (
         SELECT
@@ -116,7 +121,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const titleResult = await client.query(titleQuery, [jobId, jobGrowId]);
 
-    // 2. Aggregate all other items normally (excluding TITLE)
+    // Aggregate other items (excluding TITLE)
     const itemsQuery = `
       SELECT 
         ce.slot_id,
@@ -133,7 +138,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const itemsResult = await client.query(itemsQuery, [jobId, jobGrowId]);
 
-    // 3. Fusion items (unchanged)
+    // Fusion items
     const fusionQuery = `
       SELECT ce.slot_id, ce.fusion_item_id, ce.fusion_item_name, COUNT(*) AS usage_count
       FROM character_equipment ce
@@ -144,7 +149,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const fusionResult = await client.query(fusionQuery, [jobId, jobGrowId]);
 
-    // 4. Set usage (unchanged)
+    // Set usage
     const setQuery = `
       WITH set_counts AS (
         SELECT ce.character_id, ce.set_item_id, ce.set_item_name, COUNT(*) AS cnt
@@ -167,7 +172,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const setResult = await client.query(setQuery, [jobId, jobGrowId]);
 
-    // 5. Sample counts for regular items
+    // Sample counts for regular items
     const sampleQuery = `
       SELECT ce.slot_id, COUNT(*) AS sample_number
       FROM character_equipment ce
@@ -181,7 +186,7 @@ exports.getEquipmentStats = async (req, res) => {
       sampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
-    // 6. Sample counts for fusion items
+    // Sample counts for fusion items
     const fusionSampleQuery = `
       SELECT ce.slot_id, COUNT(*) AS sample_number
       FROM character_equipment ce
@@ -195,7 +200,7 @@ exports.getEquipmentStats = async (req, res) => {
       fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
-    // 7. Sample for sets (distinct characters)
+    // Sample for set items
     const setSampleQuery = `
       SELECT COUNT(DISTINCT ce.character_id) AS sample_number
       FROM character_equipment ce
@@ -209,7 +214,7 @@ exports.getEquipmentStats = async (req, res) => {
       ? parseInt(setSampleResult.rows[0].sample_number, 10)
       : 0;
 
-    // 8. Map rows to JS objects
+    // Map rows
     const titleStats = titleResult.rows.map(row => ({
       slot: 'TITLE',
       item_id: row.item_id,
@@ -218,26 +223,26 @@ exports.getEquipmentStats = async (req, res) => {
     }));
 
     const itemsStats = itemsResult.rows.map(row => ({
-      slot:      row.slot_id,
-      item_id:   row.item_id,
+      slot: row.slot_id,
+      item_id: row.item_id,
       item_name: row.item_name,
       usage_count: parseInt(row.usage_count, 10)
     }));
 
     const fusionItemsStats = fusionResult.rows.map(row => ({
       slot: row.slot_id,
-      fusion_item_id:   row.fusion_item_id,
+      fusion_item_id: row.fusion_item_id,
       fusion_item_name: row.fusion_item_name,
-      usage_count:      parseInt(row.usage_count, 10)
+      usage_count: parseInt(row.usage_count, 10)
     }));
 
     const setUsageStats = setResult.rows.map(row => ({
-      set_item_id:   row.set_item_id,
+      set_item_id: row.set_item_id,
       set_item_name: row.set_item_name,
-      usage_count:  parseInt(row.usage_count, 10)
+      usage_count: parseInt(row.usage_count, 10)
     }));
 
-    // 9. Group by slot
+    // Group by slot
     const itemsBySlot = {};
     const fusionItemsBySlot = {};
     orderedSlots.forEach(slot => {
@@ -253,7 +258,7 @@ exports.getEquipmentStats = async (req, res) => {
       if (fusionItemsBySlot[item.slot]) fusionItemsBySlot[item.slot].push(item);
     });
 
-    // 10. Calculate usage rates
+    // Calculate usage rates
     orderedSlots.forEach(slot => {
       const total = sampleNumbers[slot] || 0;
       itemsBySlot[slot] = itemsBySlot[slot]
