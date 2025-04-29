@@ -120,115 +120,134 @@ exports.getAvatar = async (req, res) => {
 
 exports.getAvatarStats = async (req, res) => {
     const { jobId, jobGrowId } = req.params;
-    // Define the order of avatar slots; adjust as necessary.
-    const orderedSlots = ["WEAPON", "AURORA", "HEADGEAR", "HAIR", "FACE", "BREAST", "JACKET", "PANTS", "WAIST", "SHOES", "SKIN"];
-
+    const orderedSlots = [
+      'WEAPON', 'AURORA', 'HEADGEAR', 'HAIR', 'FACE',
+      'BREAST', 'JACKET', 'PANTS', 'WAIST', 'SHOES', 'SKIN'
+    ];
+  
     try {
-        // Aggregate avatar usage by slot.
-        // For WEAPON and AURORA, group by item_id and item_name.
-        // For all other slots, group solely by option_ability.
-        const avatarQuery = `
-        SELECT 
+      // 1. Aggregate WEAPON & AURORA by name, picking a representative ID
+      const wepAurQuery = `
+        WITH wea_counts AS (
+          SELECT
+            ca.slot_id,
+            ca.item_name,
+            COUNT(*) AS usage_count,
+            MIN(ca.item_id) AS item_id
+          FROM character_avatar ca
+          JOIN characters c ON ca.character_id = c.character_id
+          WHERE c.job_id = $1
+            AND c.job_grow_id = $2
+            AND ca.slot_id IN ('WEAPON','AURORA')
+          GROUP BY ca.slot_id, ca.item_name
+        )
+        SELECT
+          slot_id,
+          item_id,
+          item_name,
+          NULL::text AS option_ability,
+          usage_count
+        FROM wea_counts
+        ORDER BY slot_id, usage_count DESC;
+      `;
+      const wepAurResult = await client.query(wepAurQuery, [jobId, jobGrowId]);
+  
+      // 2. Aggregate other avatar slots by option_ability only
+      const optQuery = `
+        SELECT
           ca.slot_id,
-          ca.item_id, 
-          CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END as item_name,
+          NULL::uuid   AS item_id,
+          NULL::text   AS item_name,
           ca.option_ability,
           COUNT(*) AS usage_count
         FROM character_avatar ca
         JOIN characters c ON ca.character_id = c.character_id
-        WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY 
-          ca.slot_id,
-          ca.item_id,
-          CASE WHEN ca.slot_id IN ('WEAPON', 'AURORA') THEN ca.item_name ELSE NULL END,
-          ca.option_ability
+        WHERE c.job_id = $1
+          AND c.job_grow_id = $2
+          AND ca.slot_id NOT IN ('WEAPON','AURORA')
+        GROUP BY ca.slot_id, ca.option_ability
         ORDER BY ca.slot_id, usage_count DESC;
       `;
-
-        const avatarResult = await client.query(avatarQuery, [jobId, jobGrowId]);
-
-        // Updated Emblem Query:
-        // Group only by slot_color and item_name so that items with the same name aggregate together.
-        const emblemQuery = `
-        SELECT 
+      const optResult = await client.query(optQuery, [jobId, jobGrowId]);
+  
+      // 3. Emblems: group by name, pick a representative ID
+      const emblemQuery = `
+        WITH em_counts AS (
+          SELECT
             cae.slot_color,
-            cae.item_id, 
-            cae.item_name, 
-            COUNT(*) AS usage_count
-        FROM character_avatar_emblems cae
-        JOIN character_avatar ca ON cae.character_avatar_id = ca.id
-        JOIN characters c ON ca.character_id = c.character_id
-        WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY cae.slot_color, cae.item_id, cae.item_name
-        ORDER BY 
-          CASE 
-            WHEN lower(cae.slot_color) = 'multicolored' THEN 1
-            WHEN lower(cae.slot_color) = 'platinum' THEN 2
-            WHEN lower(cae.slot_color) = 'blue' THEN 3
-            WHEN lower(cae.slot_color) = 'yellow' THEN 4
-            WHEN lower(cae.slot_color) = 'green' THEN 5
-            WHEN lower(cae.slot_color) = 'red' THEN 6
-            ELSE 7 
+            cae.item_name,
+            COUNT(*) AS usage_count,
+            MIN(cae.item_id) AS item_id
+          FROM character_avatar_emblems cae
+          JOIN character_avatar ca ON cae.character_avatar_id = ca.id
+          JOIN characters c ON ca.character_id = c.character_id
+          WHERE c.job_id = $1
+            AND c.job_grow_id = $2
+          GROUP BY cae.slot_color, cae.item_name
+        )
+        SELECT
+          slot_color,
+          item_id,
+          item_name,
+          usage_count
+        FROM em_counts
+        ORDER BY
+          CASE
+            WHEN lower(slot_color) = 'multicolored' THEN 1
+            WHEN lower(slot_color) = 'platinum' THEN 2
+            WHEN lower(slot_color) = 'blue' THEN 3
+            WHEN lower(slot_color) = 'yellow' THEN 4
+            WHEN lower(slot_color) = 'green' THEN 5
+            WHEN lower(slot_color) = 'red' THEN 6
+            ELSE 7
           END,
           usage_count DESC;
       `;
-        const emblemResult = await client.query(emblemQuery, [jobId, jobGrowId]);
-
-        // Process avatar stats.
-        const avatarStats = avatarResult.rows.map(row => ({
-            slot: row.slot_id,
-            item_id: row.item_id,
-            item_name: row.item_name,
-            option_ability: row.option_ability,
-            usage_count: parseInt(row.usage_count, 10)
-        }));
-
-        // Group avatar stats by slot (using the orderedSlots array).
-        const avatarStatsBySlot = {};
-        orderedSlots.forEach(slot => {
-            avatarStatsBySlot[slot] = [];
+      const emblemResult = await client.query(emblemQuery, [jobId, jobGrowId]);
+  
+      // 4. Combine and dynamically group rows by slot
+      const rawAvatar = [...wepAurResult.rows, ...optResult.rows];
+      const avatarStatsBySlot = {};
+  
+      // build groups dynamically
+      rawAvatar.forEach(row => {
+        const slot = row.slot_id;
+        if (!avatarStatsBySlot[slot]) avatarStatsBySlot[slot] = [];
+        avatarStatsBySlot[slot].push({
+          slot,
+          item_id:       row.item_id,
+          item_name:     row.item_name,
+          option_ability: row.option_ability,
+          usage_count:   parseInt(row.usage_count, 10)
         });
-        avatarStats.forEach(item => {
-            if (orderedSlots.includes(item.slot)) {
-                avatarStatsBySlot[item.slot].push(item);
-            }
+      });
+  
+      // ensure all ordered slots exist and limit to top 10
+      orderedSlots.forEach(slot => {
+        if (!avatarStatsBySlot[slot]) avatarStatsBySlot[slot] = [];
+        avatarStatsBySlot[slot] = avatarStatsBySlot[slot].slice(0, 10);
+      });
+  
+      // 5. Process emblems by color, limit top 10 each
+      const emblemStatsByColor = {};
+      emblemResult.rows.forEach(row => {
+        const color = row.slot_color.toLowerCase();
+        if (!emblemStatsByColor[color]) emblemStatsByColor[color] = [];
+        emblemStatsByColor[color].push({
+          slot_color:  color,
+          item_id:     row.item_id,
+          item_name:   row.item_name,
+          usage_count: parseInt(row.usage_count, 10)
         });
-        // Optionally, limit to the top 10 per slot.
-        for (const slot of orderedSlots) {
-            avatarStatsBySlot[slot] = avatarStatsBySlot[slot].slice(0, 10);
-        }
-
-        // Process emblem stats.
-        const emblemStatsRaw = emblemResult.rows.map(row => ({
-            slot_color: row.slot_color,
-            item_id: row.item_id,
-            item_name: row.item_name,
-            usage_count: parseInt(row.usage_count, 10)
-        }));
-
-        // Group emblems by color
-        const emblemStatsByColor = {};
-        emblemStatsRaw.forEach(item => {
-            // Normalize color key (can be adjusted if needed)
-            const color = item.slot_color.toLowerCase();
-            if (!emblemStatsByColor[color]) {
-                emblemStatsByColor[color] = [];
-            }
-            emblemStatsByColor[color].push(item);
-        });
-
-        // For each color group, sort by usage_count (descending) and pick the top 10.
-        for (const color in emblemStatsByColor) {
-            emblemStatsByColor[color].sort((a, b) => b.usage_count - a.usage_count);
-            emblemStatsByColor[color] = emblemStatsByColor[color].slice(0, 10);
-        }
-
-        res.status(200).json({
-            avatarStatsBySlot,
-            emblemStatsByColor
-        });
-    } catch (error) {
-        console.error('Error fetching avatar stats:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      });
+      Object.keys(emblemStatsByColor).forEach(color => {
+        emblemStatsByColor[color] = emblemStatsByColor[color].slice(0, 10);
+      });
+  
+      // 6. Return JSON payload
+      res.json({ avatarStatsBySlot, emblemStatsByColor });
+    } catch (err) {
+      console.error('Error fetching avatar stats:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+  };

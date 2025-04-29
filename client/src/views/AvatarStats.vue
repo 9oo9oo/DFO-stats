@@ -585,6 +585,8 @@ export default {
 .weapon-aura-grid h2 {
   color: #e56717;
   padding-bottom: 4px;
+  border-bottom: 3px solid #e56717;
+  margin-bottom: 16px;
 }
 
 section[class^="group-"] h2 {
