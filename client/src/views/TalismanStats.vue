@@ -1,7 +1,7 @@
 <template>
     <h1>Talisman & Rune Statistics for {{ jobFriendlyName }}</h1>
     <div class="equipment-wrapper">
-     <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
+     <!-- Navigation Tabs -->
      <div class="equipment-tabs">
        <router-link
          :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
@@ -30,19 +30,17 @@
        >Skill</router-link>
      </div>
 
-     <!-- Big Square (buttons omitted for now) -->
+     <!-- Talisman Layout (Still dunno what to do with this) -->
      <div class="equipment-square">
      </div>
    </div>
 
-
-    <!-- Display stats only when a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading talisman stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
 
-        <!-- Combined Talisman & Rune Side‑by‑Side -->
+        <!-- Talisman & Rune Side‑by‑Side -->
         <section class="stat-section">
           <div class="tables-container side-by-side">
             <div class="slot">
@@ -91,25 +89,25 @@ import jobMappings from '@/config/jobMappings.js';
 
 export default {
   name: 'TalismanStats',
+
   data() {
     return {
       stats: null,
       loading: false,
       error: null,
       talismanSlots: [
-        'T1','T2','T3','T4','T5','T6','T7','T8'
+        'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'
       ]
     };
   },
+
   computed: {
-    // Retrieve jobId and jobGrowId from route parameters.
     jobId() {
       return this.$route.params.jobId;
     },
     jobGrowId() {
       return this.$route.params.jobGrowId;
     },
-    // Use the jobMappings file to get the friendly job name.
     jobMapping() {
       return jobMappings[this.jobId] || {};
     },
@@ -125,11 +123,13 @@ export default {
       return this.jobMapping.jobName || 'Unknown Job';
     }
   },
+
   mounted() {
     if (this.jobGrowId) {
       this.fetchTalismanStats();
     }
   },
+
   watch: {
     '$route.params.jobGrowId'(newVal, oldVal) {
       if (newVal !== oldVal) {
@@ -137,12 +137,12 @@ export default {
       }
     }
   },
+
   methods: {
     async fetchTalismanStats() {
       if (!this.jobGrowId) return;
       this.loading = true;
       try {
-        // Assumes your backend route is /api/talisman/stats/:jobId/:jobGrowId
         const response = await axios.get(`/api/talisman/stats/${this.jobId}/${this.jobGrowId}`);
         this.stats = response.data;
       } catch (err) {
@@ -153,10 +153,12 @@ export default {
         this.loading = false;
       }
     },
+
     isActiveRoute(name) {
       return this.$route.name === name;
     },
-      formatRate(value, divisor) {
+
+    formatRate(value, divisor) {
       return (value / divisor).toFixed(2);
     }
   }
@@ -164,13 +166,15 @@ export default {
 </script>
 
 <style scoped>
+/* Wrapper */
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
-  position: relative;
   padding-top: 20px;
+  position: relative;
 }
 
+/* Tabs */
 .equipment-tabs {
   width: 95%;
   margin: 0 auto;
@@ -185,8 +189,8 @@ export default {
 
 .equipment-tabs .tab-button {
   flex: 1;
-  text-align: center;
   padding: 10px;
+  text-align: center;
   color: #fff;
   text-decoration: none;
   border-right: 1px solid #fff;
@@ -202,16 +206,17 @@ export default {
   background-color: #e56717;
 }
 
+/* Square Container */
 .equipment-square {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   margin-top: 0;
+  padding: 10px;
   border: 2px solid #fff;
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 10px;
 }
 
 .equipment-square .side,
@@ -219,7 +224,7 @@ export default {
   flex: 1;
 }
 
-/* Navigation styling */
+/* Navigation */
 .stats-nav {
   display: flex;
   justify-content: center;
@@ -233,28 +238,25 @@ export default {
   cursor: pointer;
   background-color: transparent;
   color: #fff;
-  border: 2px solid white;
+  border: 2px solid #fff;
   border-radius: 4px;
   transition: background-color 0.2s;
 }
 
-.stats-nav button:hover {
-  background-color: #e56717;
-}
-
+.stats-nav button:hover,
 .stats-nav button.active {
   background-color: #e56717;
 }
 
-/* Section styling */
+/* Section Title */
 .slot h2 {
-  padding-bottom: 8px;
   margin-bottom: 16px;
-  border-bottom: 2px solid #e56717;
+  padding-bottom: 8px;
   color: #e56717;
+  border-bottom: 2px solid #e56717;
 }
 
-/* Tables container styling */
+/* Tables Container */
 .tables-container {
   display: flex;
   flex-wrap: wrap;
@@ -264,35 +266,26 @@ export default {
 
 .tables-container.side-by-side {
   display: flex;
-  gap: 40px;
-}
-
-/* For full-width table sections */
-.full-width .slot {
-  flex: 0 0 100%;
-}
-
-/* Slot styling */
-.tables-container .slot {
-  padding: 10px;
-  border-radius: 4px;
-}
-
-.tables-container.side-by-side {
-  display: flex;
   column-gap: 60px;
   /* horizontal only */
 }
 
+/* Full-Width Slots */
+.full-width .slot {
+  flex: 0 0 100%;
+}
+
+/* Side-by-Side Slots */
 .tables-container.side-by-side .slot {
   flex: 1;
 }
 
+/* Section Spacing */
 .stat-section {
   margin: 40px;
 }
 
-/* Table styling */
+/* Table Styles */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -303,6 +296,7 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  vertical-align: middle;
 }
 
 .stats-table th {
@@ -312,8 +306,8 @@ export default {
 
 .stats-table th:nth-child(2),
 .stats-table td:nth-child(2) {
-  width: 20%;           /* shrink to 25% of table width */
-  text-align: center;   /* center horizontally */
-  vertical-align: middle; /* center vertically */
+  width: 20%;
+  text-align: center;
+  vertical-align: middle;
 }
 </style>

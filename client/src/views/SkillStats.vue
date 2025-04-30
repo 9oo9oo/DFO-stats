@@ -1,8 +1,8 @@
 <template>
     <h1>Skill Statistics for {{ jobFriendlyName }}</h1>
-    <!-- Navigation Buttons -->
+
+    <!-- Navigation Tabs -->
     <div class="equipment-wrapper">
-     <!-- Top Tabs (Equipment, Avatar, Creature, Talisman, Skill) -->
      <div class="equipment-tabs">
        <router-link
          :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
@@ -31,12 +31,11 @@
        >Skill</router-link>
      </div>
 
-     <!-- Big Square (buttons omitted for now) -->
+     <!-- Skill layout (Undecided what to do) -->
      <div class="equipment-square">
      </div>
    </div>
       
-    <!-- Display stats only when a jobGrowId is set -->
     <div v-if="jobGrowId">
       <div v-if="loading">Loading skill stats...</div>
       <div v-if="error">Error: {{ error }}</div>
@@ -53,20 +52,19 @@
             <tbody>
               <template v-for="group in chunkedLevelRows" :key="group.level">
                 <tr v-for="(rowSkills, rowIdx) in group.rows" :key="rowIdx">
-                  <!-- only show the level cell once, spanning all row chunks -->
                   <td
                     v-if="rowIdx === 0"
                     class="level-cell"
                     :rowspan="group.rows.length"
                   >{{ group.level }}</td>
 
-                  <!-- our single‑cell grid for up to 5 skills -->
+                  <!-- Single-cell grid -->
                   <td>
                     <div
                       class="skill-grid-with-labels"
                       :style="{ gridTemplateColumns: `auto repeat(${rowSkills.length}, 1fr)` }"
                     >
-                      <!-- names -->
+                      <!-- skill names -->
                       <div class="row-label">Name</div>
                       <div
                         v-for="skill in rowSkills"
@@ -76,21 +74,21 @@
                         {{ skill.skill_name }}
                       </div>
 
-                      <!-- usage% -->
+                      <!-- usage rate -->
                       <div class="row-label">Usage</div>
                       <div
                         v-for="skill in rowSkills"
-                        :key="'rate-'+skill.skill_id"
+                        :key="'rate-' + skill.skill_id"
                         class="cell"
                       >
                         {{ formatNumber(skill.total_count) }}%
                       </div>
 
-                      <!-- average -->
+                      <!-- average level -->
                       <div class="row-label">Avg lvl</div>
                       <div
                         v-for="skill in rowSkills"
-                        :key="'avg-'+skill.skill_id"
+                        :key="'avg-' + skill.skill_id"
                         class="cell"
                       >
                         {{ skill.average_level.toFixed(2) }}
@@ -120,14 +118,12 @@ export default {
     };
   },
   computed: {
-    // Retrieve jobId and jobGrowId from route parameters.
     jobId() {
       return this.$route.params.jobId;
     },
     jobGrowId() {
       return this.$route.params.jobGrowId;
     },
-    // Use jobMappings to get the friendly job name.
     jobMapping() {
       return jobMappings[this.jobId] || {};
     },
@@ -142,7 +138,6 @@ export default {
       }
       return this.jobMapping.jobName || 'Unknown Job';
     },
-    // Sort the skill statistics by required level (and alphabetically by skill name when equal)
     sortedSkillStats() {
       if (!this.stats || !this.stats.skillStats) return [];
       return this.stats.skillStats.slice().sort((a, b) => {
@@ -212,12 +207,14 @@ export default {
 </script>
 
 <style scoped>
+/* Wrapper */
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
   padding-top: 20px;
 }
 
+/* Tabs */
 .equipment-tabs {
   width: 95%;
   margin: 0 auto;
@@ -232,8 +229,8 @@ export default {
 
 .equipment-tabs .tab-button {
   flex: 1;
-  text-align: center;
   padding: 10px;
+  text-align: center;
   color: #fff;
   text-decoration: none;
   border-right: 1px solid #fff;
@@ -249,36 +246,44 @@ export default {
   background-color: #e56717;
 }
 
+/* Square Container */
 .equipment-square {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
   margin-top: 0;
+  padding: 10px;
   border: 2px solid #fff;
   border-radius: 4px;
   box-sizing: border-box;
-  padding: 10px;
 }
 
+.equipment-square .side,
+.equipment-square .center {
+  flex: 1;
+}
+
+/* Section Styling */
 .stat-section {
   margin: 40px;
 }
 
 .stat-section h2 {
-  color: #e56717;
-  padding-bottom: 8px;
   margin-bottom: 16px;
+  padding-bottom: 8px;
+  color: #e56717;
   border-bottom: 2px solid #e56717;
 }
 
-.stats-table th:nth-child(1),
-.stats-table td:nth-child(1) {
-  width: 10%;
-  text-align: center;
-  vertical-align: middle;
+.stat-section.skill-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 40px;
 }
 
+/* Stats Table */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -289,6 +294,7 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+  vertical-align: middle;
 }
 
 .stats-table th {
@@ -296,24 +302,40 @@ export default {
   color: #e56717;
 }
 
-.stat-section.skill-tree {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin: 40px;
+.stats-table th:nth-child(1),
+.stats-table td:nth-child(1) {
+  width: 10%;
 }
 
-/* each “level” row */
+/* Skill Tree Layout */
+.skill-tree {
+  margin: 40px auto;
+  table-layout: fixed;
+}
+
 .level-row {
   display: grid;
   grid-template-columns: 80px 1fr;
   align-items: start;
 }
 
-/* the nested skills table */
+.skill-grid {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 16px;
+  row-gap: 4px;
+}
+
+.skill-grid>div {
+  text-align: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Skill Table */
 .skill-table {
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
 }
 
 .skill-table th,
@@ -328,49 +350,25 @@ export default {
   color: #e56717;
 }
 
-.skill-tree {
-  margin: 40px auto;
-}
-
-/* cell for Required Level */
+/* Level Cell */
 .skill-tree .level-cell {
+  width: 20px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
   color: #e56717;
   padding: 8px;
-  width: 20px;
-  font-size: 30px;
 }
 
-/* the 3‑row inner grid */
-.skill-grid {
-  display: grid;
-  grid-template-rows: auto auto auto;
-  column-gap: 16px;
-  row-gap: 4px;
-}
-
-/* center content in each grid cell */
-.skill-grid>div {
-  text-align: center;
-  padding: 4px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.skill-tree {
-  table-layout: fixed;
-}
-
+/* Grid with Labels */
 .skill-grid-with-labels {
   display: grid;
   grid-template-rows: repeat(3, auto);
   column-gap: 12px;
-
   width: 100%;
 }
 
-/* the row‑labels column */
 .skill-grid-with-labels .row-label {
   font-weight: bold;
   text-align: right;
@@ -378,14 +376,26 @@ export default {
   color: #e56717;
 }
 
-/* center the data cells */
 .skill-grid-with-labels .cell {
   text-align: center;
   padding: 2px 0;
+  border-left: 1px solid #e56717;
 }
 
-/* 2) put a vertical line before every skill cell */
-.skill-grid-with-labels .cell {
-  border-left: 1px solid #e56717;
+/* Flash Animation */
+@keyframes flashEffect {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0px #e56717;
+  }
+
+  50% {
+    box-shadow: 0 0 10px 5px #e56717;
+  }
+}
+
+.flash {
+  animation: flashEffect 2s ease-out;
 }
 </style>

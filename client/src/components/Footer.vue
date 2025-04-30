@@ -5,11 +5,9 @@
       
       <!-- Logo link -->
       <a href="https://www.dfoneople.com/developers" target="_blank">
-        <!-- Use a local asset or URL in the src attribute -->
         <img :src="logoSrc" alt="Neople Open API" class="footer-logo" />
       </a>
     </div>
-    <!-- Decorative accent line -->
     
     <div class="footer-text">
       <p>
@@ -35,6 +33,7 @@ export default {
 </script>
 
 <style scoped>
+/* Footer */
 .site-footer {
   background-color: transparent;
   text-align: center;
@@ -51,7 +50,6 @@ export default {
   height: 100%;
 }
 
-/* New accent line styling */
 .footer-accent {
   margin: 10px auto;
   border-bottom: 1px solid #fff;
@@ -60,7 +58,7 @@ export default {
 .footer-text {
   margin-top: 10px;
   font-size: 12px;
-  color: #fff; /* Adjust as needed for your design */
+  color: #fff;
 }
 
 .footer-text p {

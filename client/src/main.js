@@ -7,7 +7,6 @@ import 'vuetify/styles';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 
 const vuetify = createVuetify({
-    // Additional configuration options go here
     icons: {
         defaultSet: 'mdi',
         aliases,

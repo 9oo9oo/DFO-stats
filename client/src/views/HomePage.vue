@@ -6,7 +6,7 @@
       <p>Updated daily with the latest stats</p>
     </div>
 
-    <!-- Buttons at the top to navigate to each character section -->
+    <!-- Navigation buttons -->
     <div class="job-buttons">
       <button
         v-for="(mapping, jobId) in jobMappings"
@@ -18,7 +18,7 @@
       </button>
     </div>
 
-    <!-- Render each job group (character section) with a unique id -->
+    <!-- Character sections -->
     <div
       class="job-group"
       v-for="(mapping, jobId) in jobMappings"
@@ -60,9 +60,7 @@ export default {
     };
   },
   methods: {
-    // Compute a global sequential index for each class image
-    // currentJobId: key for the current character mapping
-    // currentLocalIndex: the index within mapping.finalJobGrows (0-indexed)
+    // Return images across all jobs
     getSequentialIndex(currentJobId, currentLocalIndex) {
       let count = 0;
       for (const [jobId, mapping] of Object.entries(this.jobMappings)) {
@@ -71,10 +69,10 @@ export default {
         }
         count += mapping.finalJobGrows.length;
       }
-      return 0; // Fallback (should not occur)
+      return 0;
     },
 
-    // Build the dynamic image path based on the sequential index.
+    // Dynamically load image or fallback placeholder
     getImageSrc(jobId, localIndex) {
       const seqIndex = this.getSequentialIndex(jobId, localIndex);
       try {
@@ -84,7 +82,7 @@ export default {
       }
     },
 
-    // Scroll smoothly to the job group identified by jobId.
+    // Smooth-scroll to corresponding character section
     scrollToJobGroup(jobId) {
       const target = document.getElementById(jobId);
       if (target) {
@@ -96,23 +94,81 @@ export default {
 </script>
 
 <style scoped>
+/* Root layout */
 .home {
-  text-align: left;
-  padding: 20px;
   max-width: 1600px;
   margin: 0 auto;
+  padding: 20px;
+  text-align: left;
 }
 
+/* Introductory header */
 .home-text {
   padding: 20px;
   text-align: center;
 }
 
-.img-container {
-  position: relative;
-  display: inline-block;
+/* Navigation buttons */
+.job-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 30px auto;
+  max-width: 1000px;
+}
+.job-button {
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 12px;
+  transition: background-color 0.2s;
+}
+.job-button:hover {
+  background-color: #e56717;
 }
 
+/* Character section */
+.job-group {
+  margin-bottom: 40px;
+}
+.job-name {
+  color: #e56717;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* Image gallery */
+.job-images {
+  border-top: 2px solid #e56717;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start;
+  padding-top: 15px;
+}
+
+/* Image container with overlay */
+.img-container {
+  display: inline-block;
+  position: relative;
+}
+.awakening-img {
+  width: 280px;
+  height: 240px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border-radius: 15px;
+}
+.awakening-img:hover {
+  opacity: 0.5;
+}
+
+/* Overlay label on image */
 .img-overlay {
   position: absolute;
   bottom: 0;
@@ -126,77 +182,7 @@ export default {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .img-container:hover .img-overlay {
   opacity: 1;
-}
-
-/* Styling for the navigation buttons */
-.job-buttons {
-  display: grid;
-  /* This sets three columns. Change the number here to adjust your layout 
-     (e.g., repeat(2, 1fr) for two columns or repeat(auto-fit, minmax(150px, 1fr)) for flexible columns). */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  max-width: 1000px;
-  /* Optional: limits the width and helps center the grid */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.job-button {
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid white;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.job-button:hover {
-  background-color: #e56717;
-}
-
-/* Each job group (character section) */
-.job-group {
-  margin-bottom: 40px;
-  text-align: left;  
-}
-
-/* Job name header style */
-.job-name {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  text-align: left;
-  color: #e56717;
-}
-
-/* Container for class images */
-.job-images {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 30px;
-  border-top: 2px solid #e56717; /* Add a top border */
-  padding-top: 15px;           /* Create some spacing between the border and the images */
-}
-
-/* Style for clickable images */
-.awakening-img {
-  width: 280px;
-  height: 240px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  border-radius: 15px;
-  /* border: solid #e56717 1px; */
-}
-
-.awakening-img:hover {
-  opacity: 0.5;
 }
 </style>

@@ -14,35 +14,34 @@ export default {
 </script>
 
 <style scoped>
+/* Header & Navigation */
 .app-header {
   background-color: transparent;
   color: #fff;
   padding: 10px 20px;
 }
 
-/* Navigation bar styling */
 .navbar {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-/* Nav link styling */
 .nav-link {
+  position: relative;
+  font-size: 18px;
   color: #fff;
   text-decoration: none;
-  font-size: 18px;
-  position: relative;
   transition: color 0.2s ease;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: #e56717;
 }
 
-/* Decorative accent line under the header */
 .header-accent {
   margin-top: 10px;
-  border-bottom: 1px solid #fff; 
+  border-bottom: 1px solid #fff;
 }
 </style>

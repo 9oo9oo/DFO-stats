@@ -11,9 +11,12 @@
           <p><strong>{{ displayTypeDetail }}</strong></p><br />
           <template v-for="status in info.itemStatus" :key="status.name">
             <p><strong>{{ status.name }}</strong> {{ status.value }}</p>
-          </template><br />
+          </template>
           <!-- Explanation or Fusion Options -->
-          <div v-html="explainHtml" class="explanation"></div>
+          <template v-if="explainHtml">
+            <br />
+            <div v-html="explainHtml" class="explanation"></div>
+            </template>
         </div>
       </div>
     </span>
@@ -102,24 +105,25 @@ export default {
 };
 </script>
   
-  <style scoped>
+<style scoped>
+/* Tooltip */
 .item-tooltip {
-    position: relative;
     display: inline-block;
+    position: relative;
     cursor: help;
 }
 
 .tooltip {
     position: absolute;
     z-index: 1000;
-    background: black;
+    width: 300px;
+    max-width: 300px;
+    max-height: calc(100vh - 20px);
+    background: #000;
     border: 1px solid #ccc;
     padding: 0.5em;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    max-width: 300px;
-    width: 300px;
-    max-height: calc(100vh - 20px);
     overflow: auto;
 }
 
@@ -129,24 +133,15 @@ export default {
     text-align: left;
 }
 
-.tooltip p {
+.tooltip p,
+.explanation {
     font-size: 0.875em;
     line-height: 1.5;
     text-align: left;
 }
 
-.explanation {
-    font-size: 0.875em;
-}
-
-.tooltip h3,
-.tooltip p,
 .tooltip p strong {
-    text-align: left !important;
-}
-
-:deep(.explanation) p {
-    text-align: left !important;
+    font-weight: bold;
 }
 </style>
   

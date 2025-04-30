@@ -1,8 +1,8 @@
 <template>
   <h1>Equipment Statistics for {{ jobFriendlyName }}</h1>
 
+  <!-- Navigation Tabs -->
   <div class="equipment-wrapper">
-    <!-- === Top Tabs === -->
     <div class="equipment-tabs">
       <router-link
         :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
@@ -31,7 +31,7 @@
       >Skill</router-link>
     </div>
 
-    <!-- === Equipment QR Layout === -->
+    <!-- Equipment Layout -->
     <div class="equipment-square">
       <div class="side left">
         <div class="column column-one">
@@ -75,13 +75,14 @@
     </div>
   </div>
 
-  <!-- === Data Loading States === -->
+  <!-- Loading & error states -->
   <div v-if="loading">Loading equipment stats...</div>
   <div v-if="error">Error: {{ error }}</div>
 
-  <!-- === Stats Grid === -->
+  <!-- Primary stats grid -->
   <div v-if="stats" class="stats-container">
     <div class="first-row-grid">
+      <!-- Set usage -->
       <section class="set-usage">
         <h2>Set Usage</h2>
         <table class="stats-table">
@@ -107,6 +108,8 @@
           </tbody>
         </table>
       </section>
+
+    <!-- Title & Weapon (no fusion items) -->
     <section
       v-for="slot in titleWeaponSlots"
       :key="slot"
@@ -122,7 +125,6 @@
                 <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
                   <td class="item-cell">
                     <div class="icon-and-name">
-                      <!-- Tooltip on the icon only -->
                       <ItemTooltip :id="item.item_id">
                         <img
                           :src="getItemImageUrl(item.item_id)"
@@ -132,8 +134,6 @@
                           @error="hideBrokenIcon"
                         />
                       </ItemTooltip>
-
-                      <!-- Name stays outside the wrapper -->
                       <span class="item-name">{{ item.item_name }}</span>
                     </div>
                   </td>
@@ -142,41 +142,11 @@
               </tbody>
             </table>
           </div>
-          <div
-            class="table-wrapper"
-            v-if="stats.fusionItemsBySlot[slot]?.length"
-          >
-            <h3>Fusion</h3>
-            <table class="stats-table">
-              <thead><tr><th>Item</th><th>Usage</th></tr></thead>
-              <tbody>
-                <tr
-                  v-for="fusionItem in stats.fusionItemsBySlot[slot]"
-                  :key="fusionItem.fusion_item_id"
-                >
-                  <td class="item-cell">
-                    <ItemTooltip
-                      :id="fusionItem.fusion_item_id"
-                      :name="fusionItem.fusion_item_name"
-                    >
-                      <img
-                        :src="getItemImageUrl(fusionItem.fusion_item_id)"
-                        :alt="fusionItem.fusion_item_name"
-                        class="item-icon"
-                        loading="lazy"
-                      />
-                    </ItemTooltip>
-                  </td>
-                  <td>{{ fusionItem.usage_count }}%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </section>
     </div>
 
-    <!-- Other Equipment Cards -->
+    <!-- Other Equipment -->
     <div class="other-grid">
       <section
         v-for="slot in otherSlots"
@@ -259,11 +229,14 @@ import MissingIcon from '@/assets/missingicon.png';
 
 export default {
   name: 'EquipmentStats',
+  components: { ItemTooltip },
+
   data() {
     return {
       stats: null,
       loading: false,
       error: null,
+      // Slot ordering
       orderedSlots: [
         'TITLE', 'WEAPON', 'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
         'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
@@ -288,6 +261,7 @@ export default {
       }
     };
   },
+
   computed: {
     jobId() { return this.$route.params.jobId; },
     jobGrowId() { return this.$route.params.jobGrowId; },
@@ -323,6 +297,7 @@ export default {
         : '';
     }
   },
+
   mounted() {
     if (this.jobGrowId) this.fetchEquipmentStats();
   },
@@ -331,6 +306,7 @@ export default {
       if (newVal !== oldVal) this.fetchEquipmentStats();
     }
   },
+
   methods: {
     async fetchEquipmentStats() {
       if (!this.jobGrowId) return;
@@ -342,9 +318,11 @@ export default {
         this.error = err.response?.data?.error || err.message;
       } finally { this.loading = false; }
     },
+
     isActiveRoute(name) {
       return this.$route.name === name;
     },
+
     scrollToSlot(slot) {
       let el = this.$refs[slot];
       if (Array.isArray(el)) el = el[0];
@@ -361,6 +339,7 @@ export default {
         });
       }, { threshold: 0.5 }).observe(el);
     },
+
     getSequentialIndex(jobId, localIdx) {
       let count = 0;
       for (const [jid, map] of Object.entries(jobMappings)) {
@@ -369,6 +348,7 @@ export default {
       }
       return 0;
     },
+
     getImageSrc(jobId, localIdx) {
       const seq = this.getSequentialIndex(jobId, localIdx);
       try {
@@ -377,42 +357,43 @@ export default {
         return 'https://via.placeholder.com/250x400';
       }
     },
+
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
     },
+
     getSetIconUrl(setName) {
       const file = this.setIconMapping[setName];
       if (file) {
         try {
-          // webpack will bundle these
           return require(`@/assets/setIcons/${file}`);
         } catch {
-          // fallback if someone forgot to add the file
           return MissingIcon;
         }
       }
-      // no mapping → show generic missing
       return MissingIcon;
     },
+
     hideBrokenIcon(event) {
       const img = event.target;
       img.onerror = null;           // prevent infinite fallback loop
       img.src = MissingIcon;
       img.style.width = '40px';
     }
-  },
-  components: { ItemTooltip }
+  }
 };
 </script>
 
 <style scoped>
+/* Layout & Wrapper */
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
-  position: relative;
   padding-top: 20px;
+  position: relative;
 }
 
+/* Navigation Tabs */
 .equipment-tabs {
   width: 95%;
   margin: 0 auto;
@@ -426,11 +407,12 @@ export default {
 
 .equipment-tabs .tab-button {
   flex: 1;
-  text-align: center;
   padding: 10px;
-  text-decoration: none;
+  text-align: center;
   color: #fff;
+  text-decoration: none;
   border-right: 1px solid #fff;
+  transition: background-color 0.2s;
 }
 
 .equipment-tabs .tab-button:last-child {
@@ -442,12 +424,12 @@ export default {
   background-color: #e56717;
 }
 
+/* Equipment Layout */
 .equipment-square {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
-  margin-top: 0;
   border: 2px solid #fff;
   border-radius: 4px;
 }
@@ -455,8 +437,8 @@ export default {
 .equipment-square .side {
   flex: 1;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
 }
 
 .equipment-square .side.left,
@@ -469,14 +451,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .equipment-square .center {
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .equipment-square .center img {
@@ -485,6 +466,7 @@ export default {
   object-fit: cover;
 }
 
+/* Slot Buttons */
 .slot-button {
   width: 100px;
   height: 100px;
@@ -492,27 +474,29 @@ export default {
   background: #222;
   border: 1px solid #666;
   border-radius: 4px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  transition: background-color .2s;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .slot-button:hover {
   background-color: #e56717;
 }
 
+/* Table Base Styles */
 .stats-table {
   table-layout: auto;
+  border-collapse: collapse;
 }
 
 .stats-table th,
 .stats-table td {
   border: 1px solid #ddd;
   padding: 8px;
-  width: auto;
+  vertical-align: middle;
   text-align: left;
 }
 
@@ -521,20 +505,17 @@ export default {
   color: #e56717;
 }
 
-.stats-table td {
-  vertical-align: middle;
-}
-
 .stats-table th:nth-child(2),
 .stats-table td:nth-child(2) {
   text-align: center;
 }
 
-/* === New Grid Layout === */
+/* New Grid Layout */
 .stats-container {
   margin: 40px auto;
 }
 
+/* Sections */
 .set-usage,
 .slot-section {
   padding: 0 20px;
@@ -544,13 +525,14 @@ export default {
 .set-usage h2,
 .slot-section h2 {
   margin-bottom: 16px;
+  padding-bottom: 4px;
   color: #e56717;
   border-bottom: 2px solid #e56717;
-  padding-bottom: 4px;
   width: 100%;
   text-align: left;
 }
 
+/* Tables Pairing */
 .tables-pair {
   display: flex;
   gap: 20px;
@@ -564,6 +546,7 @@ export default {
   margin: 0 auto;
 }
 
+/* First Row Grid */
 .first-row-grid,
 .other-grid {
   display: grid;
@@ -579,12 +562,10 @@ export default {
 .first-row-grid .set-usage {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
 }
 
 .first-row-grid .tables-pair {
   flex: 1;
-  align-self: stretch;
 }
 
 .first-row-grid .table-wrapper {
@@ -593,6 +574,7 @@ export default {
   flex-direction: column;
 }
 
+/*  Other Equipment Grid */
 .other-grid {
   grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
   margin-bottom: 40px;
@@ -600,30 +582,24 @@ export default {
 
 .other-grid .tables-pair {
   gap: 40px;
-  align-self: stretch;
 }
 
 .other-grid .slot-section {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   justify-content: center;
 }
 
+/* Icon & Name Alignment */
 .icon-and-name {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.item-name {
+.item-name,
+.set-name {
   font-size: 14px;
-}
-
-.set-cell .icon-and-name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .set-icon {
@@ -632,21 +608,16 @@ export default {
   object-fit: contain;
 }
 
-.set-name {
-  font-size: 14px;
-}
-
+/* Flash Animation */
 @keyframes flashEffect {
-  0% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0px #e56717;
   }
 
   50% {
     box-shadow: 0 0 10px 5px #e56717;
-  }
-
-  100% {
-    box-shadow: 0 0 0px #e56717;
   }
 }
 
@@ -654,6 +625,7 @@ export default {
   animation: flashEffect 2s ease-out;
 }
 
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
   .other-grid .slot-section {
     width: 90%;
@@ -661,3 +633,4 @@ export default {
   }
 }
 </style>
+

@@ -1,7 +1,7 @@
 <template>
   <h1>Avatar Statistics for {{ jobFriendlyName }}</h1>
   <div class="equipment-wrapper">
-    <!-- Top Tabs -->
+    <!-- Navigation Tabs -->
     <div class="equipment-tabs">
       <router-link
         :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId } }"
@@ -30,7 +30,7 @@
       >Skill</router-link>
     </div>
 
-    <!-- Square container: left image, right buttons -->
+    <!-- Avatar Layout -->
     <div class="equipment-square">
       <div class="side left">
         <img :src="centerImgSrc" :alt="jobFriendlyName" class="awakening-img" />
@@ -53,10 +53,12 @@
 
   <div class="avatar-stats">
     <div v-if="jobGrowId">
+      <!-- Loading & error states -->
       <div v-if="loading">Loading avatar stats...</div>
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
-        <!-- Weapon & Aura: show these first -->
+
+        <!-- Weapon & Aura -->
         <div class="weapon-aura-grid">
           <section ref="WEAPON" class="slot-section">
             <div class="slot-table-block">
@@ -113,7 +115,7 @@
           </section>
         </div>
 
-        <!-- Grouped by equip color -->
+        <!-- Grouped by emblem socket color -->
         <section
           v-for="group in equipGroups"
           :key="group.color"
@@ -231,6 +233,7 @@ import MissingIcon from '@/assets/missingicon.png';
 export default {
   name: 'AvatarStats',
   components: { ItemTooltip },
+
   data() {
     return {
       stats: null,
@@ -265,6 +268,7 @@ export default {
       ]
     };
   },
+
   computed: {
     jobId() {
       return this.$route.params.jobId;
@@ -287,10 +291,9 @@ export default {
       const grows = this.jobMapping.finalJobGrows || [];
       const idx = grows.findIndex(g => g.jobGrowId === this.jobGrowId);
       if (idx !== -1) {
-        // if mapping already has an imgSrc, use it; otherwise build via require
         return grows[idx].imgSrc || this.getImageSrc(this.jobId, idx);
       }
-      return ''; // fallback
+      return '';
     },
     slotFontColors() {
       return {
@@ -314,18 +317,22 @@ export default {
       return groups;
     }
   },
+
   mounted() {
     if (this.jobGrowId) this.fetchAvatarStats();
   },
+
   watch: {
     '$route.params.jobGrowId'(n, o) {
       if (n !== o) this.fetchAvatarStats();
     }
   },
+
   methods: {
     isActiveRoute(name) {
       return this.$route.name === name;
     },
+
     async fetchAvatarStats() {
       if (!this.jobGrowId) return;
       this.loading = true;
@@ -340,9 +347,11 @@ export default {
         this.loading = false;
       }
     },
+
     capitalize(s) {
       return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
     },
+
     convertSlotName(slot) {
       const mappings = {
         WEAPON: 'Weapon',
@@ -359,6 +368,7 @@ export default {
       };
       return mappings[slot] || slot;
     },
+
     getSequentialIndex(currentJobId, currentLocalIndex) {
       let count = 0;
       for (const [jid, mapping] of Object.entries(jobMappings)) {
@@ -369,6 +379,7 @@ export default {
       }
       return 0;
     },
+
     getImageSrc(jobId, localIndex) {
       const seq = this.getSequentialIndex(jobId, localIndex);
       try {
@@ -377,6 +388,7 @@ export default {
         return 'https://via.placeholder.com/250x400';
       }
     },
+
     scrollToSlot(slot) {
       let el = this.$refs[slot];
       if (Array.isArray(el)) el = el[0];
@@ -393,15 +405,18 @@ export default {
         });
       }, { threshold: 0.5 }).observe(el);
     },
+
     formatRate(value, divisor) {
       return (value / divisor).toFixed(2);
     },
+
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
     },
+
     hideBrokenIcon(event) {
       const img = event.target;
-      img.onerror = null;              // prevent infinite loop
+      img.onerror = null;
       img.src = MissingIcon;
       img.style.width = '24px';
       img.style.height = '24px';
@@ -411,13 +426,15 @@ export default {
 </script>
 
 <style scoped>
+/* Wrapper */
 .equipment-wrapper {
   width: 700px;
   margin: 0 auto 40px;
-  position: relative;
   padding-top: 20px;
+  position: relative;
 }
 
+/* Tabs */
 .equipment-tabs {
   width: 95%;
   margin: 0 auto;
@@ -426,16 +443,16 @@ export default {
   border: 2px solid #fff;
   border-bottom: none;
   border-radius: 8px 8px 0 0;
-  overflow: hidden;
+  overflow: visible;
   box-sizing: border-box;
 }
 
 .equipment-tabs .tab-button {
   flex: 1;
-  text-align: center;
   padding: 10px;
-  text-decoration: none;
+  text-align: center;
   color: #fff;
+  text-decoration: none;
   border-right: 1px solid #fff;
   box-sizing: border-box;
 }
@@ -449,17 +466,17 @@ export default {
   background-color: #e56717;
 }
 
-/* Square container styles */
+/* Square Container */
 .equipment-square {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   border: 2px solid #fff;
-  box-sizing: border-box;
   border-radius: 4px;
   margin-top: 0;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .equipment-square .side {
@@ -475,16 +492,19 @@ export default {
   object-fit: cover;
 }
 
+/* Avatar Stats */
 .avatar-stats {
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
+/* Stat Sections */
 .stat-section {
   margin: 40px;
 }
 
+/* Tables Container */
 .tables-container {
   display: flex;
   flex-wrap: wrap;
@@ -505,6 +525,7 @@ export default {
   flex: 0 0 calc(33.33% - 20px);
 }
 
+/* Stats Table */
 .stats-table {
   width: 100%;
   border-collapse: collapse;
@@ -515,6 +536,7 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  vertical-align: middle;
 }
 
 .stats-table th {
@@ -525,13 +547,11 @@ export default {
 .stats-table th:nth-child(2),
 .stats-table td:nth-child(2) {
   width: 20%;
-  /* shrink to 25% of table width */
   text-align: center;
-  /* center horizontally */
   vertical-align: middle;
-  /* center vertically */
 }
 
+/* Width Utilities */
 .half-width {
   flex: 0 0 calc(50% - 20px);
 }
@@ -540,6 +560,7 @@ export default {
   flex: 0 0 calc(33.33% - 20px);
 }
 
+/* Avatar Buttons Grid */
 .avatar-buttons-grid {
   display: grid;
   grid-template-columns: repeat(4, 100px);
@@ -553,14 +574,13 @@ export default {
   grid-column-start: 2;
 }
 
-/* Retain .slot-button styles from EquipmentStats.vue */
+/* Slot Button */
 .slot-button {
   width: 100px;
   height: 100px;
   margin: 5px;
   background-color: #222;
-  border-width: 1px;
-  border-style: solid;
+  border: 1px solid;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
@@ -574,7 +594,7 @@ export default {
   background-color: #e56717;
 }
 
-/* Section underline colored per group */
+/* Weapon Aura Grid */
 .weapon-aura-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -594,7 +614,7 @@ section[class^="group-"] h2 {
   border-bottom: 3px solid currentColor;
 }
 
-/* Grid: two columns, avatar on left, emblem on right */
+/* Group Grid */
 .group-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -602,7 +622,7 @@ section[class^="group-"] h2 {
   margin-bottom: 40px;
 }
 
-/* Color each section via its class */
+/* Group Colors */
 .group-red h2 {
   color: #c0392b;
 }
@@ -619,32 +639,31 @@ section[class^="group-"] h2 {
   color: #4a90e2;
 }
 
+/* Block Sections */
 .slot-table-block,
 .emblem-table-block {
   padding: 0 10px 10px;
-  overflow: hidden;
-  box-sizing: border-box;
   border-radius: 8px;
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .slot-table-block h3,
 .emblem-table-block h3 {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0;
   color: #e56717;
 }
 
+/* Flash Animation */
 @keyframes flashEffect {
-  0% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0px #e56717;
   }
 
   50% {
     box-shadow: 0 0 10px 5px #e56717;
-  }
-
-  100% {
-    box-shadow: 0 0 0px #e56717;
   }
 }
 
@@ -652,16 +671,19 @@ section[class^="group-"] h2 {
   animation: flashEffect 2s ease-out;
 }
 
+/* Icon & Name */
 .icon-and-name {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
 .item-icon {
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
+
 .item-name {
   font-size: 14px;
 }
