@@ -90,7 +90,18 @@
           </thead>
           <tbody>
             <tr v-for="set in stats.setUsage" :key="set.set_item_id">
-              <td>{{ set.set_item_name }}</td>
+              <td class="set-cell">
+                <div class="icon-and-name">
+                  <img
+                    :src="getSetIconUrl(set.set_item_name)"
+                    :alt="set.set_item_name"
+                    class="set-icon"
+                    loading="lazy"
+                    @error="hideBrokenIcon"
+                  />
+                  <span class="set-name">{{ set.set_item_name }}</span>
+                </div>
+              </td>
               <td>{{ set.usage_count }}%</td>
             </tr>
           </tbody>
@@ -260,7 +271,21 @@ export default {
       fusionOrderedSlots: [
         'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
         'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
-      ]
+      ],
+      setIconMapping: {
+        "Hideout's Endless Gold Set": 'hideout.png',
+        "Cleansing Darkness Set": 'cleansing.png',
+        "Ancient Battlefield Valkyrie Set": 'ancient.png',
+        "Death in the Shadows Set": 'death.png',
+        "Dragon Arena Uprising Set": 'dragon.png',
+        "Overwhelming Nature Set": 'overwhelming.png',
+        "Serendipity Set": 'serendipity.png',
+        "Ethereal Orb Arts Set": 'ethereal.png',
+        "Beyond Limit Energy Set": 'beyond.png',
+        "Magic Domain Set": 'magic.png',
+        "Alpha of the Pack Hunt Set": 'alpha.png',
+        "Soul Fairy Set": 'soul.png'
+      }
     };
   },
   computed: {
@@ -355,11 +380,25 @@ export default {
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
     },
+    getSetIconUrl(setName) {
+      const file = this.setIconMapping[setName];
+      if (file) {
+        try {
+          // webpack will bundle these
+          return require(`@/assets/setIcons/${file}`);
+        } catch {
+          // fallback if someone forgot to add the file
+          return MissingIcon;
+        }
+      }
+      // no mapping → show generic missing
+      return MissingIcon;
+    },
     hideBrokenIcon(event) {
       const img = event.target;
       img.onerror = null;           // prevent infinite fallback loop
       img.src = MissingIcon;
-      img.style.width = '24px';
+      img.style.width = '40px';
     }
   },
   components: { ItemTooltip }
@@ -545,7 +584,7 @@ export default {
 
 .first-row-grid .tables-pair {
   flex: 1;
-  align-self: stretch;   
+  align-self: stretch;
 }
 
 .first-row-grid .table-wrapper {
@@ -579,7 +618,22 @@ export default {
 
 .item-name {
   font-size: 14px;
+}
 
+.set-cell .icon-and-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.set-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.set-name {
+  font-size: 14px;
 }
 
 @keyframes flashEffect {
@@ -606,5 +660,4 @@ export default {
     margin: 0 auto;
   }
 }
-
 </style>
