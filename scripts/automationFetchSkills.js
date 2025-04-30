@@ -1,16 +1,9 @@
 // scripts/automationFetchSkills.js
 import axios from 'axios';
 import jobMappings from '../src/config/jobMappings.js';
-
-// Set your testing server ID (update this to your valid server identifier)
 const serverId = 'cain';
 
-/**
- * Fetches skill data for a given job and jobGrow by calling your skill API.
- *
- * @param {string} jobId - The main job ID from jobMappings.
- * @param {string} jobGrowId - The job grow ID from the mapping.
- */
+// Fetches skill data for a given job and jobGrow by calling your skill API.
 async function fetchSkillsForClass(jobId, jobGrowId) {
   try {
     const url = `http://localhost:3000/api/skill/fetch/${serverId}/${jobId}/${jobGrowId}`;
@@ -22,9 +15,7 @@ async function fetchSkillsForClass(jobId, jobGrowId) {
   }
 }
 
-/**
- * Iterates over all job mappings and queues a fetch request for skill data for every jobGrow concurrently.
- */
+// Iterates over all job mappings and queues a fetch request for skill data for every jobGrow concurrently.
 async function runAutomation() {
   console.log('Starting skills automation process...');
   
@@ -35,13 +26,11 @@ async function runAutomation() {
   for (const jobId in jobMappings) {
     if (Object.prototype.hasOwnProperty.call(jobMappings, jobId)) {
       const mapping = jobMappings[jobId];
-      console.log(`Processing Job: ${mapping.jobName} (ID: ${jobId})`);
+      console.log(`Processing Character: ${mapping.jobName}`);
 
       // Queue the API call for each job grow.
       mapping.finalJobGrows.forEach(jobGrow => {
-        console.log(
-          `  -> Queuing fetch for Job Grow: ${jobGrow.jobGrowName} (ID: ${jobGrow.jobGrowId})`
-        );
+        console.log(`-> Queuing fetch for ${jobGrow.jobGrowName}`);
         allPromises.push(fetchSkillsForClass(jobId, jobGrow.jobGrowId));
       });
     }
@@ -49,7 +38,7 @@ async function runAutomation() {
 
   // Execute all fetch requests concurrently.
   await Promise.all(allPromises);
-  console.log('Skills automation process completed for all classes.');
+  console.log('Skills data retrieved for all class.');
 }
 
 // Run the automation script.

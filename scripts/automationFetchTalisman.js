@@ -1,16 +1,9 @@
 // scripts/automationFetchTalisman.js
 import axios from 'axios';
 import jobMappings from '../src/config/jobMappings.js';
-
-// Set your testing server ID (update this to your valid server identifier)
 const serverId = 'cain';
 
-/**
- * Fetches talisman and rune data for a given job and jobGrow by calling your API.
- *
- * @param {string} jobId - The main job ID from jobMappings.
- * @param {string} jobGrowId - The job grow ID from the mapping.
- */
+// Fetches talisman and rune data for a given job and jobGrow by calling your API.
 async function fetchTalismanAndRunesForClass(jobId, jobGrowId) {
     try {
         const url = `http://localhost:3000/api/talisman/fetch/${serverId}/${jobId}/${jobGrowId}`;
@@ -22,9 +15,7 @@ async function fetchTalismanAndRunesForClass(jobId, jobGrowId) {
     }
 }
 
-/**
- * Iterates over all job mappings and queues a fetch request for talisman and rune data for every jobGrow concurrently.
- */
+// Iterates over all job mappings and queues a fetch request for talisman and rune data for every jobGrow concurrently.
 async function runAutomation() {
     console.log('Starting talisman & rune automation process...');
     const allPromises = [];
@@ -33,11 +24,11 @@ async function runAutomation() {
     for (const jobId in jobMappings) {
         if (Object.prototype.hasOwnProperty.call(jobMappings, jobId)) {
             const mapping = jobMappings[jobId];
-            console.log(`Processing Job: ${mapping.jobName} (ID: ${jobId})`);
+            console.log(`Processing Character: ${mapping.jobName}`);
 
             // Queue the API calls for each job grow.
             mapping.finalJobGrows.forEach(jobGrow => {
-                console.log(`  -> Queuing fetch for Job Grow: ${jobGrow.jobGrowName} (ID: ${jobGrow.jobGrowId})`);
+                console.log(`-> Queuing fetch for ${jobGrow.jobGrowName}`);
                 allPromises.push(fetchTalismanAndRunesForClass(jobId, jobGrow.jobGrowId));
             });
         }
@@ -45,7 +36,7 @@ async function runAutomation() {
 
     // Run all fetch requests concurrently.
     await Promise.all(allPromises);
-    console.log('Talisman & rune automation process complete.');
+    console.log('Talisman & rune data retrieved for all class.');
 }
 
 // Execute the automation script.
