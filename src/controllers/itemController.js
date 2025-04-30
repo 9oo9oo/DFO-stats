@@ -6,6 +6,7 @@ exports.getItemInfo = async (req, res) => {
     const itemId = req.params.itemId;
     console.log(`Proxying item ${itemId} with key ${apiKey ? '✔️' : '❌ undefined'}`);
 
+    // Retrieving item info for item tooltip when user mouse is hovered over equipment icon
     try {
         const url = `https://api.dfoneople.com/df/items/${itemId}?apikey=${apiKey}`;
         const apiRes = await axios.get(url);

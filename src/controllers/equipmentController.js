@@ -6,6 +6,7 @@ const apiKey = process.env.DFO_API_KEY;
 exports.fetchEquipment = async (req, res) => {
   const { serverId, jobId, jobGrowId } = req.params;
   try {
+    // Retrieve character IDs for specified class
     const getCharacterIdsQuery = `
       SELECT character_id 
       FROM characters
@@ -17,6 +18,7 @@ exports.fetchEquipment = async (req, res) => {
       return res.status(404).json({ message: 'No character IDs found for the specified class.' });
     }
 
+    // Fetch equipment data for each character ID
     for (const row of rows) {
       const characterId = row.character_id;
       const equipmentUrl = `https://api.dfoneople.com/df/servers/${serverId}/characters/${characterId}/equip/equipment?apikey=${apiKey}`;
@@ -34,6 +36,7 @@ exports.fetchEquipment = async (req, res) => {
         continue;
       }
 
+      // Iterate through each equipment slot and upsert into DB
       for (const equip of equipmentData.equipment) {
         const itemId = equip.itemId;
         const itemName = equip.itemName;
@@ -41,6 +44,8 @@ exports.fetchEquipment = async (req, res) => {
         const setItemName = equip.setItemName;
         let fusionItemId = null;
         let fusionItemName = null;
+        
+        // WEAPON does not have fusion item
         if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
           fusionItemId = equip.upgradeInfo.itemId;
           fusionItemName = equip.upgradeInfo.itemName;
@@ -92,23 +97,48 @@ exports.getEquipmentStats = async (req, res) => {
   ];
 
   try {
-    // Query to aggregate individual item usage by slot,
-    // selecting both item_id and item_name
-    const itemsQuery = `
-        SELECT 
-          ce.slot_id,
-          ce.item_id,
+    // Aggregate TITLE (separated due to duplicate issue)
+    const titleQuery = `
+      WITH title_counts AS (
+        SELECT
           ce.item_name,
-          COUNT(*) AS usage_count
+          COUNT(*) AS usage_count,
+          MIN(ce.item_id) AS item_id
         FROM character_equipment ce
         JOIN characters c ON ce.character_id = c.character_id
-        WHERE c.job_id = $1 AND c.job_grow_id = $2
-        GROUP BY ce.slot_id, ce.item_id, ce.item_name
-        ORDER BY ce.slot_id, usage_count DESC;
-      `;
+        WHERE c.job_id = $1
+          AND c.job_grow_id = $2
+          AND ce.slot_id = 'TITLE'
+        GROUP BY ce.item_name
+      )
+      SELECT
+        'TITLE'    AS slot_id,
+        item_id,
+        item_name,
+        usage_count
+      FROM title_counts
+      ORDER BY usage_count DESC;
+    `;
+    const titleResult = await client.query(titleQuery, [jobId, jobGrowId]);
+
+    // Aggregate other items (excluding TITLE)
+    const itemsQuery = `
+      SELECT 
+        ce.slot_id,
+        ce.item_id,
+        ce.item_name,
+        COUNT(*) AS usage_count
+      FROM character_equipment ce
+      JOIN characters c ON ce.character_id = c.character_id
+      WHERE c.job_id = $1
+        AND c.job_grow_id = $2
+        AND ce.slot_id <> 'TITLE'
+      GROUP BY ce.slot_id, ce.item_id, ce.item_name
+      ORDER BY ce.slot_id, usage_count DESC;
+    `;
     const itemsResult = await client.query(itemsQuery, [jobId, jobGrowId]);
 
-    // Query to aggregate fusion item usage by slot.
+    // Fusion items
     const fusionQuery = `
       SELECT ce.slot_id, ce.fusion_item_id, ce.fusion_item_name, COUNT(*) AS usage_count
       FROM character_equipment ce
@@ -119,7 +149,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const fusionResult = await client.query(fusionQuery, [jobId, jobGrowId]);
 
-    // Query to aggregate effective set usage.
+    // Set usage
     const setQuery = `
       WITH set_counts AS (
         SELECT ce.character_id, ce.set_item_id, ce.set_item_name, COUNT(*) AS cnt
@@ -142,8 +172,7 @@ exports.getEquipmentStats = async (req, res) => {
     `;
     const setResult = await client.query(setQuery, [jobId, jobGrowId]);
 
-    // Query to get the sample number for each equipment slot.
-    // This returns the total number of records equipped per slot.
+    // Sample counts for regular items
     const sampleQuery = `
       SELECT ce.slot_id, COUNT(*) AS sample_number
       FROM character_equipment ce
@@ -157,7 +186,7 @@ exports.getEquipmentStats = async (req, res) => {
       sampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
-    // For fusion items, get the sample count (only fusion-equipped rows).
+    // Sample counts for fusion items
     const fusionSampleQuery = `
       SELECT ce.slot_id, COUNT(*) AS sample_number
       FROM character_equipment ce
@@ -171,8 +200,7 @@ exports.getEquipmentStats = async (req, res) => {
       fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
-    // For set usage, we will define the sample number as the total number of characters
-    // that have any set equipped (from non-WEAPON slots). This counts each character only once.
+    // Sample for set items
     const setSampleQuery = `
       SELECT COUNT(DISTINCT ce.character_id) AS sample_number
       FROM character_equipment ce
@@ -182,12 +210,21 @@ exports.getEquipmentStats = async (req, res) => {
         AND c.job_id = $1 AND c.job_grow_id = $2;
     `;
     const setSampleResult = await client.query(setSampleQuery, [jobId, jobGrowId]);
-    const setSampleNumber = setSampleResult.rows[0] ? parseInt(setSampleResult.rows[0].sample_number, 10) : 0;
+    const setSampleNumber = setSampleResult.rows[0]
+      ? parseInt(setSampleResult.rows[0].sample_number, 10)
+      : 0;
 
-    // Parse query results into arrays.
+    // Map rows
+    const titleStats = titleResult.rows.map(row => ({
+      slot: 'TITLE',
+      item_id: row.item_id,
+      item_name: row.item_name,
+      usage_count: parseInt(row.usage_count, 10)
+    }));
+
     const itemsStats = itemsResult.rows.map(row => ({
       slot: row.slot_id,
-      item_id: row.item_id,     // <— both ID and name now available
+      item_id: row.item_id,
       item_name: row.item_name,
       usage_count: parseInt(row.usage_count, 10)
     }));
@@ -199,65 +236,59 @@ exports.getEquipmentStats = async (req, res) => {
       usage_count: parseInt(row.usage_count, 10)
     }));
 
-    // For set usage, capture the usage count.
     const setUsageStats = setResult.rows.map(row => ({
       set_item_id: row.set_item_id,
       set_item_name: row.set_item_name,
       usage_count: parseInt(row.usage_count, 10)
     }));
 
-    // Group items by slot.
+    // Group by slot
     const itemsBySlot = {};
     const fusionItemsBySlot = {};
     orderedSlots.forEach(slot => {
       itemsBySlot[slot] = [];
       fusionItemsBySlot[slot] = [];
     });
+
+    titleStats.forEach(item => itemsBySlot['TITLE'].push(item));
     itemsStats.forEach(item => {
-      if (orderedSlots.includes(item.slot)) {
-        itemsBySlot[item.slot].push(item);
-      }
+      if (itemsBySlot[item.slot]) itemsBySlot[item.slot].push(item);
     });
     fusionItemsStats.forEach(item => {
-      // For fusion items, optionally exclude the WEAPON slot.
-      if (item.slot === "WEAPON") return;
-      if (orderedSlots.includes(item.slot)) {
-        fusionItemsBySlot[item.slot].push(item);
-      }
+      if (fusionItemsBySlot[item.slot]) fusionItemsBySlot[item.slot].push(item);
     });
 
-    // Calculate usage rate for regular items per slot.
+    // Calculate usage rates
     orderedSlots.forEach(slot => {
-      const sampleNumber = sampleNumbers[slot] || 0;
-      itemsBySlot[slot] = itemsBySlot[slot].map(item => ({
-        ...item,
-        // usage_rate = item usage_count / total items in that slot.
-        usage_rate: sampleNumber > 0 ? parseFloat((item.usage_count / sampleNumber).toFixed(2)) : 0
-      }));
+      const total = sampleNumbers[slot] || 0;
+      itemsBySlot[slot] = itemsBySlot[slot]
+        .map(item => ({
+          ...item,
+          usage_rate: total > 0
+            ? parseFloat((item.usage_count / total).toFixed(2))
+            : 0
+        }))
+        .slice(0, 10);
+
+      const fusionTotal = fusionSampleNumbers[slot] || 0;
+      fusionItemsBySlot[slot] = fusionItemsBySlot[slot]
+        .map(item => ({
+          ...item,
+          usage_rate: fusionTotal > 0
+            ? parseFloat((item.usage_count / fusionTotal).toFixed(2))
+            : 0
+        }))
+        .slice(0, 10);
     });
 
-    // Calculate usage rate for fusion items per slot.
-    orderedSlots.forEach(slot => {
-      const fusionSample = fusionSampleNumbers[slot] || 0;
-      fusionItemsBySlot[slot] = fusionItemsBySlot[slot].map(item => ({
-        ...item,
-        usage_rate: fusionSample > 0 ? parseFloat((item.usage_count / fusionSample).toFixed(2)) : 0
-      }));
-    });
-
-    // Calculate usage rate for set usage.
-    // usage_rate = set usage count / (total characters with a set equipped)
     const setUsageWithRate = setUsageStats.map(setStat => ({
       ...setStat,
-      usage_rate: setSampleNumber > 0 ? parseFloat((setStat.usage_count / setSampleNumber).toFixed(2)) : 0
+      usage_rate: setSampleNumber > 0
+        ? parseFloat((setStat.usage_count / setSampleNumber).toFixed(2))
+        : 0
     }));
 
-    // Optionally, limit the results to the Top 10 per slot.
-    orderedSlots.forEach(slot => {
-      itemsBySlot[slot] = itemsBySlot[slot].slice(0, 10);
-      fusionItemsBySlot[slot] = fusionItemsBySlot[slot].slice(0, 10);
-    });
-
+    // 11. Return JSON
     res.status(200).json({
       itemsBySlot,
       fusionItemsBySlot,

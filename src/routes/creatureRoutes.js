@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 const creatureController = require('../controllers/creatureController');
 
-// Fetch creature data for characters.
+// Fetch creature data
 router.get('/fetch/:serverId/:jobId/:jobGrowId', creatureController.fetchCreature);
 
-// Return creature statistics.
+// Return creature stats
 router.get('/stats/:jobId/:jobGrowId', creatureController.getCreatureStats);
 
 module.exports = router;

@@ -41,7 +41,7 @@ exports.fetchSkills = async (req, res) => {
             const passiveSkills = skillData.skill.style.passive || [];
             const allSkills = [...activeSkills, ...passiveSkills];
 
-            // Iterate through each skill and insert/update into the character_skills table
+            // Iterate through each skill and upsert into the character_skills table
             for (const skill of allSkills) {
                 const { skillId, name, level, requiredLevel } = skill;
                 const insertSkillQuery = `
@@ -75,8 +75,8 @@ exports.getSkillStats = async (req, res) => {
     const { jobId, jobGrowId } = req.params;
 
     try {
-        // Aggregate the average level for each skill for characters of the given class,
-        // including required_level and sorted in ascending order by required_level.
+        // Aggregate the average level and required level of each skill
+        // Sort in ascending order by skill required level
         const skillStatsQuery = `
         SELECT cs.skill_id, cs.skill_name, cs.required_level, AVG(cs.level) AS average_level, COUNT(*) AS total_count
         FROM character_skills cs
@@ -87,7 +87,7 @@ exports.getSkillStats = async (req, res) => {
       `;
         const { rows } = await client.query(skillStatsQuery, [jobId, jobGrowId]);
 
-        // Format the result rows.
+        // Formatting the rows
         const skillStats = rows.map(row => ({
             skill_id: row.skill_id,
             skill_name: row.skill_name,
