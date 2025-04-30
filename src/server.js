@@ -30,6 +30,10 @@ app.use('/api/skill', skillRoutes);
 app.use('/api/avatar', avatarRoutes);
 app.use('/api/items', itemRoutes);
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server listening on port http://localhost:${PORT}`);
