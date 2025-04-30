@@ -1,0 +1,2148 @@
+(node:749144) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchCharacterIds.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting character ID automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/character/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/character/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/character/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/character/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/character/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/character/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/character/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/character/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/character/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/character/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/character/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: '100 character IDs inserted successfully for the given class.'
+}
+Automation process completed for all classes.
+(node:749517) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchEquipment.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting equipment automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/equipment/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/equipment/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/equipment/fetch/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/equipment/fetch/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/equipment/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/equipment/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/equipment/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/equipment/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/equipment/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/equipment/fetch/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/equipment/fetch/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Equipment data fetched and stored successfully for the retrieved character IDs.'
+}
+Equipment automation process complete.
+(node:749601) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchAvatar.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting avatar automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/avatar/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/avatar/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/avatar/fetch/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/avatar/fetch/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/avatar/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/avatar/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/avatar/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/avatar/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/avatar/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/avatar/fetch/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/avatar/fetch/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Avatar data fetched and stored successfully for the retrieved character IDs.'
+}
+Avatar automation process complete.
+(node:750091) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchCreature.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting creature automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing creature fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing creature fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/creature/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing creature fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing creature fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/creature/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing creature fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing creature fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing creature fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing creature fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/creature/fetch/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing creature fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing creature fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing creature fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/creature/fetch/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing creature fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing creature fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/creature/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing creature fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing creature fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing creature fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing creature fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing creature fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing creature fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing creature fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/creature/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing creature fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/creature/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing creature fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/creature/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing creature fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/creature/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing creature fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/creature/fetch/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing creature fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/creature/fetch/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Creature data fetched and stored successfully for the retrieved character IDs.'
+}
+Creature automation process complete.
+(node:750167) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchTalisman.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting talisman & rune automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/talisman/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/talisman/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/talisman/fetch/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/talisman/fetch/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/talisman/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/talisman/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/talisman/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/talisman/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/talisman/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/talisman/fetch/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/talisman/fetch/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Talisman and rune data fetched and stored successfully for the retrieved character IDs.'
+}
+Talisman & rune automation process complete.
+(node:750245) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/ec2-user/DFO-stats/scripts/automationFetchSkills.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/ec2-user/DFO-stats/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Starting skills automation process...
+Processing Job: Slayer (M) (ID: 40132cbc8b2b5eedfe035e35c322472e)
+  -> Queuing fetch for Job Grow: Neo: Blade Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Soul Bender (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Berserker (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Asura (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Ghostblade (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/skill/fetch/cain/40132cbc8b2b5eedfe035e35c322472e/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Slayer (F) (ID: 08cf6465c8dfcdbf5a896b40a2811007)
+  -> Queuing fetch for Job Grow: Neo: Sword Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Dark Templar (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Demon Slayer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vagabond (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Spectre (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/skill/fetch/cain/08cf6465c8dfcdbf5a896b40a2811007/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Fighter (M) (ID: cb572073a5db60ca7f245363a79d1f22)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/cb572073a5db60ca7f245363a79d1f22/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/cb572073a5db60ca7f245363a79d1f22/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/cb572073a5db60ca7f245363a79d1f22/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Fighter (F) (ID: 18ccc1f38ad764c77ec52dbaefce0c2e)
+  -> Queuing fetch for Job Grow: Neo: Nen Master (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Striker (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Brawler (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Grappler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/18ccc1f38ad764c77ec52dbaefce0c2e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Gunner (M) (ID: 374f82bfb1c054cde79431cf4420a35c)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/374f82bfb1c054cde79431cf4420a35c/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/374f82bfb1c054cde79431cf4420a35c/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/374f82bfb1c054cde79431cf4420a35c/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Blitz (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/skill/fetch/cain/374f82bfb1c054cde79431cf4420a35c/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Gunner (F) (ID: 8b680595b273a488997441eee3f7176f)
+  -> Queuing fetch for Job Grow: Neo: Ranger (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/8b680595b273a488997441eee3f7176f/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Launcher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/8b680595b273a488997441eee3f7176f/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Mechanic (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/8b680595b273a488997441eee3f7176f/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Spitfire (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/8b680595b273a488997441eee3f7176f/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Mage (M) (ID: 3c67a7b71273c8452c9f68adb4004215)
+  -> Queuing fetch for Job Grow: Neo: Elemental Bomber (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Glacial Master (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/3c67a7b71273c8452c9f68adb4004215/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Blood Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/3c67a7b71273c8452c9f68adb4004215/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Swift Master (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/3c67a7b71273c8452c9f68adb4004215/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Dimension Walker (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/skill/fetch/cain/3c67a7b71273c8452c9f68adb4004215/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Mage (F) (ID: fc067d0781f1d01ef8f0b215440bac6d)
+  -> Queuing fetch for Job Grow: Neo: Elementalist (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Summoner (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Battle Mage (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Witch (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/ec6a93f4d14bb36ccc541183291197a7
+  -> Queuing fetch for Job Grow: Neo: Enchantress (ID: 5dff544828c42d8fc109f2f747d50c7f)
+Calling: http://localhost:3000/api/skill/fetch/cain/fc067d0781f1d01ef8f0b215440bac6d/5dff544828c42d8fc109f2f747d50c7f
+Processing Job: Priest (M) (ID: 92d1c40f5e486e3aa4fae8db283d1fd3)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Monk (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Exorcist (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Avenger (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/92d1c40f5e486e3aa4fae8db283d1fd3/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Priest (F) (ID: 2ae47d662a9b18848c5e314966765bd7)
+  -> Queuing fetch for Job Grow: Neo: Crusader (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Inquisitor (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/2ae47d662a9b18848c5e314966765bd7/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Shaman (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/2ae47d662a9b18848c5e314966765bd7/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Mistress (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/2ae47d662a9b18848c5e314966765bd7/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Thief (ID: 402e7bc8074a3dcd7797da85a9f7386e)
+  -> Queuing fetch for Job Grow: Neo: Rogue (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Necromancer (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Kunoichi (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Shadow Dancer (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/402e7bc8074a3dcd7797da85a9f7386e/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Knight (ID: c21b43973c6d3fd9f192e9b66925c9b9)
+  -> Queuing fetch for Job Grow: Neo: Elven Knight (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Chaos (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Lightbringer (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Dragon Knight (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/c21b43973c6d3fd9f192e9b66925c9b9/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Demonic Lancer (ID: 0b2b0ac15e70d4fc9f4094b9a90937a6)
+  -> Queuing fetch for Job Grow: Neo: Vanguard (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Skirmisher (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Dragoon (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Impaler (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/0b2b0ac15e70d4fc9f4094b9a90937a6/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Agent (ID: 86c10841b1e4ddc6db7bd2fbe5e11519)
+  -> Queuing fetch for Job Grow: Neo: Hitman (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Secret Agent (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Troubleshooter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Specialist (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/86c10841b1e4ddc6db7bd2fbe5e11519/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Archer (ID: dbbdf2dd28072b26f22b77454d665f21)
+  -> Queuing fetch for Job Grow: Neo: Muse (ID: ba2ae3598c3af10c26562e073bc92060)
+Calling: http://localhost:3000/api/skill/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ba2ae3598c3af10c26562e073bc92060
+  -> Queuing fetch for Job Grow: Neo: Traveler (ID: 53632e641719388657407af4f9c063ac)
+Calling: http://localhost:3000/api/skill/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/53632e641719388657407af4f9c063ac
+  -> Queuing fetch for Job Grow: Neo: Hunter (ID: 0f12d512a825d52e75d87120f39ba4cb)
+Calling: http://localhost:3000/api/skill/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/0f12d512a825d52e75d87120f39ba4cb
+  -> Queuing fetch for Job Grow: Neo: Vigilante (ID: ec6a93f4d14bb36ccc541183291197a7)
+Calling: http://localhost:3000/api/skill/fetch/cain/dbbdf2dd28072b26f22b77454d665f21/ec6a93f4d14bb36ccc541183291197a7
+Processing Job: Dark Knight (ID: 4b3bc88bb6337d2e23ed3411b2435068)
+  -> Queuing fetch for Job Grow: Neo: Dark Knight (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/skill/fetch/cain/4b3bc88bb6337d2e23ed3411b2435068/632b3965398c1c7526657cea3fd16bf5
+Processing Job: Creator (ID: c95dfe0d42b6c71bc8019fcca0b3eccd)
+  -> Queuing fetch for Job Grow: Neo: Creator (ID: 632b3965398c1c7526657cea3fd16bf5)
+Calling: http://localhost:3000/api/skill/fetch/cain/c95dfe0d42b6c71bc8019fcca0b3eccd/632b3965398c1c7526657cea3fd16bf5
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=0b2b0ac15e70d4fc9f4094b9a90937a6, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=86c10841b1e4ddc6db7bd2fbe5e11519, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=374f82bfb1c054cde79431cf4420a35c, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=8b680595b273a488997441eee3f7176f, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=08cf6465c8dfcdbf5a896b40a2811007, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=92d1c40f5e486e3aa4fae8db283d1fd3, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=dbbdf2dd28072b26f22b77454d665f21, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=402e7bc8074a3dcd7797da85a9f7386e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=ec6a93f4d14bb36ccc541183291197a7: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=18ccc1f38ad764c77ec52dbaefce0c2e, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=cb572073a5db60ca7f245363a79d1f22, jobGrowId=0f12d512a825d52e75d87120f39ba4cb: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=3c67a7b71273c8452c9f68adb4004215, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c95dfe0d42b6c71bc8019fcca0b3eccd, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=2ae47d662a9b18848c5e314966765bd7, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=5dff544828c42d8fc109f2f747d50c7f: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=fc067d0781f1d01ef8f0b215440bac6d, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=40132cbc8b2b5eedfe035e35c322472e, jobGrowId=ba2ae3598c3af10c26562e073bc92060: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=c21b43973c6d3fd9f192e9b66925c9b9, jobGrowId=53632e641719388657407af4f9c063ac: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Success for jobId=4b3bc88bb6337d2e23ed3411b2435068, jobGrowId=632b3965398c1c7526657cea3fd16bf5: {
+  message: 'Skill data fetched and stored successfully for the retrieved character IDs.'
+}
+Skills automation process completed for all classes.
