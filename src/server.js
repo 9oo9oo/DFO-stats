@@ -1,11 +1,12 @@
 // server.js
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.static('../client/dist'));
 
 // Middleware
+app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.set('json spaces', 2);
