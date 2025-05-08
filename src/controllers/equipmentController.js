@@ -300,6 +300,70 @@ exports.getEquipmentStats = async (req, res) => {
   }
 };
 
+exports.getEquipmentCombinations = async (req, res) => {
+  const { jobId, jobGrowId } = req.params;
+  const combos = {
+    core:   ['JACKET','SHOULDER','PANTS','WAIST','SHOES'],
+    jewels: ['WRIST','RING','AMULET'],
+    extras: ['SUPPORT','MAGIC_STON','EARRING'],
+  };
 
+  // helper to build a “base vs fusion” query
+  const makeComboQuery = (slots, useFusion = false) => {
+    const joins = slots.map((slot, idx) => `
+      LEFT JOIN character_equipment AS s${idx}
+        ON s${idx}.character_id = c.character_id
+       AND s${idx}.slot_id = '${slot}'
+    `).join('\n');
 
+    const selectCols = slots.map((slot, idx) => {
+      const col  = useFusion ? 'fusion_item_id'   : 'item_id';
+      const name = useFusion ? 'fusion_item_name' : 'item_name';
+      const key  = slot.toLowerCase();
+      return `
+        s${idx}.${col}   AS ${key}_id,
+        s${idx}.${name}  AS ${key}_name
+      `;
+    }).join(',\n');
+
+    const groupCols = slots.map((slot, idx) => {
+      const col  = useFusion ? 'fusion_item_id'   : 'item_id';
+      const name = useFusion ? 'fusion_item_name' : 'item_name';
+      return `s${idx}.${col}, s${idx}.${name}`;
+    }).join(', ');
+
+    return `
+      SELECT
+        ${selectCols},
+        COUNT(*) AS usage_count
+      FROM characters c
+      ${joins}
+      WHERE c.job_id = $1
+        AND c.job_grow_id = $2
+      GROUP BY ${groupCols}
+      ORDER BY usage_count DESC
+      LIMIT 5;
+    `;
+  };
+
+  try {
+    const results = {};
+    for (const [groupName, slots] of Object.entries(combos)) {
+      // normal combo
+      const normalSql = makeComboQuery(slots, false);
+      const { rows: normalRows } = await client.query(normalSql, [jobId, jobGrowId]);
+      results[groupName] = normalRows;
+
+      // fusion combo
+      const fusionSql = makeComboQuery(slots, true);
+      const { rows: fusionRows } = await client.query(fusionSql, [jobId, jobGrowId]);
+      results[`${groupName}Fusion`] = fusionRows;
+    }
+
+    return res.json(results);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
+};
 

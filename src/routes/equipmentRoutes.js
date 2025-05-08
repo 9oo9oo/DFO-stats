@@ -9,4 +9,7 @@ router.get('/fetch/:serverId/:jobId/:jobGrowId', equipmentController.fetchEquipm
 // Return equipment stats
 router.get('/stats/:jobId/:jobGrowId', equipmentController.getEquipmentStats);
 
+// Equipment Combination Endpoint
+router.get('/combinations/:jobId/:jobGrowId', equipmentController.getEquipmentCombinations);
+
 module.exports = router;
