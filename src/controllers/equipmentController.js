@@ -44,7 +44,7 @@ exports.fetchEquipment = async (req, res) => {
         const setItemName = equip.setItemName;
         let fusionItemId = null;
         let fusionItemName = null;
-        
+
         // WEAPON does not have fusion item
         if (equip.slotId !== 'WEAPON' && equip.upgradeInfo && equip.upgradeInfo.itemId) {
           fusionItemId = equip.upgradeInfo.itemId;
@@ -183,7 +183,7 @@ exports.getEquipmentStats = async (req, res) => {
     const sampleResult = await client.query(sampleQuery, [jobId, jobGrowId]);
     const sampleNumbers = {};
     sampleResult.rows.forEach(row => {
-      sampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
+      sampleNumbers[row.slot_id] = parseInt(row.sample_number, 5);
     });
 
     // Sample counts for fusion items
@@ -197,7 +197,7 @@ exports.getEquipmentStats = async (req, res) => {
     const fusionSampleResult = await client.query(fusionSampleQuery, [jobId, jobGrowId]);
     const fusionSampleNumbers = {};
     fusionSampleResult.rows.forEach(row => {
-      fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
+      fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 5);
     });
 
     // Sample for set items
@@ -299,5 +299,7 @@ exports.getEquipmentStats = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
 
 

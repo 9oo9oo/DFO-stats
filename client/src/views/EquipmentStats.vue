@@ -162,7 +162,7 @@
             <table class="stats-table">
               <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
-                <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
+                <tr v-for="item in limitedItemsBySlot[slot]" :key="item.item_id">
                   <td class="item-cell">
                     <div class="icon-and-name">
                       <ItemTooltip :id="item.item_id" :name="item.item_name">
@@ -190,10 +190,7 @@
             <table class="stats-table">
               <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
-                <tr
-                  v-for="fusionItem in stats.fusionItemsBySlot[slot]"
-                  :key="fusionItem.fusion_item_id"
-                >
+                <tr v-for="fusionItem in limitedFusionBySlot[slot]" :key="fusionItem.fusion_item_id">
                 <td class="item-cell">
                   <div class="icon-and-name">
                     <ItemTooltip
@@ -295,6 +292,29 @@ export default {
       return idx >= 0
         ? (grows[idx].imgSrc || this.getImageSrc(this.jobId, idx))
         : '';
+    },
+    limitedItemsBySlot() {
+      if (!this.stats) return {};
+      const out = {};
+      // combine all slots you ever loop over
+      const allSlots = [...this.titleWeaponSlots, ...this.otherSlots];
+      allSlots.forEach(slot => {
+        const list = this.stats.itemsBySlot[slot] || [];
+        const limit = this.titleWeaponSlots.includes(slot) ? 10 : 5;
+        out[slot] = list.slice(0, limit);
+      });
+      return out;
+    },
+
+    // similarly limit fusion items to top-5 each
+    limitedFusionBySlot() {
+      if (!this.stats) return {};
+      const out = {};
+      this.otherSlots.forEach(slot => {
+        const list = this.stats.fusionItemsBySlot?.[slot] || [];
+        out[slot] = list.slice(0, 5);
+      });
+      return out;
     }
   },
 
@@ -584,10 +604,29 @@ export default {
   gap: 40px;
 }
 
+.other-grid .tables-pair .table-wrapper {
+  flex: 1;
+}
+
 .other-grid .slot-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.other-grid .stats-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.other-grid .stats-table th:first-child,
+.other-grid .stats-table td:first-child {
+  width: 80%;
+}
+
+.other-grid .stats-table th:nth-child(2),
+.other-grid .stats-table td:nth-child(2) {
+  text-align: center;
 }
 
 /* Icon & Name Alignment */
