@@ -1,9 +1,79 @@
 <template>
     <div class="summary-container">
       <h1>Equipment Combinations Summary</h1>
-      <div v-if="loading">Loading combinations...</div>
+
+      <div v-if="loading">Loading summary...</div>
       <div v-else-if="error" class="error">{{ error }}</div>
-      <div v-else>
+      <div v-else-if="stats && combos && stats.setUsage && Object.keys(combos).length">
+
+        <!-- Set Usage -->
+      <div class="combo-group">
+        <h2>Set Usage (Top 3)</h2>
+        <table class="stats-table">
+          <thead>
+            <tr><th>Set</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="set in stats.setUsage.slice(0, 3)" :key="set.set_item_id">
+              <td>{{ set.set_item_name }}</td>
+              <td>{{ set.usage_rate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Title -->
+      <div class="combo-group">
+        <h2>Top Titles (Top 3)</h2>
+        <table class="stats-table">
+          <thead>
+            <tr><th>Title</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in stats.itemsBySlot['TITLE'].slice(0, 3)" :key="item.item_id">
+              <td class="item-cell">
+                <ItemTooltip :id="item.item_id" :name="item.item_name">
+                  <img
+                    :src="getItemImageUrl(item.item_id)"
+                    :alt="item.item_name"
+                    class="item-icon"
+                    loading="lazy"
+                    @error="hideBrokenIcon"
+                  />
+                </ItemTooltip>
+              </td>
+              <td>{{ item.usage_rate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Weapon -->
+      <div class="combo-group">
+        <h2>Top Weapons (Top 3)</h2>
+        <table class="stats-table">
+          <thead>
+            <tr><th>Weapon</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in stats.itemsBySlot['WEAPON'].slice(0, 3)" :key="item.item_id">
+              <td class="item-cell">
+                <ItemTooltip :id="item.item_id" :name="item.item_name">
+                  <img
+                    :src="getItemImageUrl(item.item_id)"
+                    :alt="item.item_name"
+                    class="item-icon"
+                    loading="lazy"
+                    @error="hideBrokenIcon"
+                  />
+                </ItemTooltip>
+              </td>
+              <td>{{ item.usage_rate }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
         <!-- Normal Combos -->
         <div class="combo-group" v-for="group in groups" :key="group.key">
           <h2>{{ group.title }}</h2>
@@ -125,6 +195,16 @@ export default {
         comboKey(combo, slots) {
             return slots.map(s => combo[`${s}_id`] || s).join('-');
         },
+        async fetchStats() {
+            try {
+                const resp = await axios.get(
+                    `/api/equipment/stats/${this.jobId}/${this.jobGrowId}`
+                );
+                this.stats = resp.data;
+            } catch (err) {
+                this.error = err.response?.data?.error || err.message;
+            }
+        },
         async fetchCombinations() {
             this.loading = true;
             try {
@@ -150,8 +230,11 @@ export default {
         },
     },
     mounted() {
-        this.fetchCombinations();
-    }
+    this.loading = true;
+    Promise.all([this.fetchStats(), this.fetchCombinations()])
+      .catch(err => { this.error ||= err.message; })
+      .finally(() => { this.loading = false; });
+  }
 };
 </script>
   
@@ -206,7 +289,7 @@ export default {
 .stats-table,
 .stats-table td,
 .stats-table th {
-  overflow: visible !important;
+    overflow: visible !important;
 }
 </style>
   
