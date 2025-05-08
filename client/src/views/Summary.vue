@@ -143,6 +143,80 @@
             </tbody>
           </table>
         </div>
+        
+        <!-- Weapon & Aura Avatar -->
+        <div v-if="avatarStats">
+            <div class="combo-group">
+            <h2>Avatar Options – Weapon & Aura</h2>
+            <table class="stats-table">
+                <thead>
+                <tr><th>Item</th><th>Usage</th></tr>
+                </thead>
+                <tbody>
+                <tr
+                    v-for="it in (avatarStats.WEAPON || []).slice(0, 3)"
+                    :key="it.item_id"
+                >
+                    <td class="item-cell">
+                    <ItemTooltip :id="it.item_id" :name="it.item_name">
+                        <img
+                        :src="getItemImageUrl(it.item_id)"
+                        :alt="it.item_name"
+                        class="item-icon"
+                        loading="lazy"
+                        @error="hideBrokenIcon"
+                        />
+                    </ItemTooltip>
+                    </td>
+                    <td>{{ it.usage_count }}%</td>
+                </tr>
+                <tr
+                    v-for="it in (avatarStats.AURORA || []).slice(0, 3)"
+                    :key="it.item_id"
+                >
+                    <td class="item-cell">
+                    <ItemTooltip :id="it.item_id" :name="it.item_name">
+                        <img
+                        :src="getItemImageUrl(it.item_id)"
+                        :alt="it.item_name"
+                        class="item-icon"
+                        loading="lazy"
+                        @error="hideBrokenIcon"
+                        />
+                    </ItemTooltip>
+                    </td>
+                    <td>{{ it.usage_count }}%</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            
+            <!-- "Other" Avatar options -->
+            <div v-if="avatarStats && otherAvatarSlots.length" class="combo-group">
+                <h2>Avatar Options – Other Parts</h2>
+                <table class="stats-table">
+                    <thead>
+                    <tr><th>Part</th><th>Options</th><th>Usage</th></tr>
+                    </thead>
+                    <tbody>
+                          <!-- for each slot, render two rows -->
+                    <template v-for="slot in otherAvatarSlots" :key="slot">
+                        <tr
+                        v-for="(item, idx) in (avatarStats[slot] || []).slice(0,2)"
+                        :key="item.item_id"
+                        >
+                        <!-- Part name only on the first of the two rows -->
+                        <td v-if="idx === 0" :rowspan="2">
+                            {{ slotDisplayNames[slot] || slot }}
+                        </td>
+                        <td>{{ item.option_ability || '-' }}</td>
+                        <td>{{ item.usage_count }}%</td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+                </div>
+        </div>
       </div>
     </div>
   </template>
@@ -160,6 +234,8 @@ export default {
             combos: {},
             loading: false,
             error: null,
+            stats: null,
+            avatarStats: null,
             groups: [
                 { key: 'core', title: 'Core Equipment', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
                 { key: 'jewels', title: 'Jewelry', slots: ['wrist', 'ring', 'amulet'] },
@@ -189,7 +265,13 @@ export default {
                 magic_ston: 'Magic Stone',
                 earring: 'Earrings'
             };
-        }
+        },
+        otherAvatarSlots() {
+            return this.avatarStats
+                ? Object.keys(this.avatarStats)
+                    .filter(s => !['WEAPON', 'AURORA', 'AURA_SKIN'].includes(s))
+                : [];
+        },
     },
     methods: {
         comboKey(combo, slots) {
@@ -228,13 +310,27 @@ export default {
             img.src = MissingIcon;
             img.style.width = '40px';
         },
+        async fetchAvatarStats() {
+            try {
+                const { data } = await axios.get(
+                    `/api/avatar/stats/${this.jobId}/${this.jobGrowId}`
+                );
+                this.avatarStats = data.avatarStatsBySlot;
+            } catch (err) {
+                this.error = err.message;
+            }
+        },
     },
     mounted() {
-    this.loading = true;
-    Promise.all([this.fetchStats(), this.fetchCombinations()])
-      .catch(err => { this.error ||= err.message; })
-      .finally(() => { this.loading = false; });
-  }
+        this.loading = true;
+        Promise.all([
+            this.fetchStats(),
+            this.fetchCombinations(),
+            this.fetchAvatarStats()
+        ])
+            .catch(err => { this.error ||= err.message; })
+            .finally(() => { this.loading = false; });
+    }
 };
 </script>
   
