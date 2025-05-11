@@ -67,7 +67,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in stats.creatureStats" :key="item.creature_item_id">
+                  <tr v-for="item in (stats.creatureStats || []).slice(0, 5)" :key="item.creature_item_id">
                     <td class="item-cell">
                       <div class="icon-and-name">
                         <ItemTooltip :id="item.creature_item_id">
@@ -100,7 +100,7 @@
                   <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in stats.artifactRedStats" :key="item.artifact_item_id">
+                  <tr v-for="item in (stats.artifactRedStats || []).slice(0, 5)" :key="item.artifact_item_id">
                     <td class="item-cell">
                       <div class="icon-and-name">
                         <ItemTooltip
@@ -129,7 +129,7 @@
                   <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in stats.artifactBlueStats" :key="item.artifact_item_id">
+                  <tr v-for="item in (stats.artifactBlueStats || []).slice(0, 5)" :key="item.artifact_item_id">
                     <td class="item-cell">
                       <div class="icon-and-name">
                         <ItemTooltip
@@ -158,7 +158,7 @@
                   <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in stats.artifactGreenStats" :key="item.artifact_item_id">
+                  <tr v-for="item in (stats.artifactGreenStats || []).slice(0, 5)" :key="item.artifact_item_id">
                     <td class="item-cell">
                       <div class="icon-and-name">
                         <ItemTooltip
@@ -472,6 +472,26 @@ export default {
   justify-content: space-between;
 }
 
+.tables-container.artifact-container .slot {
+  flex: 1 1 0;
+}
+
+.tables-container.artifact-container .stats-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tables-container.artifact-container .stats-table th,
+.tables-container.artifact-container .stats-table td {
+  white-space: normal;
+  overflow-wrap: break-word;   /* modern */
+}
+
+.tables-container.artifact-container .stats-table th:nth-child(2),
+.tables-container.artifact-container .stats-table td:nth-child(2) {
+  width: 20%;
+}
+
 .tables-container .slot {
   padding: 10px;
   border-radius: 4px;
@@ -535,5 +555,20 @@ export default {
 
 .item-name {
   font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .tables-container.artifact-container {
+    gap: 8px;
+  }
+
+  .tables-container.artifact-container .slot {
+    margin: 0 5px;
+  }
+
+  .tables-container.artifact-container .stats-table th:nth-child(2),
+  .tables-container.artifact-container .stats-table td:nth-child(2) {
+    width: 25%;
+  }
 }
 </style>
