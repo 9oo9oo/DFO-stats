@@ -8,7 +8,7 @@
 
         <!-- Set Usage -->
       <div class="combo-group">
-        <h2>Set Usage (Top 3)</h2>
+        <h2>Set Item</h2>
         <table class="stats-table">
           <thead>
             <tr><th>Set</th><th>Usage</th></tr>
@@ -24,7 +24,7 @@
 
       <!-- Title -->
       <div class="combo-group">
-        <h2>Top Titles (Top 3)</h2>
+        <h2>Title Equipment</h2>
         <table class="stats-table">
           <thead>
             <tr><th>Title</th><th>Usage</th></tr>
@@ -50,7 +50,7 @@
 
       <!-- Weapon -->
       <div class="combo-group">
-        <h2>Top Weapons (Top 3)</h2>
+        <h2>Weapon Equipment</h2>
         <table class="stats-table">
           <thead>
             <tr><th>Weapon</th><th>Usage</th></tr>
@@ -76,7 +76,7 @@
 
         <!-- Normal Combos -->
         <div class="combo-group" v-for="group in groups" :key="group.key">
-          <h2>{{ group.title }}</h2>
+          <h2>Popular {{ group.title }} Combination</h2>
           <table class="stats-table">
             <thead>
               <tr>
@@ -111,7 +111,7 @@
   
         <!-- Fusion Combos -->
         <div class="combo-group" v-for="group in fusionGroups" :key="group.key">
-          <h2>{{ group.title }} (Fusion)</h2>
+          <h2>Popular {{ group.title }} Combination</h2>
           <table class="stats-table">
             <thead>
               <tr>
@@ -146,54 +146,69 @@
         
         <!-- Weapon & Aura Avatar -->
         <div v-if="avatarStats">
-            <div class="combo-group">
-            <h2>Avatar Options – Weapon & Aura</h2>
-            <table class="stats-table">
+          <div class="combo-group">
+            <!-- Weapon Avatar Table -->
+            <section class="avatar-group">
+              <h2>Weapon Avatar</h2>
+              <table class="stats-table">
                 <thead>
-                <tr><th>Item</th><th>Usage</th></tr>
+                  <tr><th>Item</th><th>Usage</th></tr>
                 </thead>
                 <tbody>
-                <tr
+                  <tr
                     v-for="it in (avatarStats.WEAPON || []).slice(0, 3)"
-                    :key="it.item_id"
-                >
+                    :key="`weapon-${it.item_id}`"
+                  >
                     <td class="item-cell">
-                    <ItemTooltip :id="it.item_id" :name="it.item_name">
+                      <ItemTooltip :id="it.item_id" :name="it.item_name">
                         <img
-                        :src="getItemImageUrl(it.item_id)"
-                        :alt="it.item_name"
-                        class="item-icon"
-                        loading="lazy"
-                        @error="hideBrokenIcon"
+                          :src="getItemImageUrl(it.item_id)"
+                          :alt="it.item_name"
+                          class="item-icon"
+                          loading="lazy"
+                          @error="hideBrokenIcon"
                         />
-                    </ItemTooltip>
+                      </ItemTooltip>
                     </td>
                     <td>{{ it.usage_count }}%</td>
-                </tr>
-                <tr
-                    v-for="it in (avatarStats.AURORA || []).slice(0, 3)"
-                    :key="it.item_id"
-                >
-                    <td class="item-cell">
-                    <ItemTooltip :id="it.item_id" :name="it.item_name">
-                        <img
-                        :src="getItemImageUrl(it.item_id)"
-                        :alt="it.item_name"
-                        class="item-icon"
-                        loading="lazy"
-                        @error="hideBrokenIcon"
-                        />
-                    </ItemTooltip>
-                    </td>
-                    <td>{{ it.usage_count }}%</td>
-                </tr>
+                  </tr>
                 </tbody>
-            </table>
-            </div>
+              </table>
+            </section>
+
+            <!-- Aurora Avatar Table -->
+            <section class="avatar-group">
+              <h2>Aura Avatar</h2>
+              <table class="stats-table">
+                <thead>
+                  <tr><th>Item</th><th>Usage</th></tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="it in (avatarStats.AURORA || []).slice(0, 3)"
+                    :key="`aurora-${it.item_id}`"
+                  >
+                    <td class="item-cell">
+                      <ItemTooltip :id="it.item_id" :name="it.item_name">
+                        <img
+                          :src="getItemImageUrl(it.item_id)"
+                          :alt="it.item_name"
+                          class="item-icon"
+                          loading="lazy"
+                          @error="hideBrokenIcon"
+                        />
+                      </ItemTooltip>
+                    </td>
+                    <td>{{ it.usage_count }}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
             
             <!-- "Other" Avatar options -->
             <div v-if="avatarStats && otherAvatarSlots.length" class="combo-group">
-                <h2>Avatar Options – Other Parts</h2>
+                <h2>Popular Avatar Options</h2>
                 <table class="stats-table">
                     <thead>
                     <tr><th>Part</th><th>Options</th><th>Usage</th></tr>
@@ -237,14 +252,14 @@ export default {
             stats: null,
             avatarStats: null,
             groups: [
-                { key: 'core', title: 'Core Equipment', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
-                { key: 'jewels', title: 'Jewelry', slots: ['wrist', 'ring', 'amulet'] },
-                { key: 'extras', title: 'Extras', slots: ['support', 'magic_ston', 'earring'] }
+                { key: 'core', title: 'Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
+                { key: 'jewels', title: 'Accessory', slots: ['wrist', 'ring', 'amulet'] },
+                { key: 'extras', title: 'Special Equipment', slots: ['support', 'magic_ston', 'earring'] }
             ],
             fusionGroups: [
-                { key: 'coreFusion', title: 'Core Equipment', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
-                { key: 'jewelsFusion', title: 'Jewelry', slots: ['wrist', 'ring', 'amulet'] },
-                { key: 'extrasFusion', title: 'Extras', slots: ['support', 'magic_ston', 'earring'] }
+                { key: 'coreFusion', title: 'Fusion Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
+                { key: 'jewelsFusion', title: 'Fusion Accessory', slots: ['wrist', 'ring', 'amulet'] },
+                { key: 'extrasFusion', title: 'Fusion Special Equipment', slots: ['support', 'magic_ston', 'earring'] }
             ]
         };
     },
