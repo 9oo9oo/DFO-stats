@@ -666,9 +666,28 @@ export default {
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
+  .first-row-grid {
+    gap: 0;
+  }
+
+  .first-row-grid .tables-pair {
+    gap: 0;            
+    margin-bottom: 12px;  
+  }
+
+  .other-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .other-grid .slot-section {
-    width: 90%;
-    margin: 0 auto;
+    width: auto !important;
+    justify-content: flex-start !important;
+    margin: 0;
+  }
+
+  .other-grid .tables-pair {
+    flex-direction: column !important;
+    gap: 16px;
   }
 }
 </style>
