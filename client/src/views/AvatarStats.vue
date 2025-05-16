@@ -415,8 +415,7 @@ export default {
       const img = event.target;
       img.onerror = null;
       img.src = MissingIcon;
-      img.style.width = '24px';
-      img.style.height = '24px';
+      img.style.width = '40px';
     }
   }
 };

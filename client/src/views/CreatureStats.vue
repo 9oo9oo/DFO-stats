@@ -76,6 +76,7 @@
                             :alt="item.creature_item_name"
                             class="item-icon"
                             loading="lazy"
+                            @error="hideBrokenIcon"
                           />
                         </ItemTooltip>
                         <span class="item-name">{{ item.creature_item_name }}</span>
@@ -112,6 +113,7 @@
                             :alt="item.artifact_item_name"
                             class="item-icon"
                             loading="lazy"
+                            @error="hideBrokenIcon"
                           />
                         </ItemTooltip>
                         <span class="item-name">{{ item.artifact_item_name }}</span>
@@ -141,6 +143,7 @@
                             :alt="item.artifact_item_name"
                             class="item-icon"
                             loading="lazy"
+                            @error="hideBrokenIcon"
                           />
                         </ItemTooltip>
                         <span class="item-name">{{ item.artifact_item_name }}</span>
@@ -170,6 +173,7 @@
                             :alt="item.artifact_item_name"
                             class="item-icon"
                             loading="lazy"
+                            @error="hideBrokenIcon"
                           />
                         </ItemTooltip>
                         <span class="item-name">{{ item.artifact_item_name }}</span>
@@ -190,6 +194,7 @@
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
 import ItemTooltip from '@/components/ItemTooltip.vue';
+import MissingIcon from '@/assets/missingicon.png';
 
 export default {
   name: 'CreatureStats',
@@ -267,6 +272,13 @@ export default {
 
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
+    },
+
+    hideBrokenIcon(event) {
+      const img = event.target;
+      img.onerror = null;
+      img.src = MissingIcon;
+      img.style.width = '40px';
     }
   }
 };
