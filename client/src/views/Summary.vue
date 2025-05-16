@@ -125,9 +125,8 @@
         </table>
       </div>
 
-      <!-- Weapon & Aura Avatar Tables -->
-      <div v-if="avatarStats">
         <!-- Weapon Avatar Table -->
+      <div v-if="avatarStats" class="combo-group">
         <h2>Weapon Avatar</h2>
         <table class="stats-table">
           <thead>
@@ -148,8 +147,10 @@
             </tr>
           </tbody>
         </table>
+      </div>
 
         <!-- Aurora Avatar Table -->
+      <div v-if="avatarStats" class="combo-group">
         <h2>Aura Avatar</h2>
         <table class="stats-table">
           <thead>
