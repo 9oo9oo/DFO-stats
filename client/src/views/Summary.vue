@@ -143,7 +143,7 @@
             </tbody>
           </table>
         </div>
-        
+
         <!-- Weapon & Aura Avatar -->
         <div v-if="avatarStats">
           <div class="combo-group">
@@ -205,6 +205,7 @@
               </table>
             </section>
           </div>
+          
             
             <!-- "Other" Avatar options -->
             <div v-if="avatarStats && otherAvatarSlots.length" class="combo-group">
@@ -227,16 +228,95 @@
                         <td>{{ item.option_ability || '-' }}</td>
                         <td>{{ item.usage_count }}%</td>
                         </tr>
-                    </template>
-                    </tbody>
-                </table>
-                </div>
-        </div>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+
+            
+  <!-- Creature + Artifact Combinations -->
+  <div
+    class="combo-group"
+    v-if="creatureCombos && creatureCombos.length"
+  >
+    <h2>Creature + Artifact Combinations</h2>
+    <table class="stats-table">
+      <thead>
+        <tr><th>Creature</th><th>Artifacts</th><th>Usage</th></tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="combo in creatureCombos.slice(0, 10)"
+          :key="combo.creature_item.id + '-' + combo.usage_count"
+        >
+          <td class="item-cell">
+            <ItemTooltip
+              :id="combo.creature_item.id"
+              :name="combo.creature_item.name"
+            >
+              <img
+                :src="getItemImageUrl(combo.creature_item.id)"
+                :alt="combo.creature_item.name"
+                class="item-icon"
+                loading="lazy"
+                @error="hideBrokenIcon"
+              />
+            </ItemTooltip>
+          </td>
+          <td>
+            <div class="icon-group">
+              <ItemTooltip
+                :id="combo.artifact_red.id"
+                :name="combo.artifact_red.name"
+              >
+                <img
+                  :src="getItemImageUrl(combo.artifact_red.id)"
+                  :alt="combo.artifact_red.name"
+                  class="item-icon"
+                  loading="lazy"
+                  @error="hideBrokenIcon"
+                />
+              </ItemTooltip>
+              <ItemTooltip
+                :id="combo.artifact_blue.id"
+                :name="combo.artifact_blue.name"
+              >
+                <img
+                  :src="getItemImageUrl(combo.artifact_blue.id)"
+                  :alt="combo.artifact_blue.name"
+                  class="item-icon"
+                  loading="lazy"
+                  @error="hideBrokenIcon"
+                />
+              </ItemTooltip>
+              <ItemTooltip
+                :id="combo.artifact_green.id"
+                :name="combo.artifact_green.name"
+              >
+                <img
+                  :src="getItemImageUrl(combo.artifact_green.id)"
+                  :alt="combo.artifact_green.name"
+                  class="item-icon"
+                  loading="lazy"
+                  @error="hideBrokenIcon"
+                />
+              </ItemTooltip>
+            </div>
+          </td>
+          <td>{{ combo.usage_count }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+       
+
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
+<script>
 import axios from 'axios';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
@@ -251,6 +331,7 @@ export default {
             error: null,
             stats: null,
             avatarStats: null,
+            creatureCombos: null,
             groups: [
                 { key: 'core', title: 'Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
                 { key: 'jewels', title: 'Accessory', slots: ['wrist', 'ring', 'amulet'] },
@@ -335,13 +416,25 @@ export default {
                 this.error = err.message;
             }
         },
+        async fetchCreatureCombos() {
+          try {
+            const resp = await axios.get(
+              `/api/creature/combinations/${this.jobId}/${this.jobGrowId}`
+            );
+            // assuming your endpoint returns { combinationStats: [...] }
+            this.creatureCombos = resp.data.combinationStats || [];
+          } catch (err) {
+            this.error = err.response?.data?.error || err.message;
+          }
+        },
     },
     mounted() {
         this.loading = true;
         Promise.all([
             this.fetchStats(),
             this.fetchCombinations(),
-            this.fetchAvatarStats()
+            this.fetchAvatarStats(),
+            this.fetchCreatureCombos(),
         ])
             .catch(err => { this.error ||= err.message; })
             .finally(() => { this.loading = false; });

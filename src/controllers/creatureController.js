@@ -220,3 +220,55 @@ exports.getCreatureStats = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+exports.getCreatureArtifactCombinations = async (req, res) => {
+  const { jobId, jobGrowId } = req.params;
+  try {
+    const comboQuery = `
+      SELECT
+        cc.creature_item_id,
+        cc.creature_item_name,
+        cc.artifact_red_item_id   AS red_id,
+        cc.artifact_red_item_name AS red_name,
+        cc.artifact_blue_item_id   AS blue_id,
+        cc.artifact_blue_item_name AS blue_name,
+        cc.artifact_green_item_id   AS green_id,
+        cc.artifact_green_item_name AS green_name,
+        COUNT(*) AS usage_count
+      FROM character_creature cc
+      JOIN characters c
+        ON cc.character_id = c.character_id
+      WHERE c.job_id     = $1
+        AND c.job_grow_id = $2
+        AND cc.creature_item_id    IS NOT NULL
+        AND cc.artifact_red_item_id   IS NOT NULL
+        AND cc.artifact_blue_item_id  IS NOT NULL
+        AND cc.artifact_green_item_id IS NOT NULL
+      GROUP BY
+        cc.creature_item_id,
+        cc.creature_item_name,
+        cc.artifact_red_item_id,
+        cc.artifact_red_item_name,
+        cc.artifact_blue_item_id,
+        cc.artifact_blue_item_name,
+        cc.artifact_green_item_id,
+        cc.artifact_green_item_name
+      ORDER BY usage_count DESC
+      LIMIT 20;
+    `;
+    const { rows } = await client.query(comboQuery, [jobId, jobGrowId]);
+
+    const combinationStats = rows.map(r => ({
+      creature_item:   { id: r.creature_item_id, name: r.creature_item_name },
+      artifact_red:    { id: r.red_id,   name: r.red_name },
+      artifact_blue:   { id: r.blue_id,  name: r.blue_name },
+      artifact_green:  { id: r.green_id, name: r.green_name },
+      usage_count:     parseInt(r.usage_count, 10),
+    }));
+
+    res.status(200).json({ combinationStats });
+  } catch (err) {
+    console.error('Error fetching creature-artifact combos:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

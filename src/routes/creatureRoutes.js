@@ -9,4 +9,7 @@ router.get('/fetch/:serverId/:jobId/:jobGrowId', creatureController.fetchCreatur
 // Return creature stats
 router.get('/stats/:jobId/:jobGrowId', creatureController.getCreatureStats);
 
+// Return creature & artifact combinations
+router.get('/combinations/:jobId/:jobGrowId', creatureController.getCreatureArtifactCombinations);
+
 module.exports = router;
