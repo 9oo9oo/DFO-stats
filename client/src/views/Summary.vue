@@ -18,7 +18,13 @@
           </thead>
           <tbody>
             <tr v-for="set in stats.setUsage.slice(0, 3)" :key="set.set_item_id">
-              <td>{{ set.set_item_name }}</td>
+              <td>
+                <div class="icon-group">
+                  <img :src="getSetIconUrl(set.set_item_name)" :alt="set.set_item_name" class="set-icon" loading="lazy"
+                    @error="hideBrokenIcon" />
+                  <span class="set-name">{{ set.set_item_name }}</span>
+                </div>
+              </td>
               <td>{{ set.usage_rate }}</td>
             </tr>
           </tbody>
@@ -38,10 +44,13 @@
           <tbody>
             <tr v-for="item in stats.itemsBySlot['TITLE'].slice(0, 3)" :key="item.item_id">
               <td class="item-cell">
-                <ItemTooltip :id="item.item_id" :name="item.item_name">
-                  <img :src="getItemImageUrl(item.item_id)" :alt="item.item_name" class="item-icon" loading="lazy"
-                    @error="hideBrokenIcon" />
-                </ItemTooltip>
+                <div class="icon-group">
+                  <ItemTooltip :id="item.item_id" :name="item.item_name">
+                    <img :src="getItemImageUrl(item.item_id)" :alt="item.item_name" class="item-icon" loading="lazy"
+                      @error="hideBrokenIcon" />
+                  </ItemTooltip>
+                  <span class="item-name">{{ item.item_name }}</span>
+                </div>
               </td>
               <td>{{ item.usage_rate }}</td>
             </tr>
@@ -62,10 +71,13 @@
           <tbody>
             <tr v-for="item in stats.itemsBySlot['WEAPON'].slice(0, 3)" :key="item.item_id">
               <td class="item-cell">
+                <div class="icon-group">
                 <ItemTooltip :id="item.item_id" :name="item.item_name">
                   <img :src="getItemImageUrl(item.item_id)" :alt="item.item_name" class="item-icon" loading="lazy"
                     @error="hideBrokenIcon" />
                 </ItemTooltip>
+                <span class="item-name">{{ item.item_name }}</span>
+                </div>
               </td>
               <td>{{ item.usage_rate }}</td>
             </tr>
@@ -125,7 +137,7 @@
         </table>
       </div>
 
-        <!-- Weapon Avatar Table -->
+      <!-- Weapon Avatar Table -->
       <div v-if="avatarStats" class="combo-group">
         <h2>Weapon Avatar</h2>
         <table class="stats-table">
@@ -138,10 +150,13 @@
           <tbody>
             <tr v-for="it in (avatarStats.WEAPON || []).slice(0, 3)" :key="`weapon-${it.item_id}`">
               <td class="item-cell">
+                <div class="icon-group">
                 <ItemTooltip :id="it.item_id" :name="it.item_name">
                   <img :src="getItemImageUrl(it.item_id)" :alt="it.item_name" class="item-icon" loading="lazy"
                     @error="hideBrokenIcon" />
                 </ItemTooltip>
+                <span class="item-name">{{ it.item_name }}</span>
+                </div>
               </td>
               <td>{{ it.usage_count }}%</td>
             </tr>
@@ -149,7 +164,7 @@
         </table>
       </div>
 
-        <!-- Aurora Avatar Table -->
+      <!-- Aurora Avatar Table -->
       <div v-if="avatarStats" class="combo-group">
         <h2>Aura Avatar</h2>
         <table class="stats-table">
@@ -162,10 +177,13 @@
           <tbody>
             <tr v-for="it in (avatarStats.AURORA || []).slice(0, 3)" :key="`aurora-${it.item_id}`">
               <td class="item-cell">
+                <div class="icon-group">
                 <ItemTooltip :id="it.item_id" :name="it.item_name">
                   <img :src="getItemImageUrl(it.item_id)" :alt="it.item_name" class="item-icon" loading="lazy"
                     @error="hideBrokenIcon" />
                 </ItemTooltip>
+                <span class="item-name">{{ it.item_name }}</span>
+                </div>
               </td>
               <td>{{ it.usage_count }}%</td>
             </tr>
@@ -212,12 +230,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="combo in creatureCombos.slice(0, 10)" :key="combo.creature_item.id + '-' + combo.usage_count">
+            <tr v-for="combo in creatureCombos.slice(0, 5)" :key="combo.creature_item.id + '-' + combo.usage_count">
               <td class="item-cell">
+                <div class="icon-group">
                 <ItemTooltip :id="combo.creature_item.id" :name="combo.creature_item.name">
                   <img :src="getItemImageUrl(combo.creature_item.id)" :alt="combo.creature_item.name" class="item-icon"
                     loading="lazy" @error="hideBrokenIcon" />
                 </ItemTooltip>
+                <span class="item-name">{{ combo.creature_item.name }}</span>
+                </div>
               </td>
               <td>
                 <div class="icon-group">
@@ -309,7 +330,21 @@ export default {
         { key: 'coreFusion', title: 'Fusion Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
         { key: 'jewelsFusion', title: 'Fusion Accessory', slots: ['wrist', 'ring', 'amulet'] },
         { key: 'extrasFusion', title: 'Fusion Special Equipment', slots: ['support', 'magic_ston', 'earring'] }
-      ]
+      ],
+      setIconMapping: {
+        "Hideout's Endless Gold Set": 'hideout.png',
+        "Cleansing Darkness Set": 'cleansing.png',
+        "Ancient Battlefield Valkyrie Set": 'ancient.png',
+        "Death in the Shadows Set": 'death.png',
+        "Dragon Arena Uprising Set": 'dragon.png',
+        "Overwhelming Nature Set": 'overwhelming.png',
+        "Serendipity Set": 'serendipity.png',
+        "Ethereal Orb Arts Set": 'ethereal.png',
+        "Beyond Limit Energy Set": 'beyond.png',
+        "Magic Domain Set": 'magic.png',
+        "Alpha of the Pack Hunt Set": 'alpha.png',
+        "Soul Fairy Set": 'soul.png'
+      }
     };
   },
   computed: {
@@ -367,6 +402,17 @@ export default {
     getItemImageUrl(itemId) {
       return `https://img-api.dfoneople.com/df/items/${itemId}`;
     },
+    getSetIconUrl(setName) {
+      const file = this.setIconMapping[setName];
+      if (file) {
+        try {
+          return require(`@/assets/setIcons/${file}`);
+        } catch {
+          return MissingIcon;
+        }
+      }
+      return MissingIcon;
+    },
     hideBrokenIcon(event) {
       const img = event.target;
       img.onerror = null;
@@ -400,7 +446,7 @@ export default {
           `/api/talisman/stats/${this.jobId}/${this.jobGrowId}`
         );
         this.talismanStats = data.talismanStats;
-        this.runeStats    = data.runeStats;
+        this.runeStats = data.runeStats;
       } catch (err) {
         this.error = err.response?.data?.error || err.message;
       }
@@ -440,24 +486,26 @@ export default {
 }
 
 .stats-table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   margin-top: 8px;
 }
 
 .stats-table th {
-  background-color: #f2f2f2;
+  background-color: white;
+  border: 2px solid black;
   color: #e56717;
   padding: 8px;
   text-align: left;
 }
 
 .stats-table td {
-  border: 1px solid #ddd;
+  border: 1px solid white;
   padding: 8px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .icon-group {
