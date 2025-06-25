@@ -3,9 +3,6 @@ set -e
 
 cd /home/ec2-user/DFO-stats
 
-echo "Pulling latest code…"
-git pull origin main
-
 echo "Rebuilding .env in src/…"
 cd src
 : > .env
