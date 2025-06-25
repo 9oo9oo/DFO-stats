@@ -66,7 +66,7 @@
             <table class="stats-table">
               <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
-                <tr v-for="it in stats.avatarStatsBySlot['WEAPON'] || []" :key="it.item_id">
+                <tr v-for="it in (stats.avatarStatsBySlot['WEAPON'] || []).slice(0, 5)" :key="it.item_id">
                   <td class="item-cell">
                     <div class="icon-and-name">
                       <ItemTooltip :id="it.item_id" :name="it.item_name">
@@ -93,7 +93,7 @@
             <table class="stats-table">
               <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
-                <tr v-for="it in stats.avatarStatsBySlot['AURORA'] || []" :key="it.item_id">
+                <tr v-for="it in (stats.avatarStatsBySlot['AURORA'] || []).slice(0, 5)" :key="it.item_id">
                   <td class="item-cell">
                     <div class="icon-and-name">
                       <ItemTooltip :id="it.item_id" :name="it.item_name">
@@ -143,10 +143,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="item in stats.avatarStatsBySlot[slot] || []"
-                      :key="item.item_id"
-                    >
+                    <tr v-for="item in (stats.avatarStatsBySlot[slot] || []).slice(0, 3)" :key="item.item_id">
                         <template v-if="slot === 'WEAPON' || slot === 'AURORA'">
                         <td class="item-cell">
                           <div class="icon-and-name">
@@ -188,7 +185,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      v-for="em in stats.emblemStatsByColor[emColor] || []"
+                      v-for="em in (stats.emblemStatsByColor[emColor] || []).slice(0, 5)"
                       :key="em.item_id"
                     >
                     <td class="item-cell">
@@ -418,8 +415,7 @@ export default {
       const img = event.target;
       img.onerror = null;
       img.src = MissingIcon;
-      img.style.width = '24px';
-      img.style.height = '24px';
+      img.style.width = '40px';
     }
   }
 };
