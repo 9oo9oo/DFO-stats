@@ -38,7 +38,7 @@ jobs:
                "client/node_modules/**" \
                ".git/**"
 
-      # 6. Configure AWS creds (AWS_REGION on github secrets)
+      # 6. Configure AWS creds (all AWS creds on github secrets)
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
