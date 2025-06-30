@@ -57,7 +57,7 @@ export default {
 
 .footer-text {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 120px;
   color: #fff;
 }
 
