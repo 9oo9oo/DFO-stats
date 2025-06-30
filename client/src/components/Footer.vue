@@ -57,17 +57,10 @@ export default {
 
 .footer-text {
   margin-top: 10px;
-  font-size: 240px;
-  color: #fff;
-}
-
-/* CI-CD Testing 
-.footer-text {
-  margin-top: 10px;
   font-size: 12px;
   color: #fff;
 }
-*/
+
 
 .footer-text p {
   margin: 5px 0;
