@@ -17,8 +17,3 @@ done
 
 echo "Installing backend deps…"
 npm ci
-
-echo "Building Vue client…"
-cd ../client
-npm ci
-npm run build
