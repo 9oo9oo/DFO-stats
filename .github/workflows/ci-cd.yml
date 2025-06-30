@@ -8,10 +8,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout
+      # 1. Checkout repository
       - uses: actions/checkout@v3
 
-      # 2. Node.js setup
+      # 2. Setup Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -29,20 +29,25 @@ jobs:
         run: |
           npm ci
           npm run build
-      
-      # Make your deploy scripts executable
-      - name: Set execute bit on hooks
-        run: chmod +x scripts/install_dependencies.sh scripts/start_server.sh scripts/cleanup_old.sh scripts/health_check.sh scripts/stop_server.sh
 
-      # 5. Package everything
+      # 5. Make deploy hooks executable
+      - name: Set execute bit on hooks
+        run: |
+          chmod +x scripts/*.sh
+
+      # 6. Package everything (use pre-built client)
       - name: Zip artifact
         run: |
+          # include pre-built client dist
+          cp -r client/dist client/build-output
           zip -r deployment.zip . \
             -x "src/node_modules/**" \
                "client/node_modules/**" \
+               "client/src/**" \
+               "client/public/**" \
                ".git/**"
 
-      # 6. Configure AWS creds (all AWS creds on github secrets)
+      # 7. Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -50,13 +55,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:            ${{ secrets.AWS_REGION }}
 
-      # 7. Upload to S3
+      # 8. Upload to S3
       - name: Upload to S3
         run: |
           aws s3 cp deployment.zip \
             s3://${{ secrets.S3_BUCKET }}/deployment-${{ github.sha }}.zip
 
-      # 8. Deploy with CodeDeploy
+      # 9. Deploy with CodeDeploy
       - name: Deploy to CodeDeploy via AWS CLI
         run: |
           aws deploy create-deployment \
