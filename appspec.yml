@@ -16,11 +16,14 @@ hooks:
   BeforeInstall:
     - location: scripts/cleanup_old.sh
       timeout: 300
-      runas: ec2-user
+      runas: root
 
   AfterInstall:
+    - location: scripts/fix_permissions.sh
+      timeout: 300
+      runas: root
     - location: scripts/install_dependencies.sh
-      timeout: 900
+      timeout: 300
       runas: ec2-user
 
   ApplicationStart:
