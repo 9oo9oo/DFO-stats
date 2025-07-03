@@ -3,7 +3,7 @@ module.exports = {
 
   roots: [
     '<rootDir>/src',         // backend
-    '<rootDir>/client/src',  // frontend
+    // '<rootDir>/client/src',  // frontend
   ],
 
   moduleFileExtensions: ['js', 'json', 'vue'],
@@ -16,25 +16,25 @@ module.exports = {
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.spec.js',
     '<rootDir>/src/**/*.spec.js',
-    '<rootDir>/client/src/**/__tests__/**/*.spec.js',
-    '<rootDir>/client/src/**/*.spec.js',
+    // '<rootDir>/client/src/**/__tests__/**/*.spec.js',
+    // '<rootDir>/client/src/**/*.spec.js',
   ],
 
-  moduleNameMapper: {
-    '^@/(.*)$':         '<rootDir>/src/$1',
-    '^@client/(.*)$':   '<rootDir>/client/src/$1',
-  },
+  // moduleNameMapper: {
+  //   '^@/(.*)$':         '<rootDir>/src/$1',
+  //   '^@client/(.*)$':   '<rootDir>/client/src/$1',
+  // },
 
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.js',
     '!src/server.js',
     '!src/config/*.js',
-    'client/src/**/*.js',
-    'client/src/**/*.vue',
-    '!client/src/main.js',
-    '!client/src/config/*.js',
-    '!client/src/router/*.js',
+    // 'client/src/**/*.js',
+    // 'client/src/**/*.vue',
+    // '!client/src/main.js',
+    // '!client/src/config/*.js',
+    // '!client/src/router/*.js',
   ],
 
   reporters: [

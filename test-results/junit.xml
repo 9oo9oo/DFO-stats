@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="65" failures="0" errors="0" time="2.283">
-  <testsuite name="models/db" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="0.806" tests="4">
-    <testcase classname="models/db should call connect() and query(&quot;SELECT version();&quot;) on import" name="models/db should call connect() and query(&quot;SELECT version();&quot;) on import" time="0.011">
+<testsuites name="jest tests" tests="65" failures="0" errors="0" time="1.752">
+  <testsuite name="equipmentRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:45" time="0.412" tests="4">
+    <testcase classname="equipmentRoutes GET /equipment/fetch/:serverId/:jobId/:jobGrowId calls fetchEquipment and returns JSON" name="equipmentRoutes GET /equipment/fetch/:serverId/:jobId/:jobGrowId calls fetchEquipment and returns JSON" time="0.016">
     </testcase>
-    <testcase classname="models/db exports the same client instance" name="models/db exports the same client instance" time="0.001">
+    <testcase classname="equipmentRoutes GET /equipment/stats/:jobId/:jobGrowId calls getEquipmentStats and returns JSON" name="equipmentRoutes GET /equipment/stats/:jobId/:jobGrowId calls getEquipmentStats and returns JSON" time="0.003">
     </testcase>
-    <testcase classname="models/db SIGINT handler should call client.end() and process.exit() on SIGINT" name="models/db SIGINT handler should call client.end() and process.exit() on SIGINT" time="0.001">
+    <testcase classname="equipmentRoutes GET /equipment/combinations/:jobId/:jobGrowId calls getEquipmentCombinations and returns JSON" name="equipmentRoutes GET /equipment/combinations/:jobId/:jobGrowId calls getEquipmentCombinations and returns JSON" time="0.003">
     </testcase>
-    <testcase classname="models/db connection error logs error when client.connect() rejects" name="models/db connection error logs error when client.connect() rejects" time="0.014">
-    </testcase>
-  </testsuite>
-  <testsuite name="serverController.getServers" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="0.946" tests="2">
-    <testcase classname="serverController.getServers should call axios.get with the correct URL and return data on success" name="serverController.getServers should call axios.get with the correct URL and return data on success" time="0.013">
-    </testcase>
-    <testcase classname="serverController.getServers should return 500 + error message when axios.get throws" name="serverController.getServers should return 500 + error message when axios.get throws" time="0.001">
+    <testcase classname="equipmentRoutes returns 404 for unsupported methods or unknown routes" name="equipmentRoutes returns 404 for unsupported methods or unknown routes" time="0.007">
     </testcase>
   </testsuite>
-  <testsuite name="itemController.getItemInfo" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="0.949" tests="3">
-    <testcase classname="itemController.getItemInfo should proxy item info successfully" name="itemController.getItemInfo should proxy item info successfully" time="0.01">
-    </testcase>
-    <testcase classname="itemController.getItemInfo should return 502 if API request fails with response status" name="itemController.getItemInfo should return 502 if API request fails with response status" time="0.001">
-    </testcase>
-    <testcase classname="itemController.getItemInfo should return 502 if API request fails without response" name="itemController.getItemInfo should return 502 if API request fails without response" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="skillController.fetchSkills" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="0.999" tests="5">
-    <testcase classname="skillController.fetchSkills returns 404 when no character IDs found" name="skillController.fetchSkills returns 404 when no character IDs found" time="0.035">
-    </testcase>
-    <testcase classname="skillController.fetchSkills returns 200 when API returns no skill data" name="skillController.fetchSkills returns 200 when API returns no skill data" time="0.001">
-    </testcase>
-    <testcase classname="skillController.fetchSkills inserts active and passive skills and returns 200" name="skillController.fetchSkills inserts active and passive skills and returns 200" time="0.001">
-    </testcase>
-    <testcase classname="skillController.getSkillStats returns formatted skill stats successfully" name="skillController.getSkillStats returns formatted skill stats successfully" time="0.001">
-    </testcase>
-    <testcase classname="skillController.getSkillStats returns 500 if DB query fails" name="skillController.getSkillStats returns 500 if DB query fails" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="characterController.getCharacter" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.017" tests="4">
-    <testcase classname="characterController.getCharacter returns 500 if fetching highest fame fails" name="characterController.getCharacter returns 500 if fetching highest fame fails" time="0.011">
-    </testcase>
-    <testcase classname="characterController.getCharacter returns 500 if fetching character data fails in loop" name="characterController.getCharacter returns 500 if fetching character data fails in loop" time="0.001">
-    </testcase>
-    <testcase classname="characterController.getCharacter successfully inserts fetched characters and returns 200" name="characterController.getCharacter successfully inserts fetched characters and returns 200" time="0.002">
-    </testcase>
-    <testcase classname="characterController.getCharacter rolls back and returns 500 if DB insertion fails" name="characterController.getCharacter rolls back and returns 500 if DB insertion fails" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="creatureController.fetchCreature" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.037" tests="7">
-    <testcase classname="creatureController.fetchCreature should return 404 when no character IDs" name="creatureController.fetchCreature should return 404 when no character IDs" time="0.014">
-    </testcase>
-    <testcase classname="creatureController.fetchCreature should return 200 when no creature data" name="creatureController.fetchCreature should return 200 when no creature data" time="0.001">
-    </testcase>
-    <testcase classname="creatureController.fetchCreature should insert creature and artifacts on success" name="creatureController.fetchCreature should insert creature and artifacts on success" time="0.001">
-    </testcase>
-    <testcase classname="creatureController.getCreatureStats returns stats on success" name="creatureController.getCreatureStats returns stats on success" time="0.001">
-    </testcase>
-    <testcase classname="creatureController.getCreatureStats handles DB error" name="creatureController.getCreatureStats handles DB error" time="0.001">
-    </testcase>
-    <testcase classname="creatureController.getCreatureArtifactCombinations returns combination stats" name="creatureController.getCreatureArtifactCombinations returns combination stats" time="0.001">
-    </testcase>
-    <testcase classname="creatureController.getCreatureArtifactCombinations handles combo DB error" name="creatureController.getCreatureArtifactCombinations handles combo DB error" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="talismanController.fetchTalismanAndRunes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.034" tests="5">
-    <testcase classname="talismanController.fetchTalismanAndRunes returns 404 when no character IDs found" name="talismanController.fetchTalismanAndRunes returns 404 when no character IDs found" time="0.014">
-    </testcase>
-    <testcase classname="talismanController.fetchTalismanAndRunes returns 200 when API returns no talisman data" name="talismanController.fetchTalismanAndRunes returns 200 when API returns no talisman data" time="0.001">
-    </testcase>
-    <testcase classname="talismanController.fetchTalismanAndRunes inserts talisman runes and returns 200 on success" name="talismanController.fetchTalismanAndRunes inserts talisman runes and returns 200 on success" time="0.002">
-    </testcase>
-    <testcase classname="talismanController.getTalismanRuneStats returns formatted talisman and rune stats successfully" name="talismanController.getTalismanRuneStats returns formatted talisman and rune stats successfully" time="0.001">
-    </testcase>
-    <testcase classname="talismanController.getTalismanRuneStats returns 500 if DB query fails" name="talismanController.getTalismanRuneStats returns 500 if DB query fails" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="equipmentController.fetchEquipment" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.056" tests="7">
-    <testcase classname="equipmentController.fetchEquipment returns 404 when no character IDs" name="equipmentController.fetchEquipment returns 404 when no character IDs" time="0.013">
+  <testsuite name="equipmentController.fetchEquipment" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.079" tests="7">
+    <testcase classname="equipmentController.fetchEquipment returns 404 when no character IDs" name="equipmentController.fetchEquipment returns 404 when no character IDs" time="0.001">
     </testcase>
     <testcase classname="equipmentController.fetchEquipment returns 200 when equipment API returns no data" name="equipmentController.fetchEquipment returns 200 when equipment API returns no data" time="0.001">
     </testcase>
     <testcase classname="equipmentController.fetchEquipment inserts equipment and fusion items on success" name="equipmentController.fetchEquipment inserts equipment and fusion items on success" time="0.001">
     </testcase>
-    <testcase classname="equipmentController.getEquipmentStats aggregates and returns equipment stats" name="equipmentController.getEquipmentStats aggregates and returns equipment stats" time="0.006">
+    <testcase classname="equipmentController.getEquipmentStats aggregates and returns equipment stats" name="equipmentController.getEquipmentStats aggregates and returns equipment stats" time="0.001">
     </testcase>
-    <testcase classname="equipmentController.getEquipmentStats handles DB error" name="equipmentController.getEquipmentStats handles DB error" time="0.001">
+    <testcase classname="equipmentController.getEquipmentStats handles DB error" name="equipmentController.getEquipmentStats handles DB error" time="0">
     </testcase>
     <testcase classname="equipmentController.getEquipmentCombinations returns combination stats for each group" name="equipmentController.getEquipmentCombinations returns combination stats for each group" time="0.001">
     </testcase>
-    <testcase classname="equipmentController.getEquipmentCombinations handles DB error" name="equipmentController.getEquipmentCombinations handles DB error" time="0.001">
+    <testcase classname="equipmentController.getEquipmentCombinations handles DB error" name="equipmentController.getEquipmentCombinations handles DB error" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="getAvatar" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.058" tests="5">
-    <testcase classname="getAvatar returns 404 when no character IDs found" name="getAvatar returns 404 when no character IDs found" time="0.01">
+  <testsuite name="skillRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.102" tests="3">
+    <testcase classname="skillRoutes GET /skill/fetch/:serverId/:jobId/:jobGrowId calls fetchSkills and returns JSON" name="skillRoutes GET /skill/fetch/:serverId/:jobId/:jobGrowId calls fetchSkills and returns JSON" time="0.008">
+    </testcase>
+    <testcase classname="skillRoutes GET /skill/stats/:jobId/:jobGrowId calls getSkillStats and returns JSON" name="skillRoutes GET /skill/stats/:jobId/:jobGrowId calls getSkillStats and returns JSON" time="0.003">
+    </testcase>
+    <testcase classname="skillRoutes returns 404 for unsupported methods or unknown routes" name="skillRoutes returns 404 for unsupported methods or unknown routes" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="creatureRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.099" tests="4">
+    <testcase classname="creatureRoutes GET /creature/fetch/:serverId/:jobId/:jobGrowId calls fetchCreature and returns JSON" name="creatureRoutes GET /creature/fetch/:serverId/:jobId/:jobGrowId calls fetchCreature and returns JSON" time="0.005">
+    </testcase>
+    <testcase classname="creatureRoutes GET /creature/stats/:jobId/:jobGrowId calls getCreatureStats and returns JSON" name="creatureRoutes GET /creature/stats/:jobId/:jobGrowId calls getCreatureStats and returns JSON" time="0.002">
+    </testcase>
+    <testcase classname="creatureRoutes GET /creature/combinations/:jobId/:jobGrowId calls getCreatureArtifactCombinations and returns JSON" name="creatureRoutes GET /creature/combinations/:jobId/:jobGrowId calls getCreatureArtifactCombinations and returns JSON" time="0.002">
+    </testcase>
+    <testcase classname="creatureRoutes returns 404 for unsupported methods or unknown routes" name="creatureRoutes returns 404 for unsupported methods or unknown routes" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="talismanRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.096" tests="3">
+    <testcase classname="talismanRoutes GET /talisman/fetch/:serverId/:jobId/:jobGrowId calls fetchTalismanAndRunes and returns JSON" name="talismanRoutes GET /talisman/fetch/:serverId/:jobId/:jobGrowId calls fetchTalismanAndRunes and returns JSON" time="0.007">
+    </testcase>
+    <testcase classname="talismanRoutes GET /talisman/stats/:jobId/:jobGrowId calls getTalismanRuneStats and returns JSON" name="talismanRoutes GET /talisman/stats/:jobId/:jobGrowId calls getTalismanRuneStats and returns JSON" time="0.002">
+    </testcase>
+    <testcase classname="talismanRoutes returns 404 for unsupported methods or unknown routes" name="talismanRoutes returns 404 for unsupported methods or unknown routes" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="itemRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.087" tests="2">
+    <testcase classname="itemRoutes GET /item/:itemId calls getItemInfo and returns JSON" name="itemRoutes GET /item/:itemId calls getItemInfo and returns JSON" time="0.005">
+    </testcase>
+    <testcase classname="itemRoutes returns 404 for unsupported methods or unknown routes" name="itemRoutes returns 404 for unsupported methods or unknown routes" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="serverRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.091" tests="2">
+    <testcase classname="serverRoutes GET /servers → calls serverController.getServers and returns its JSON" name="serverRoutes GET /servers → calls serverController.getServers and returns its JSON" time="0.007">
+    </testcase>
+    <testcase classname="serverRoutes non-GET methods on /servers/ respond 404" name="serverRoutes non-GET methods on /servers/ respond 404" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="creatureController.fetchCreature" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:46" time="0.057" tests="7">
+    <testcase classname="creatureController.fetchCreature should return 404 when no character IDs" name="creatureController.fetchCreature should return 404 when no character IDs" time="0.001">
+    </testcase>
+    <testcase classname="creatureController.fetchCreature should return 200 when no creature data" name="creatureController.fetchCreature should return 200 when no creature data" time="0.001">
+    </testcase>
+    <testcase classname="creatureController.fetchCreature should insert creature and artifacts on success" name="creatureController.fetchCreature should insert creature and artifacts on success" time="0.001">
+    </testcase>
+    <testcase classname="creatureController.getCreatureStats returns stats on success" name="creatureController.getCreatureStats returns stats on success" time="0.002">
+    </testcase>
+    <testcase classname="creatureController.getCreatureStats handles DB error" name="creatureController.getCreatureStats handles DB error" time="0">
+    </testcase>
+    <testcase classname="creatureController.getCreatureArtifactCombinations returns combination stats" name="creatureController.getCreatureArtifactCombinations returns combination stats" time="0.001">
+    </testcase>
+    <testcase classname="creatureController.getCreatureArtifactCombinations handles combo DB error" name="creatureController.getCreatureArtifactCombinations handles combo DB error" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="avatarRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.088" tests="3">
+    <testcase classname="avatarRoutes GET /avatar/fetch/:serverId/:jobId/:jobGrowId calls getAvatar and returns JSON" name="avatarRoutes GET /avatar/fetch/:serverId/:jobId/:jobGrowId calls getAvatar and returns JSON" time="0.006">
+    </testcase>
+    <testcase classname="avatarRoutes GET /avatar/stats/:jobId/:jobGrowId calls getAvatarStats and returns JSON" name="avatarRoutes GET /avatar/stats/:jobId/:jobGrowId calls getAvatarStats and returns JSON" time="0.002">
+    </testcase>
+    <testcase classname="avatarRoutes returns 404 for unsupported routes/methods" name="avatarRoutes returns 404 for unsupported routes/methods" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="characterRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.08" tests="2">
+    <testcase classname="characterRoutes GET /character/:serverId/:jobId/:jobGrowId calls getCharacter and returns JSON" name="characterRoutes GET /character/:serverId/:jobId/:jobGrowId calls getCharacter and returns JSON" time="0.005">
+    </testcase>
+    <testcase classname="characterRoutes returns 404 for unsupported methods or unknown routes" name="characterRoutes returns 404 for unsupported methods or unknown routes" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="getAvatar" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.052" tests="5">
+    <testcase classname="getAvatar returns 404 when no character IDs found" name="getAvatar returns 404 when no character IDs found" time="0.001">
     </testcase>
     <testcase classname="getAvatar returns 200 when avatar API returns no data" name="getAvatar returns 200 when avatar API returns no data" time="0.001">
     </testcase>
-    <testcase classname="getAvatar inserts avatar and emblems when present" name="getAvatar inserts avatar and emblems when present" time="0.001">
+    <testcase classname="getAvatar inserts avatar and emblems when present" name="getAvatar inserts avatar and emblems when present" time="0">
     </testcase>
     <testcase classname="getAvatarStats aggregates and returns avatar and emblem stats" name="getAvatarStats aggregates and returns avatar and emblem stats" time="0.001">
     </testcase>
     <testcase classname="getAvatarStats sends 500 when a DB error occurs" name="getAvatarStats sends 500 when a DB error occurs" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="creatureRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.243" tests="4">
-    <testcase classname="creatureRoutes GET /creature/fetch/:serverId/:jobId/:jobGrowId calls fetchCreature and returns JSON" name="creatureRoutes GET /creature/fetch/:serverId/:jobId/:jobGrowId calls fetchCreature and returns JSON" time="0.039">
+  <testsuite name="skillController.fetchSkills" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.05" tests="5">
+    <testcase classname="skillController.fetchSkills returns 404 when no character IDs found" name="skillController.fetchSkills returns 404 when no character IDs found" time="0">
     </testcase>
-    <testcase classname="creatureRoutes GET /creature/stats/:jobId/:jobGrowId calls getCreatureStats and returns JSON" name="creatureRoutes GET /creature/stats/:jobId/:jobGrowId calls getCreatureStats and returns JSON" time="0.006">
+    <testcase classname="skillController.fetchSkills returns 200 when API returns no skill data" name="skillController.fetchSkills returns 200 when API returns no skill data" time="0">
     </testcase>
-    <testcase classname="creatureRoutes GET /creature/combinations/:jobId/:jobGrowId calls getCreatureArtifactCombinations and returns JSON" name="creatureRoutes GET /creature/combinations/:jobId/:jobGrowId calls getCreatureArtifactCombinations and returns JSON" time="0.005">
+    <testcase classname="skillController.fetchSkills inserts active and passive skills and returns 200" name="skillController.fetchSkills inserts active and passive skills and returns 200" time="0">
     </testcase>
-    <testcase classname="creatureRoutes returns 404 for unsupported methods or unknown routes" name="creatureRoutes returns 404 for unsupported methods or unknown routes" time="0.011">
+    <testcase classname="skillController.getSkillStats returns formatted skill stats successfully" name="skillController.getSkillStats returns formatted skill stats successfully" time="0">
     </testcase>
-  </testsuite>
-  <testsuite name="skillRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.233" tests="3">
-    <testcase classname="skillRoutes GET /skill/fetch/:serverId/:jobId/:jobGrowId calls fetchSkills and returns JSON" name="skillRoutes GET /skill/fetch/:serverId/:jobId/:jobGrowId calls fetchSkills and returns JSON" time="0.033">
-    </testcase>
-    <testcase classname="skillRoutes GET /skill/stats/:jobId/:jobGrowId calls getSkillStats and returns JSON" name="skillRoutes GET /skill/stats/:jobId/:jobGrowId calls getSkillStats and returns JSON" time="0.004">
-    </testcase>
-    <testcase classname="skillRoutes returns 404 for unsupported methods or unknown routes" name="skillRoutes returns 404 for unsupported methods or unknown routes" time="0.009">
+    <testcase classname="skillController.getSkillStats returns 500 if DB query fails" name="skillController.getSkillStats returns 500 if DB query fails" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="serverRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.236" tests="2">
-    <testcase classname="serverRoutes GET /servers → calls serverController.getServers and returns its JSON" name="serverRoutes GET /servers → calls serverController.getServers and returns its JSON" time="0.03">
+  <testsuite name="itemController.getItemInfo" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.049" tests="3">
+    <testcase classname="itemController.getItemInfo should proxy item info successfully" name="itemController.getItemInfo should proxy item info successfully" time="0">
     </testcase>
-    <testcase classname="serverRoutes non-GET methods on /servers/ respond 404" name="serverRoutes non-GET methods on /servers/ respond 404" time="0.009">
+    <testcase classname="itemController.getItemInfo should return 502 if API request fails with response status" name="itemController.getItemInfo should return 502 if API request fails with response status" time="0">
     </testcase>
-  </testsuite>
-  <testsuite name="equipmentRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.239" tests="4">
-    <testcase classname="equipmentRoutes GET /equipment/fetch/:serverId/:jobId/:jobGrowId calls fetchEquipment and returns JSON" name="equipmentRoutes GET /equipment/fetch/:serverId/:jobId/:jobGrowId calls fetchEquipment and returns JSON" time="0.028">
-    </testcase>
-    <testcase classname="equipmentRoutes GET /equipment/stats/:jobId/:jobGrowId calls getEquipmentStats and returns JSON" name="equipmentRoutes GET /equipment/stats/:jobId/:jobGrowId calls getEquipmentStats and returns JSON" time="0.004">
-    </testcase>
-    <testcase classname="equipmentRoutes GET /equipment/combinations/:jobId/:jobGrowId calls getEquipmentCombinations and returns JSON" name="equipmentRoutes GET /equipment/combinations/:jobId/:jobGrowId calls getEquipmentCombinations and returns JSON" time="0.003">
-    </testcase>
-    <testcase classname="equipmentRoutes returns 404 for unsupported methods or unknown routes" name="equipmentRoutes returns 404 for unsupported methods or unknown routes" time="0.009">
+    <testcase classname="itemController.getItemInfo should return 502 if API request fails without response" name="itemController.getItemInfo should return 502 if API request fails without response" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="avatarRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.247" tests="3">
-    <testcase classname="avatarRoutes GET /avatar/fetch/:serverId/:jobId/:jobGrowId calls getAvatar and returns JSON" name="avatarRoutes GET /avatar/fetch/:serverId/:jobId/:jobGrowId calls getAvatar and returns JSON" time="0.028">
+  <testsuite name="talismanController.fetchTalismanAndRunes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.05" tests="5">
+    <testcase classname="talismanController.fetchTalismanAndRunes returns 404 when no character IDs found" name="talismanController.fetchTalismanAndRunes returns 404 when no character IDs found" time="0.001">
     </testcase>
-    <testcase classname="avatarRoutes GET /avatar/stats/:jobId/:jobGrowId calls getAvatarStats and returns JSON" name="avatarRoutes GET /avatar/stats/:jobId/:jobGrowId calls getAvatarStats and returns JSON" time="0.004">
+    <testcase classname="talismanController.fetchTalismanAndRunes returns 200 when API returns no talisman data" name="talismanController.fetchTalismanAndRunes returns 200 when API returns no talisman data" time="0">
     </testcase>
-    <testcase classname="avatarRoutes returns 404 for unsupported routes/methods" name="avatarRoutes returns 404 for unsupported routes/methods" time="0.009">
+    <testcase classname="talismanController.fetchTalismanAndRunes inserts talisman runes and returns 200 on success" name="talismanController.fetchTalismanAndRunes inserts talisman runes and returns 200 on success" time="0">
     </testcase>
-  </testsuite>
-  <testsuite name="talismanRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:44" time="1.248" tests="3">
-    <testcase classname="talismanRoutes GET /talisman/fetch/:serverId/:jobId/:jobGrowId calls fetchTalismanAndRunes and returns JSON" name="talismanRoutes GET /talisman/fetch/:serverId/:jobId/:jobGrowId calls fetchTalismanAndRunes and returns JSON" time="0.028">
+    <testcase classname="talismanController.getTalismanRuneStats returns formatted talisman and rune stats successfully" name="talismanController.getTalismanRuneStats returns formatted talisman and rune stats successfully" time="0.002">
     </testcase>
-    <testcase classname="talismanRoutes GET /talisman/stats/:jobId/:jobGrowId calls getTalismanRuneStats and returns JSON" name="talismanRoutes GET /talisman/stats/:jobId/:jobGrowId calls getTalismanRuneStats and returns JSON" time="0.005">
-    </testcase>
-    <testcase classname="talismanRoutes returns 404 for unsupported methods or unknown routes" name="talismanRoutes returns 404 for unsupported methods or unknown routes" time="0.011">
+    <testcase classname="talismanController.getTalismanRuneStats returns 500 if DB query fails" name="talismanController.getTalismanRuneStats returns 500 if DB query fails" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="characterRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:45" time="0.477" tests="2">
-    <testcase classname="characterRoutes GET /character/:serverId/:jobId/:jobGrowId calls getCharacter and returns JSON" name="characterRoutes GET /character/:serverId/:jobId/:jobGrowId calls getCharacter and returns JSON" time="0.014">
+  <testsuite name="characterController.getCharacter" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.048" tests="4">
+    <testcase classname="characterController.getCharacter returns 500 if fetching highest fame fails" name="characterController.getCharacter returns 500 if fetching highest fame fails" time="0.001">
     </testcase>
-    <testcase classname="characterRoutes returns 404 for unsupported methods or unknown routes" name="characterRoutes returns 404 for unsupported methods or unknown routes" time="0.006">
+    <testcase classname="characterController.getCharacter returns 500 if fetching character data fails in loop" name="characterController.getCharacter returns 500 if fetching character data fails in loop" time="0.001">
+    </testcase>
+    <testcase classname="characterController.getCharacter successfully inserts fetched characters and returns 200" name="characterController.getCharacter successfully inserts fetched characters and returns 200" time="0">
+    </testcase>
+    <testcase classname="characterController.getCharacter rolls back and returns 500 if DB insertion fails" name="characterController.getCharacter rolls back and returns 500 if DB insertion fails" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="itemRoutes" errors="0" failures="0" skipped="0" timestamp="2025-07-03T05:05:45" time="0.342" tests="2">
-    <testcase classname="itemRoutes GET /item/:itemId calls getItemInfo and returns JSON" name="itemRoutes GET /item/:itemId calls getItemInfo and returns JSON" time="0.016">
+  <testsuite name="serverController.getServers" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.045" tests="2">
+    <testcase classname="serverController.getServers should call axios.get with the correct URL and return data on success" name="serverController.getServers should call axios.get with the correct URL and return data on success" time="0">
     </testcase>
-    <testcase classname="itemRoutes returns 404 for unsupported methods or unknown routes" name="itemRoutes returns 404 for unsupported methods or unknown routes" time="0.008">
+    <testcase classname="serverController.getServers should return 500 + error message when axios.get throws" name="serverController.getServers should return 500 + error message when axios.get throws" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="models/db" errors="0" failures="0" skipped="0" timestamp="2025-07-03T07:42:47" time="0.043" tests="4">
+    <testcase classname="models/db should call connect() and query(&quot;SELECT version();&quot;) on import" name="models/db should call connect() and query(&quot;SELECT version();&quot;) on import" time="0.001">
+    </testcase>
+    <testcase classname="models/db exports the same client instance" name="models/db exports the same client instance" time="0.001">
+    </testcase>
+    <testcase classname="models/db SIGINT handler should call client.end() and process.exit() on SIGINT" name="models/db SIGINT handler should call client.end() and process.exit() on SIGINT" time="0">
+    </testcase>
+    <testcase classname="models/db connection error logs error when client.connect() rejects" name="models/db connection error logs error when client.connect() rejects" time="0.005">
     </testcase>
   </testsuite>
 </testsuites>
