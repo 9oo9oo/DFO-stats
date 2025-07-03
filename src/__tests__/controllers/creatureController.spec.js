@@ -135,41 +135,64 @@ describe('creatureController.getCreatureStats', () => {
 });
 
 describe('creatureController.getCreatureArtifactCombinations', () => {
+  beforeAll(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+  afterAll(() => {
+    console.error.mockRestore();
+  });
+
   let req, res;
   beforeEach(() => {
     jest.clearAllMocks();
     req = { params: { jobId: 'j1', jobGrowId: 'g2' } };
     res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
   });
+
   it('returns combination stats', async () => {
     const rows = [{
       creature_item_id: 'ci', creature_item_name: 'CN',
-      red_id: 'r1', red_name: 'RN',
-      blue_id: 'b1', blue_name: 'BN',
-      green_id: 'g1', green_name: 'GN',
+      red_id: 'r1',    red_name: 'RN',
+      blue_id: 'b1',   blue_name: 'BN',
+      green_id: 'g1',  green_name: 'GN',
       usage_count: '7'
     }];
     mockQuery.mockResolvedValueOnce({ rows });
 
     await getCreatureArtifactCombinations(req, res);
 
-    expect(mockQuery).toHaveBeenCalledWith(expect.stringMatching(/SELECT[\s\S]*COUNT/), ['j1','g2']);
+    // ensure we called the right SQL
+    expect(mockQuery).toHaveBeenCalledWith(
+      expect.stringMatching(/SELECT[\s\S]*COUNT/),
+      ['j1','g2']
+    );
+
     const resp = res.json.mock.calls[0][0];
-    expect(resp.combinationStats).toEqual([{ combinationStats: undefined }]);
-    // Actually verify content
+
+    // instead of that bogus first check, just assert the key exists
+    expect(resp).toHaveProperty('combinationStats');
+    expect(Array.isArray(resp.combinationStats)).toBe(true);
+
+    // now verify the real content
     expect(resp.combinationStats).toEqual([{
-      creature_item:   { id: 'ci', name: 'CN' },
-      artifact_red:    { id: 'r1', name: 'RN' },
-      artifact_blue:   { id: 'b1', name: 'BN' },
-      artifact_green:  { id: 'g1', name: 'GN' },
-      usage_count:     7
+      creature_item:  { id: 'ci', name: 'CN' },
+      artifact_red:   { id: 'r1', name: 'RN' },
+      artifact_blue:  { id: 'b1', name: 'BN' },
+      artifact_green: { id: 'g1', name: 'GN' },
+      usage_count:    7
     }]);
+
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
   it('handles combo DB error', async () => {
     mockQuery.mockRejectedValueOnce(new Error('combo fail'));
     await getCreatureArtifactCombinations(req, res);
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Error fetching creature-artifact combos:',
+      expect.any(Error)
+    );
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: 'Internal Server Error' });
   });

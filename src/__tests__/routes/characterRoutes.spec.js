@@ -32,7 +32,8 @@ describe('characterRoutes', () => {
     expect(mockGetCharacter).toHaveBeenCalledTimes(1);
     expect(mockGetCharacter).toHaveBeenCalledWith(
       expect.objectContaining({ params: { serverId: 's1', jobId: 'j1', jobGrowId: 'g1' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ character: true });
   });

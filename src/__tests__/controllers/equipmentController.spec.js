@@ -135,6 +135,12 @@ describe('equipmentController.getEquipmentStats', () => {
 
 describe('equipmentController.getEquipmentCombinations', () => {
   let req, res;
+  beforeAll(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+  afterAll(() => {
+    console.error.mockRestore();
+  });
   beforeEach(() => {
     jest.clearAllMocks();
     req = { params: { jobId: 'j1', jobGrowId: 'g2' } };

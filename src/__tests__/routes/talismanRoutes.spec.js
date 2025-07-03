@@ -11,7 +11,7 @@ jest.mock('../../controllers/talismanController', () => ({
 
 const request = require('supertest');
 const express = require('express');
-const talismanRoutes = require('../../routes/tailsmanRoutes');
+const talismanRoutes = require('../../routes/talismanRoutes');
 
 describe('talismanRoutes', () => {
     let app;
@@ -35,7 +35,8 @@ describe('talismanRoutes', () => {
         expect(mockFetchTalismanAndRunes).toHaveBeenCalledTimes(1);
         expect(mockFetchTalismanAndRunes).toHaveBeenCalledWith(
             expect.objectContaining({ params: { serverId: 's1', jobId: 'j1', jobGrowId: 'g1' } }),
-            expect.any(Object)
+            expect.any(Object),
+            expect.any(Function)
         );
         expect(res.body).toEqual({ fetch: true });
     });
@@ -49,7 +50,8 @@ describe('talismanRoutes', () => {
         expect(mockGetTalismanRuneStats).toHaveBeenCalledTimes(1);
         expect(mockGetTalismanRuneStats).toHaveBeenCalledWith(
             expect.objectContaining({ params: { jobId: 'j2', jobGrowId: 'g2' } }),
-            expect.any(Object)
+            expect.any(Object),
+            expect.any(Function)
         );
         expect(res.body).toEqual({ stats: true });
     });

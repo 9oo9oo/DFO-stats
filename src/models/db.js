@@ -25,7 +25,7 @@ client.connect()
 process.on('SIGINT', async () => {
   await client.end();
   console.log('Database connection closed gracefully.');
-  process.exit();
+  process.exit(0);
 });
 
 module.exports = client;

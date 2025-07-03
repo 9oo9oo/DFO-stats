@@ -37,7 +37,8 @@ describe('equipmentRoutes', () => {
     expect(mockFetchEquipment).toHaveBeenCalledTimes(1);
     expect(mockFetchEquipment).toHaveBeenCalledWith(
       expect.objectContaining({ params: { serverId: 's1', jobId: 'j1', jobGrowId: 'g1' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ fetch: true });
   });
@@ -51,7 +52,8 @@ describe('equipmentRoutes', () => {
     expect(mockGetEquipmentStats).toHaveBeenCalledTimes(1);
     expect(mockGetEquipmentStats).toHaveBeenCalledWith(
       expect.objectContaining({ params: { jobId: 'j2', jobGrowId: 'g2' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ stats: true });
   });
@@ -65,7 +67,8 @@ describe('equipmentRoutes', () => {
     expect(mockGetEquipmentCombos).toHaveBeenCalledTimes(1);
     expect(mockGetEquipmentCombos).toHaveBeenCalledWith(
       expect.objectContaining({ params: { jobId: 'j3', jobGrowId: 'g3' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ combos: true });
   });

@@ -35,7 +35,8 @@ describe('avatarRoutes', () => {
     expect(mockGetAvatar).toHaveBeenCalledTimes(1);
     expect(mockGetAvatar).toHaveBeenCalledWith(
       expect.objectContaining({ params: { serverId: 's1', jobId: 'j1', jobGrowId: 'g1' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ fetch: true });
   });
@@ -49,7 +50,8 @@ describe('avatarRoutes', () => {
     expect(mockGetAvatarStats).toHaveBeenCalledTimes(1);
     expect(mockGetAvatarStats).toHaveBeenCalledWith(
       expect.objectContaining({ params: { jobId: 'j2', jobGrowId: 'g2' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ stats: true });
   });

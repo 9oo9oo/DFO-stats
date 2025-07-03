@@ -183,7 +183,7 @@ exports.getEquipmentStats = async (req, res) => {
     const sampleResult = await client.query(sampleQuery, [jobId, jobGrowId]);
     const sampleNumbers = {};
     sampleResult.rows.forEach(row => {
-      sampleNumbers[row.slot_id] = parseInt(row.sample_number, 5);
+      sampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
     // Sample counts for fusion items
@@ -197,7 +197,7 @@ exports.getEquipmentStats = async (req, res) => {
     const fusionSampleResult = await client.query(fusionSampleQuery, [jobId, jobGrowId]);
     const fusionSampleNumbers = {};
     fusionSampleResult.rows.forEach(row => {
-      fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 5);
+      fusionSampleNumbers[row.slot_id] = parseInt(row.sample_number, 10);
     });
 
     // Sample for set items
@@ -303,9 +303,9 @@ exports.getEquipmentStats = async (req, res) => {
 exports.getEquipmentCombinations = async (req, res) => {
   const { jobId, jobGrowId } = req.params;
   const combos = {
-    core:   ['JACKET','SHOULDER','PANTS','WAIST','SHOES'],
-    jewels: ['WRIST','RING','AMULET'],
-    extras: ['SUPPORT','MAGIC_STON','EARRING'],
+    core: ['JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES'],
+    jewels: ['WRIST', 'RING', 'AMULET'],
+    extras: ['SUPPORT', 'MAGIC_STON', 'EARRING'],
   };
 
   // helper to build a “base vs fusion” query
@@ -317,9 +317,9 @@ exports.getEquipmentCombinations = async (req, res) => {
     `).join('\n');
 
     const selectCols = slots.map((slot, idx) => {
-      const col  = useFusion ? 'fusion_item_id'   : 'item_id';
+      const col = useFusion ? 'fusion_item_id' : 'item_id';
       const name = useFusion ? 'fusion_item_name' : 'item_name';
-      const key  = slot.toLowerCase();
+      const key = slot.toLowerCase();
       return `
         s${idx}.${col}   AS ${key}_id,
         s${idx}.${name}  AS ${key}_name
@@ -327,7 +327,7 @@ exports.getEquipmentCombinations = async (req, res) => {
     }).join(',\n');
 
     const groupCols = slots.map((slot, idx) => {
-      const col  = useFusion ? 'fusion_item_id'   : 'item_id';
+      const col = useFusion ? 'fusion_item_id' : 'item_id';
       const name = useFusion ? 'fusion_item_name' : 'item_name';
       return `s${idx}.${col}, s${idx}.${name}`;
     }).join(', ');

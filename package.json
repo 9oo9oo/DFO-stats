@@ -40,6 +40,7 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "jest": "^30.0.3",
+    "jest-silent-reporter": "^0.6.0",
     "nodemon": "^3.1.9",
     "supertest": "^7.1.1"
   }

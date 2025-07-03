@@ -37,7 +37,8 @@ describe('creatureRoutes', () => {
     expect(mockFetchCreature).toHaveBeenCalledTimes(1);
     expect(mockFetchCreature).toHaveBeenCalledWith(
       expect.objectContaining({ params: { serverId: 's1', jobId: 'j1', jobGrowId: 'g1' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ fetch: true });
   });
@@ -51,7 +52,8 @@ describe('creatureRoutes', () => {
     expect(mockGetCreatureStats).toHaveBeenCalledTimes(1);
     expect(mockGetCreatureStats).toHaveBeenCalledWith(
       expect.objectContaining({ params: { jobId: 'j2', jobGrowId: 'g2' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ stats: true });
   });
@@ -65,7 +67,8 @@ describe('creatureRoutes', () => {
     expect(mockGetCreatureCombos).toHaveBeenCalledTimes(1);
     expect(mockGetCreatureCombos).toHaveBeenCalledWith(
       expect.objectContaining({ params: { jobId: 'j3', jobGrowId: 'g3' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ combos: true });
   });

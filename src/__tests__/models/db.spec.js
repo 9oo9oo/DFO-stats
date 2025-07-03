@@ -76,3 +76,41 @@ describe('models/db', () => {
     });
   });
 });
+
+describe('models/db connection error', () => {
+  let consoleError;
+
+  beforeAll(() => {
+    consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    consoleError.mockRestore();
+  });
+
+  it('logs error when client.connect() rejects', async () => {
+    jest.resetModules();
+    // Mock pg.Client.connect to reject
+    jest.mock('pg', () => ({
+      Client: jest.fn().mockImplementation(() => ({
+        connect: jest.fn().mockRejectedValue(new Error('oh no')),
+        query:   jest.fn(),
+        end:     jest.fn(),
+      })),
+    }));
+
+    // Re-require under isolation so our mock takes effect
+    jest.isolateModules(() => {
+      require('../../models/db');
+    });
+
+    // Let the promise chain execute
+    await jest.runAllTimersAsync();
+
+    expect(consoleError).toHaveBeenCalledWith(
+      'Connection error:',
+      expect.any(String)
+    );
+  });
+});
+

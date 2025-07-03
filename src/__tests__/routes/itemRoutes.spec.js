@@ -32,7 +32,8 @@ describe('itemRoutes', () => {
     expect(mockGetItemInfo).toHaveBeenCalledTimes(1);
     expect(mockGetItemInfo).toHaveBeenCalledWith(
       expect.objectContaining({ params: { itemId: '12345' } }),
-      expect.any(Object)
+      expect.any(Object),
+      expect.any(Function)
     );
     expect(res.body).toEqual({ item: true });
   });
