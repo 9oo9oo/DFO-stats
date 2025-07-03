@@ -21,21 +21,29 @@ jobs:
         working-directory: ./src
         run: |
           npm ci
-          # npm test    # uncomment if you have tests
+          npm test
+      
+      # 4. Upload backend JUnit report
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-test-results
+          path: src/test-results/junit.xml
 
-      # 4. Build frontend
+      # 5. Build frontend
       - name: Build frontend
         working-directory: ./client
         run: |
           npm ci
           npm run build
 
-      # 5. Make deploy hooks executable
+      # 6. Make deploy hooks executable
       - name: Set execute bit on hooks
         run: |
           chmod +x scripts/*.sh
 
-      # 6. Package everything (use pre-built client)
+      # 7. Package everything (use pre-built client)
       - name: Zip artifact
         run: |
           # include pre-built client dist
@@ -47,7 +55,7 @@ jobs:
                "client/public/**" \
                ".git/**"
 
-      # 7. Configure AWS credentials
+      # 8. Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -55,13 +63,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:            ${{ secrets.AWS_REGION }}
 
-      # 8. Upload to S3
+      # 9. Upload to S3
       - name: Upload to S3
         run: |
           aws s3 cp deployment.zip \
             s3://${{ secrets.S3_BUCKET }}/deployment-${{ github.sha }}.zip
 
-      # 9. Deploy with CodeDeploy
+      # 10. Deploy with CodeDeploy
       - name: Deploy to CodeDeploy via AWS CLI
         run: |
           aws deploy create-deployment \

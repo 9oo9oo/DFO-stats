@@ -9,4 +9,11 @@ module.exports = {
     '!**/config/**', 
     '!server.js', 
     '!**/coverage/**'],
+    reporters: [
+    "default",
+    ["jest-junit", {
+      outputDirectory: "test-results",
+      outputName: "junit.xml"
+    }]
+  ]
 };
