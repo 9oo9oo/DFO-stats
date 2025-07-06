@@ -1,25 +1,29 @@
 // src/routes/equipmentRoutes.ts
 import { Router } from 'express';
-import equipmentController from '../controllers/equipmentController';
+import {
+  fetchEquipment,
+  getEquipmentStats,
+  getEquipmentCombinations
+} from '../controllers/equipmentController';
 
 const router = Router();
 
 // Fetch equipment data
 router.get(
   '/fetch/:serverId/:jobId/:jobGrowId',
-  equipmentController.fetchEquipment
+  fetchEquipment
 );
 
 // Return equipment stats
 router.get(
   '/stats/:jobId/:jobGrowId',
-  equipmentController.getEquipmentStats
+  getEquipmentStats
 );
 
 // Equipment Combination Endpoint
 router.get(
   '/combinations/:jobId/:jobGrowId',
-  equipmentController.getEquipmentCombinations
+  getEquipmentCombinations
 );
 
 export default router;
