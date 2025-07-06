@@ -194,7 +194,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import jobMappings from '@/config/jobMappings.js';
+import jobMappings from '@/config/jobMappings';
 import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
@@ -208,19 +208,19 @@ interface CreatureStatsData {
 
 // ——— Reactive State —————————————————————————————————————
 
-const stats   = ref<CreatureStatsData | null>(null);
+const stats = ref<CreatureStatsData | null>(null);
 const loading = ref(false);
-const error   = ref<string | null>(null);
+const error = ref<string | null>(null);
 
 // Replace this.$refs
 const slotRefs = ref<Record<string, HTMLElement | null>>({});
 
 // ——— Router & Params ————————————————————————————————————
 
-const route  = useRoute();
+const route = useRoute();
 const router = useRouter();
 
-const jobId     = computed(() => route.params.jobId  as string);
+const jobId = computed(() => route.params.jobId as string);
 const jobGrowId = computed(() => route.params.jobGrowId as string);
 
 // ——— Typed Mapping & Labels —————————————————————————————
@@ -524,7 +524,8 @@ function hideBrokenIcon(event: Event): void {
 .tables-container.artifact-container .stats-table th,
 .tables-container.artifact-container .stats-table td {
   white-space: normal;
-  overflow-wrap: break-word;   /* modern */
+  overflow-wrap: break-word;
+  /* modern */
 }
 
 .tables-container.artifact-container .stats-table th:nth-child(2),

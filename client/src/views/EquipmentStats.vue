@@ -122,7 +122,7 @@
             <table class="stats-table">
               <thead><tr><th>Item</th><th>Usage</th></tr></thead>
               <tbody>
-                <tr v-for="item in stats.itemsBySlot[slot]" :key="item.item_id">
+                <tr v-for="item in stats.itemsBySlot?.[slot] || []" :key="item.item_id">
                   <td class="item-cell">
                     <div class="icon-and-name">
                       <ItemTooltip :id="item.item_id">
@@ -184,7 +184,7 @@
           <!-- Fusion Equipment -->
           <div
             class="table-wrapper"
-            v-if="stats.fusionItemsBySlot[slot]?.length"
+            v-if="stats.fusionItemsBySlot?.[slot]?.length"
           >
             <h3>Fusion</h3>
             <table class="stats-table">
@@ -218,191 +218,237 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, reactive, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import jobMappings from '@/config/jobMappings.js';
+import jobMappings from '@/config/jobMappings';
+import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
 
-export default {
-  name: 'EquipmentStats',
-  components: { ItemTooltip },
+// ——— Types —————————————————————————————————————————————
 
-  data() {
-    return {
-      stats: null,
-      loading: false,
-      error: null,
-      // Slot ordering
-      orderedSlots: [
-        'TITLE', 'WEAPON', 'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
-        'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
-      ],
-      fusionOrderedSlots: [
-        'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
-        'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
-      ],
-      setIconMapping: {
-        "Hideout's Endless Gold Set": 'hideout.png',
-        "Cleansing Darkness Set": 'cleansing.png',
-        "Ancient Battlefield Valkyrie Set": 'ancient.png',
-        "Death in the Shadows Set": 'death.png',
-        "Dragon Arena Uprising Set": 'dragon.png',
-        "Overwhelming Nature Set": 'overwhelming.png',
-        "Serendipity Set": 'serendipity.png',
-        "Ethereal Orb Arts Set": 'ethereal.png',
-        "Beyond Limit Energy Set": 'beyond.png',
-        "Magic Domain Set": 'magic.png',
-        "Alpha of the Pack Hunt Set": 'alpha.png',
-        "Soul Fairy Set": 'soul.png'
+interface SetUsage {
+  set_item_id: string;
+  set_item_name: string;
+  usage_count: number;
+}
+
+interface EquipmentItem {
+  item_id: string;
+  item_name: string;
+  usage_count: number;
+}
+
+interface FusionItem {
+  fusion_item_id: string;
+  fusion_item_name: string;
+  usage_count: number;
+}
+
+interface EquipmentStatsData {
+  setUsage?: SetUsage[];
+  itemsBySlot?: Record<string, EquipmentItem[]>;
+  fusionItemsBySlot?: Record<string, FusionItem[]>;
+  [key: string]: any;
+}
+
+// ——— Reactive State —————————————————————————————————————
+
+const stats = ref<EquipmentStatsData | null>(null);
+const loading = ref(false);
+const error = ref<string | null>(null);
+
+// reactive map of slot → DOM element
+const slotRefs = reactive<Record<string, Element | null>>({});
+
+// static configuration
+const orderedSlots = [
+  'TITLE', 'WEAPON', 'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
+  'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
+] as const;
+
+const fusionOrderedSlots = [
+  'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
+  'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
+] as const;
+
+const setIconMapping: Record<string, string> = {
+  "Hideout's Endless Gold Set": 'hideout.png',
+  "Cleansing Darkness Set": 'cleansing.png',
+  "Ancient Battlefield Valkyrie Set": 'ancient.png',
+  "Death in the Shadows Set": 'death.png',
+  "Dragon Arena Uprising Set": 'dragon.png',
+  "Overwhelming Nature Set": 'overwhelming.png',
+  "Serendipity Set": 'serendipity.png',
+  "Ethereal Orb Arts Set": 'ethereal.png',
+  "Beyond Limit Energy Set": 'beyond.png',
+  "Magic Domain Set": 'magic.png',
+  "Alpha of the Pack Hunt Set": 'alpha.png',
+  "Soul Fairy Set": 'soul.png'
+};
+
+// ——— Router & Params ————————————————————————————————————
+
+const route = useRoute();
+const router = useRouter();
+const jobId = computed(() => route.params.jobId as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
+
+// ——— Computed ——————————————————————————————————————————
+
+const jobMapping = computed<JobMapping>(() => {
+  return (jobMappings as Record<string, JobMapping>)[jobId.value] || ({} as JobMapping);
+});
+
+const jobFriendlyName = computed(() => {
+  const grows = jobMapping.value.finalJobGrows || [];
+  const found = grows.find((g: JobGrow) => g.jobGrowId === jobGrowId.value);
+  return found?.jobGrowName ?? jobMapping.value.jobName ?? 'Unknown Job';
+});
+
+const slotDisplayNames = computed<Record<string, string>>(() => ({
+  TITLE: 'Title', WEAPON: 'Weapon', JACKET: 'Top', SHOULDER: 'Head/Shoulder',
+  PANTS: 'Bottom', SHOES: 'Shoes', WAIST: 'Belt', AMULET: 'Necklace',
+  WRIST: 'Bracelet', RING: 'Ring', SUPPORT: 'Sub-Equipment',
+  MAGIC_STON: 'Magic Stone', EARRING: 'Earrings'
+}));
+
+const titleWeaponSlots = computed(() =>
+  orderedSlots.filter(s => ['TITLE', 'WEAPON'].includes(s))
+);
+
+const otherSlots = computed(() =>
+  orderedSlots.filter(s => !['TITLE', 'WEAPON'].includes(s))
+);
+
+const leftColumnOne = ['SHOULDER', 'PANTS', 'SHOES'] as const;
+const leftColumnTwo = ['JACKET', 'WAIST'] as const;
+const rightColumnOne = ['WEAPON', 'WRIST', 'SUPPORT', 'EARRING'] as const;
+const rightColumnTwo = ['TITLE', 'RING', 'AMULET', 'MAGIC_STON'] as const;
+
+const centerImgSrc = computed(() => {
+  const grows = jobMapping.value.finalJobGrows || [];
+  const idx = grows.findIndex(g => g.jobGrowId === jobGrowId.value);
+  return idx >= 0
+    ? (grows[idx].imgSrc ?? getImageSrc(jobId.value, idx))
+    : '';
+});
+
+const limitedItemsBySlot = computed<Record<string, EquipmentItem[]>>(() => {
+  if (!stats.value) return {};
+  const out: Record<string, EquipmentItem[]> = {};
+  const all = [...titleWeaponSlots.value, ...otherSlots.value];
+  all.forEach(slot => {
+    const list = stats.value!.itemsBySlot?.[slot] ?? [];
+    const limit = titleWeaponSlots.value.includes(slot) ? 10 : 5;
+    out[slot] = list.slice(0, limit);
+  });
+  return out;
+});
+
+const limitedFusionBySlot = computed<Record<string, FusionItem[]>>(() => {
+  if (!stats.value) return {};
+  const out: Record<string, FusionItem[]> = {};
+  otherSlots.value.forEach(slot => {
+    const list = stats.value!.fusionItemsBySlot?.[slot] ?? [];
+    out[slot] = list.slice(0, 5);
+  });
+  return out;
+});
+
+// ——— Lifecycle & Watchers —————————————————————————————
+
+onMounted(() => {
+  if (jobGrowId.value) fetchEquipmentStats();
+});
+
+watch(() => route.params.jobGrowId, (n, o) => {
+  if (n !== o) fetchEquipmentStats();
+});
+
+// ——— Methods —————————————————————————————————————————
+
+async function fetchEquipmentStats(): Promise<void> {
+  if (!jobGrowId.value) return;
+  loading.value = true;
+  try {
+    const { data } = await axios.get<EquipmentStatsData>(
+      `/api/equipment/stats/${jobId.value}/${jobGrowId.value}`
+    );
+    stats.value = data;
+  } catch (err: any) {
+    error.value = err.response?.data?.error || err.message;
+  } finally {
+    loading.value = false;
+  }
+}
+
+function isActiveRoute(name: string): boolean {
+  return router.currentRoute.value.name === name;
+}
+
+function scrollToSlot(slot: string): void {
+  const el = slotRefs[slot];
+  if (!(el instanceof Element)) return;
+
+  const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  new IntersectionObserver((entries, obs) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        el.classList.add('flash');
+        setTimeout(() => el.classList.remove('flash'), 1500);
+        obs.disconnect();
       }
-    };
-  },
-
-  computed: {
-    jobId() { return this.$route.params.jobId; },
-    jobGrowId() { return this.$route.params.jobGrowId; },
-    jobMapping() { return jobMappings[this.jobId] || {}; },
-    jobFriendlyName() {
-      const grows = this.jobMapping.finalJobGrows || [];
-      const found = grows.find(g => g.jobGrowId === this.jobGrowId);
-      return found?.jobGrowName || this.jobMapping.jobName || 'Unknown Job';
-    },
-    slotDisplayNames() {
-      return {
-        TITLE: 'Title', WEAPON: 'Weapon', JACKET: 'Top', SHOULDER: 'Head/Shoulder',
-        PANTS: 'Bottom', SHOES: 'Shoes', WAIST: 'Belt', AMULET: 'Necklace',
-        WRIST: 'Bracelet', RING: 'Ring', SUPPORT: 'Sub-Equipment',
-        MAGIC_STON: 'Magic Stone', EARRING: 'Earrings'
-      };
-    },
-    titleWeaponSlots() {
-      return this.orderedSlots.filter(s => ['TITLE', 'WEAPON'].includes(s));
-    },
-    otherSlots() {
-      return this.orderedSlots.filter(s => !['TITLE', 'WEAPON'].includes(s));
-    },
-    leftColumnOne() { return ['SHOULDER', 'PANTS', 'SHOES']; },
-    leftColumnTwo() { return ['JACKET', 'WAIST']; },
-    rightColumnOne() { return ['WEAPON', 'WRIST', 'SUPPORT', 'EARRING']; },
-    rightColumnTwo() { return ['TITLE', 'RING', 'AMULET', 'MAGIC_STON']; },
-    centerImgSrc() {
-      const grows = this.jobMapping.finalJobGrows || [];
-      const idx = grows.findIndex(g => g.jobGrowId === this.jobGrowId);
-      return idx >= 0
-        ? (grows[idx].imgSrc || this.getImageSrc(this.jobId, idx))
-        : '';
-    },
-    limitedItemsBySlot() {
-      if (!this.stats) return {};
-      const out = {};
-      // combine all slots you ever loop over
-      const allSlots = [...this.titleWeaponSlots, ...this.otherSlots];
-      allSlots.forEach(slot => {
-        const list = this.stats.itemsBySlot[slot] || [];
-        const limit = this.titleWeaponSlots.includes(slot) ? 10 : 5;
-        out[slot] = list.slice(0, limit);
-      });
-      return out;
-    },
-
-    // similarly limit fusion items to top-5 each
-    limitedFusionBySlot() {
-      if (!this.stats) return {};
-      const out = {};
-      this.otherSlots.forEach(slot => {
-        const list = this.stats.fusionItemsBySlot?.[slot] || [];
-        out[slot] = list.slice(0, 5);
-      });
-      return out;
     }
-  },
+  }, { threshold: 0.5 }).observe(el);
+}
 
-  mounted() {
-    if (this.jobGrowId) this.fetchEquipmentStats();
-  },
-  watch: {
-    '$route.params.jobGrowId'(newVal, oldVal) {
-      if (newVal !== oldVal) this.fetchEquipmentStats();
-    }
-  },
+function getSequentialIndex(currentJobId: string, localIdx: number): number {
+  let count = 0;
+  for (const [jid, map] of Object.entries(jobMappings as Record<string, JobMapping>)) {
+    if (jid === currentJobId) return count + localIdx + 1;
+    count += map.finalJobGrows.length;
+  }
+  return 0;
+}
 
-  methods: {
-    async fetchEquipmentStats() {
-      if (!this.jobGrowId) return;
-      this.loading = true;
-      try {
-        const resp = await axios.get(`/api/equipment/stats/${this.jobId}/${this.jobGrowId}`);
-        this.stats = resp.data;
-      } catch (err) {
-        this.error = err.response?.data?.error || err.message;
-      } finally { this.loading = false; }
-    },
+function getImageSrc(jobId: string, localIdx: number): string {
+  const seq = getSequentialIndex(jobId, localIdx);
+  try {
+    return require(`@/assets/classImages/${seq}.jpg`);
+  } catch {
+    return 'https://via.placeholder.com/250x400';
+  }
+}
 
-    isActiveRoute(name) {
-      return this.$route.name === name;
-    },
+function getItemImageUrl(itemId: string): string {
+  return `https://img-api.dfoneople.com/df/items/${itemId}`;
+}
 
-    scrollToSlot(slot) {
-      let el = this.$refs[slot];
-      if (Array.isArray(el)) el = el[0];
-      if (!el) return;
-      const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
-      window.scrollTo({ top, behavior: 'smooth' });
-      new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            el.classList.add('flash');
-            setTimeout(() => el.classList.remove('flash'), 1500);
-            obs.disconnect();
-          }
-        });
-      }, { threshold: 0.5 }).observe(el);
-    },
-
-    getSequentialIndex(jobId, localIdx) {
-      let count = 0;
-      for (const [jid, map] of Object.entries(jobMappings)) {
-        if (jid === jobId) return count + localIdx + 1;
-        count += map.finalJobGrows.length;
-      }
-      return 0;
-    },
-
-    getImageSrc(jobId, localIdx) {
-      const seq = this.getSequentialIndex(jobId, localIdx);
-      try {
-        return require(`@/assets/classImages/${seq}.jpg`);
-      } catch {
-        return 'https://via.placeholder.com/250x400';
-      }
-    },
-
-    getItemImageUrl(itemId) {
-      return `https://img-api.dfoneople.com/df/items/${itemId}`;
-    },
-
-    getSetIconUrl(setName) {
-      const file = this.setIconMapping[setName];
-      if (file) {
-        try {
-          return require(`@/assets/setIcons/${file}`);
-        } catch {
-          return MissingIcon;
-        }
-      }
+function getSetIconUrl(setName: string): string {
+  const file = setIconMapping[setName];
+  if (file) {
+    try {
+      return require(`@/assets/setIcons/${file}`);
+    } catch {
       return MissingIcon;
-    },
-
-    hideBrokenIcon(event) {
-      const img = event.target;
-      img.onerror = null;           // prevent infinite fallback loop
-      img.src = MissingIcon;
-      img.style.width = '40px';
     }
   }
-};
+  return MissingIcon;
+}
+
+function hideBrokenIcon(event: Event): void {
+  const img = event.target as HTMLImageElement;
+  img.onerror = null;
+  img.src = MissingIcon;
+  img.style.width = '40px';
+}
 </script>
+
 
 <style scoped>
 /* Layout & Wrapper */
@@ -671,8 +717,8 @@ export default {
   }
 
   .first-row-grid .tables-pair {
-    gap: 0;            
-    margin-bottom: 12px;  
+    gap: 0;
+    margin-bottom: 12px;
   }
 
   .other-grid {

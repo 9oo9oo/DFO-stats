@@ -225,7 +225,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import jobMappings from '@/config/jobMappings.js';
+import jobMappings from '@/config/jobMappings';
 import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
@@ -251,41 +251,41 @@ interface EquipGroup {
 
 // ——— Reactive State —————————————————————————————————————
 
-const stats     = ref<AvatarStats | null>(null);
-const loading   = ref(false);
-const error     = ref<string | null>(null);
+const stats = ref<AvatarStats | null>(null);
+const loading = ref(false);
+const error = ref<string | null>(null);
 
 // Ref map to replace this.$refs
 const slotRefs = ref<Record<string, HTMLElement | null>>({});
 
 const slotButtons = [
-  'WEAPON','HAIR','HEADGEAR','FACE','AURORA',
-  'BREAST','JACKET','SKIN','WAIST','PANTS','SHOES'
+  'WEAPON', 'HAIR', 'HEADGEAR', 'FACE', 'AURORA',
+  'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
 ] as const;
 
 const orderedSlots = [
-  'WEAPON','AURORA','HAIR','HEADGEAR','FACE',
-  'BREAST','JACKET','SKIN','WAIST','PANTS','SHOES'
+  'WEAPON', 'AURORA', 'HAIR', 'HEADGEAR', 'FACE',
+  'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
 ] as const;
 
 const orderedEmblemColors = [
-  'platinum','multicolored','blue','yellow','green','red'
+  'platinum', 'multicolored', 'blue', 'yellow', 'green', 'red'
 ] as const;
 
 const equipGroups = [
-  { color: 'red',        name: 'Red',        slots: ['HEADGEAR','HAIR'], emblemColors: ['red'] },
-  { color: 'yellow',     name: 'Yellow',     slots: ['FACE','BREAST'],   emblemColors: ['yellow'] },
-  { color: 'green',      name: 'Green',      slots: ['JACKET','PANTS'],  emblemColors: ['green','platinum'] },
-  { color: 'blue',       name: 'Blue',       slots: ['WAIST','SHOES'],   emblemColors: ['blue'] },
-  { color: 'multicolor', name: 'Multicolor', slots: ['SKIN'],            emblemColors: ['multicolored'] }
+  { color: 'red', name: 'Red', slots: ['HEADGEAR', 'HAIR'], emblemColors: ['red'] },
+  { color: 'yellow', name: 'Yellow', slots: ['FACE', 'BREAST'], emblemColors: ['yellow'] },
+  { color: 'green', name: 'Green', slots: ['JACKET', 'PANTS'], emblemColors: ['green', 'platinum'] },
+  { color: 'blue', name: 'Blue', slots: ['WAIST', 'SHOES'], emblemColors: ['blue'] },
+  { color: 'multicolor', name: 'Multicolor', slots: ['SKIN'], emblemColors: ['multicolored'] }
 ] as EquipGroup[];
 
 // ——— Router & Params ————————————————————————————————————
 
-const route  = useRoute();
+const route = useRoute();
 const router = useRouter();
 
-const jobId     = computed(() => route.params.jobId as string);
+const jobId = computed(() => route.params.jobId as string);
 const jobGrowId = computed(() => route.params.jobGrowId as string);
 
 // ——— Typed Mapping & Labels —————————————————————————————
@@ -302,21 +302,21 @@ const jobFriendlyName = computed(() => {
 
 const centerImgSrc = computed(() => {
   const grows = jobMapping.value.finalJobGrows || [];
-  const idx   = grows.findIndex(g => g.jobGrowId === jobGrowId.value);
+  const idx = grows.findIndex(g => g.jobGrowId === jobGrowId.value);
   return idx >= 0
     ? grows[idx].imgSrc ?? getImageSrc(jobId.value, idx)
     : '';
 });
 
-const slotFontColors: Record<string,string> = {
+const slotFontColors: Record<string, string> = {
   HEADGEAR: '#c0392b', HAIR: '#c0392b',
   FACE: '#f5c32c', BREAST: '#f5c32c',
   JACKET: '#3cb043', PANTS: '#3cb043',
   WAIST: '#4a90e2', SHOES: '#4a90e2'
 };
 
-const emblemStatsByColor = computed<Record<string,EmblemStat[]>>(() => {
-  const groups: Record<string,EmblemStat[]> = {};
+const emblemStatsByColor = computed<Record<string, EmblemStat[]>>(() => {
+  const groups: Record<string, EmblemStat[]> = {};
   stats.value?.emblemStats?.forEach(e => {
     const c = e.slot_color.toLowerCase();
     (groups[c] ||= []).push(e);
@@ -360,12 +360,12 @@ function capitalize(s: string): string {
 }
 
 function convertSlotName(slot: string): string {
-  const map: Record<string,string> = {
-    WEAPON: 'Weapon',    AURORA: 'Aura',
-    HEADGEAR: 'Hat',     HAIR: 'Hair',
-    FACE: 'Face',        BREAST: 'Torso',
-    JACKET: 'Top',       PANTS: 'Bottom',
-    WAIST: 'Waist',      SHOES: 'Shoes',
+  const map: Record<string, string> = {
+    WEAPON: 'Weapon', AURORA: 'Aura',
+    HEADGEAR: 'Hat', HAIR: 'Hair',
+    FACE: 'Face', BREAST: 'Torso',
+    JACKET: 'Top', PANTS: 'Bottom',
+    WAIST: 'Waist', SHOES: 'Shoes',
     SKIN: 'Skin'
   };
   return map[slot] ?? slot;
@@ -373,7 +373,7 @@ function convertSlotName(slot: string): string {
 
 function getSequentialIndex(currentJobId: string, currentLocalIndex: number): number {
   let count = 0;
-  for (const [jid, mapping] of Object.entries(jobMappings as Record<string,JobMapping>)) {
+  for (const [jid, mapping] of Object.entries(jobMappings as Record<string, JobMapping>)) {
     if (jid === currentJobId) {
       return count + currentLocalIndex + 1;
     }
