@@ -1,19 +1,19 @@
 // src/routes/avatarRoutes.ts
 import { Router } from 'express';
-import avatarController from '../controllers/avatarController';
+import { getAvatar, getAvatarStats } from '../controllers/avatarController';
 
 const router = Router();
 
 // Fetch avatar data
 router.get(
   '/fetch/:serverId/:jobId/:jobGrowId',
-  avatarController.getAvatar
+  getAvatar
 );
 
 // Return avatar stats
 router.get(
   '/stats/:jobId/:jobGrowId',
-  avatarController.getAvatarStats
+  getAvatarStats
 );
 
 export default router;
