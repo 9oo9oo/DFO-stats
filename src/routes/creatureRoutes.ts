@@ -1,25 +1,29 @@
 // src/routes/creatureRoutes.ts
 import { Router } from 'express';
-import creatureController from '../controllers/creatureController';
+import {
+  fetchCreature,
+  getCreatureStats,
+  getCreatureArtifactCombinations
+} from '../controllers/creatureController';
 
 const router = Router();
 
 // Fetch creature data
 router.get(
   '/fetch/:serverId/:jobId/:jobGrowId',
-  creatureController.fetchCreature
+  fetchCreature
 );
 
 // Return creature stats
 router.get(
   '/stats/:jobId/:jobGrowId',
-  creatureController.getCreatureStats
+  getCreatureStats
 );
 
 // Return creature & artifact combinations
 router.get(
   '/combinations/:jobId/:jobGrowId',
-  creatureController.getCreatureArtifactCombinations
+  getCreatureArtifactCombinations
 );
 
 export default router;
