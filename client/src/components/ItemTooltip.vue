@@ -1,32 +1,33 @@
 <template>
     <span class="item-tooltip" @mouseenter="onEnter" @mouseleave="onLeave" ref="wrapper">
-      <slot />
-      <div v-if="visible" class="tooltip" :style="tooltipStyle">
+        <slot />
+        <div v-if="visible" class="tooltip" :style="tooltipStyle">
         <div v-if="loading">Loading...</div>
         <div v-else>
-          <h3>{{ info.itemName }}</h3><br />
-          <p>
+            <h3>{{ info.itemName }}</h3><br />
+            <p>
             <strong><span :style="{ color: rarityColor, }">{{ info.itemRarity }}</span></strong>
-          </p>
-          <p><strong>{{ displayTypeDetail }}</strong></p><br />
-          <template v-for="status in info.itemStatus" :key="status.name">
+            </p>
+            <p><strong>{{ displayTypeDetail }}</strong></p><br />
+            <template v-for="status in info.itemStatus" :key="status.name">
             <p><strong>{{ status.name }}</strong> {{ status.value }}</p>
-          </template>
-          <!-- Explanation or Fusion Options -->
-          <template v-if="explainHtml">
+            </template>
+            <!-- Explanation or Fusion Options -->
+            <template v-if="explainHtml">
             <br />
             <div v-html="explainHtml" class="explanation"></div>
             </template>
         </div>
-      </div>
+        </div>
     </span>
-  </template>
+</template>
   
-  <script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import axios from 'axios';
 const cache = new Map();
 
-export default {
+export default defineComponent({
     name: 'ItemTooltip',
     props: {
         id: { type: String, required: true }
@@ -102,7 +103,7 @@ export default {
             this.visible = false;
         }
     }
-};
+});
 </script>
   
 <style scoped>

@@ -104,7 +104,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
 

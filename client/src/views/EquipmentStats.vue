@@ -218,7 +218,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
 import ItemTooltip from '@/components/ItemTooltip.vue';

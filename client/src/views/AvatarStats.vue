@@ -221,204 +221,208 @@
 </template>
 
 
-<script>
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
+import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
 
-export default {
-  name: 'AvatarStats',
-  components: { ItemTooltip },
+// ——— Types —————————————————————————————————————————————
 
-  data() {
-    return {
-      stats: null,
-      loading: false,
-      error: null,
-      slotButtons: [
-        'WEAPON',
-        'HAIR',
-        'HEADGEAR',
-        'FACE',
-        'AURORA',
-        'BREAST',
-        'JACKET',
-        'SKIN',
-        'WAIST',
-        'PANTS',
-        'SHOES'
-      ],
-      orderedSlots: [
-        'WEAPON', 'AURORA', 'HAIR', 'HEADGEAR', 'FACE',
-        'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
-      ],
-      orderedEmblemColors: [
-        'platinum', 'multicolored', 'blue', 'yellow', 'green', 'red'
-      ],
-      equipGroups: [
-        { color: 'red', name: 'Red', slots: ['HEADGEAR', 'HAIR'], emblemColors: ['red'] },
-        { color: 'yellow', name: 'Yellow', slots: ['FACE', 'BREAST'], emblemColors: ['yellow'] },
-        { color: 'green', name: 'Green & Platinum', slots: ['JACKET', 'PANTS'], emblemColors: ['green', 'platinum'] },
-        { color: 'blue', name: 'Blue', slots: ['WAIST', 'SHOES'], emblemColors: ['blue'] },
-        { color: 'multicolor', name: 'Multicolor', slots: ['SKIN'], emblemColors: ['multicolored'] }
-      ]
-    };
-  },
+interface EmblemStat {
+  slot_color: string;
+  [key: string]: any;
+}
 
-  computed: {
-    jobId() {
-      return this.$route.params.jobId;
-    },
-    jobGrowId() {
-      return this.$route.params.jobGrowId;
-    },
-    jobMapping() {
-      return jobMappings[this.jobId] || {};
-    },
-    jobFriendlyName() {
-      const grow = Array.isArray(this.jobMapping.finalJobGrows)
-        ? this.jobMapping.finalJobGrows.find(
-          g => g.jobGrowId === this.jobGrowId
-        )
-        : null;
-      return grow?.jobGrowName || this.jobMapping.jobName || 'Unknown Job';
-    },
-    centerImgSrc() {
-      const grows = this.jobMapping.finalJobGrows || [];
-      const idx = grows.findIndex(g => g.jobGrowId === this.jobGrowId);
-      if (idx !== -1) {
-        return grows[idx].imgSrc || this.getImageSrc(this.jobId, idx);
-      }
-      return '';
-    },
-    slotFontColors() {
-      return {
-        HEADGEAR: '#c0392b',  // “Hat”
-        HAIR: '#c0392b',
-        FACE: '#f5c32c',
-        BREAST: '#f5c32c', // “Torso”
-        JACKET: '#3cb043',  // “Top”
-        PANTS: '#3cb043',  // “Bottom”
-        WAIST: '#4a90e2',
-        SHOES: '#4a90e2'
-      };
-    },
-    emblemStatsByColor() {
-      const groups = {};
-      this.stats?.emblemStats?.forEach(e => {
-        const c = e.slot_color.toLowerCase();
-        groups[c] = groups[c] || [];
-        groups[c].push(e);
-      });
-      return groups;
-    }
-  },
+interface AvatarStats {
+  emblemStats?: EmblemStat[];
+  [key: string]: any;
+}
 
-  mounted() {
-    if (this.jobGrowId) this.fetchAvatarStats();
-  },
+interface EquipGroup {
+  color: string;
+  name: string;
+  slots: string[];
+  emblemColors: string[];
+}
 
-  watch: {
-    '$route.params.jobGrowId'(n, o) {
-      if (n !== o) this.fetchAvatarStats();
-    }
-  },
+// ——— Reactive State —————————————————————————————————————
 
-  methods: {
-    isActiveRoute(name) {
-      return this.$route.name === name;
-    },
+const stats     = ref<AvatarStats | null>(null);
+const loading   = ref(false);
+const error     = ref<string | null>(null);
 
-    async fetchAvatarStats() {
-      if (!this.jobGrowId) return;
-      this.loading = true;
-      try {
-        const { data } = await axios.get(
-          `/api/avatar/stats/${this.jobId}/${this.jobGrowId}`
-        );
-        this.stats = data;
-      } catch (e) {
-        this.error = e.response?.data?.error || e.message;
-      } finally {
-        this.loading = false;
-      }
-    },
+// Ref map to replace this.$refs
+const slotRefs = ref<Record<string, HTMLElement | null>>({});
 
-    capitalize(s) {
-      return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
-    },
+const slotButtons = [
+  'WEAPON','HAIR','HEADGEAR','FACE','AURORA',
+  'BREAST','JACKET','SKIN','WAIST','PANTS','SHOES'
+] as const;
 
-    convertSlotName(slot) {
-      const mappings = {
-        WEAPON: 'Weapon',
-        AURORA: 'Aura',
-        HEADGEAR: 'Hat',
-        HAIR: 'Hair',
-        FACE: 'Face',
-        BREAST: 'Torso',
-        JACKET: 'Top',
-        PANTS: 'Bottom',
-        WAIST: 'Waist',
-        SHOES: 'Shoes',
-        SKIN: 'Skin'
-      };
-      return mappings[slot] || slot;
-    },
+const orderedSlots = [
+  'WEAPON','AURORA','HAIR','HEADGEAR','FACE',
+  'BREAST','JACKET','SKIN','WAIST','PANTS','SHOES'
+] as const;
 
-    getSequentialIndex(currentJobId, currentLocalIndex) {
-      let count = 0;
-      for (const [jid, mapping] of Object.entries(jobMappings)) {
-        if (jid === currentJobId) {
-          return count + currentLocalIndex + 1;
-        }
-        count += mapping.finalJobGrows.length;
-      }
-      return 0;
-    },
+const orderedEmblemColors = [
+  'platinum','multicolored','blue','yellow','green','red'
+] as const;
 
-    getImageSrc(jobId, localIndex) {
-      const seq = this.getSequentialIndex(jobId, localIndex);
-      try {
-        return require(`@/assets/classImages/${seq}.jpg`);
-      } catch {
-        return 'https://via.placeholder.com/250x400';
-      }
-    },
+const equipGroups = [
+  { color: 'red',        name: 'Red',        slots: ['HEADGEAR','HAIR'], emblemColors: ['red'] },
+  { color: 'yellow',     name: 'Yellow',     slots: ['FACE','BREAST'],   emblemColors: ['yellow'] },
+  { color: 'green',      name: 'Green',      slots: ['JACKET','PANTS'],  emblemColors: ['green','platinum'] },
+  { color: 'blue',       name: 'Blue',       slots: ['WAIST','SHOES'],   emblemColors: ['blue'] },
+  { color: 'multicolor', name: 'Multicolor', slots: ['SKIN'],            emblemColors: ['multicolored'] }
+] as EquipGroup[];
 
-    scrollToSlot(slot) {
-      let el = this.$refs[slot];
-      if (Array.isArray(el)) el = el[0];
-      if (!el) return;
-      const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
-      window.scrollTo({ top, behavior: 'smooth' });
-      new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            el.classList.add('flash');
-            setTimeout(() => el.classList.remove('flash'), 1500);
-            obs.disconnect();
-          }
-        });
-      }, { threshold: 0.5 }).observe(el);
-    },
+// ——— Router & Params ————————————————————————————————————
 
-    formatRate(value, divisor) {
-      return (value / divisor).toFixed(2);
-    },
+const route  = useRoute();
+const router = useRouter();
 
-    getItemImageUrl(itemId) {
-      return `https://img-api.dfoneople.com/df/items/${itemId}`;
-    },
+const jobId     = computed(() => route.params.jobId as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
 
-    hideBrokenIcon(event) {
-      const img = event.target;
-      img.onerror = null;
-      img.src = MissingIcon;
-      img.style.width = '40px';
-    }
-  }
+// ——— Typed Mapping & Labels —————————————————————————————
+
+const jobMapping = computed<JobMapping>(() => {
+  return (jobMappings as Record<string, JobMapping>)[jobId.value] || ({} as JobMapping);
+});
+
+const jobFriendlyName = computed(() => {
+  const grows = jobMapping.value.finalJobGrows || [];
+  const found = grows.find(g => g.jobGrowId === jobGrowId.value);
+  return found?.jobGrowName ?? jobMapping.value.jobName ?? 'Unknown Job';
+});
+
+const centerImgSrc = computed(() => {
+  const grows = jobMapping.value.finalJobGrows || [];
+  const idx   = grows.findIndex(g => g.jobGrowId === jobGrowId.value);
+  return idx >= 0
+    ? grows[idx].imgSrc ?? getImageSrc(jobId.value, idx)
+    : '';
+});
+
+const slotFontColors: Record<string,string> = {
+  HEADGEAR: '#c0392b', HAIR: '#c0392b',
+  FACE: '#f5c32c', BREAST: '#f5c32c',
+  JACKET: '#3cb043', PANTS: '#3cb043',
+  WAIST: '#4a90e2', SHOES: '#4a90e2'
 };
+
+const emblemStatsByColor = computed<Record<string,EmblemStat[]>>(() => {
+  const groups: Record<string,EmblemStat[]> = {};
+  stats.value?.emblemStats?.forEach(e => {
+    const c = e.slot_color.toLowerCase();
+    (groups[c] ||= []).push(e);
+  });
+  return groups;
+});
+
+// ——— Lifecycle & Watches —————————————————————————————
+
+onMounted(() => {
+  if (jobGrowId.value) fetchAvatarStats();
+});
+
+watch(() => route.params.jobGrowId, (newVal, oldVal) => {
+  if (newVal !== oldVal) fetchAvatarStats();
+});
+
+// ——— Methods —————————————————————————————————————————
+
+function isActiveRoute(name: string): boolean {
+  return router.currentRoute.value.name === name;
+}
+
+async function fetchAvatarStats(): Promise<void> {
+  if (!jobGrowId.value) return;
+  loading.value = true;
+  try {
+    const { data } = await axios.get<AvatarStats>(
+      `/api/avatar/stats/${jobId.value}/${jobGrowId.value}`
+    );
+    stats.value = data;
+  } catch (e: any) {
+    error.value = e.response?.data?.error || e.message;
+  } finally {
+    loading.value = false;
+  }
+}
+
+function capitalize(s: string): string {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+}
+
+function convertSlotName(slot: string): string {
+  const map: Record<string,string> = {
+    WEAPON: 'Weapon',    AURORA: 'Aura',
+    HEADGEAR: 'Hat',     HAIR: 'Hair',
+    FACE: 'Face',        BREAST: 'Torso',
+    JACKET: 'Top',       PANTS: 'Bottom',
+    WAIST: 'Waist',      SHOES: 'Shoes',
+    SKIN: 'Skin'
+  };
+  return map[slot] ?? slot;
+}
+
+function getSequentialIndex(currentJobId: string, currentLocalIndex: number): number {
+  let count = 0;
+  for (const [jid, mapping] of Object.entries(jobMappings as Record<string,JobMapping>)) {
+    if (jid === currentJobId) {
+      return count + currentLocalIndex + 1;
+    }
+    count += mapping.finalJobGrows.length;
+  }
+  return 0;
+}
+
+function getImageSrc(jobId: string, localIndex: number): string {
+  const seq = getSequentialIndex(jobId, localIndex);
+  try {
+    return require(`@/assets/classImages/${seq}.jpg`);
+  } catch {
+    return 'https://via.placeholder.com/250x400';
+  }
+}
+
+function scrollToSlot(slot: string): void {
+  const el = slotRefs.value[slot];
+  if (!el) return;
+
+  const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  new IntersectionObserver((entries, obs) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        el.classList.add('flash');
+        setTimeout(() => el.classList.remove('flash'), 1500);
+        obs.disconnect();
+      }
+    }
+  }, { threshold: 0.5 }).observe(el);
+}
+
+function formatRate(value: number, divisor: number): string {
+  return (value / divisor).toFixed(2);
+}
+
+function getItemImageUrl(itemId: string): string {
+  return `https://img-api.dfoneople.com/df/items/${itemId}`;
+}
+
+function hideBrokenIcon(event: Event): void {
+  const img = event.target as HTMLImageElement;
+  img.onerror = null;
+  img.src = MissingIcon;
+  img.style.width = '40px';
+}
 </script>
 
 <style scoped>

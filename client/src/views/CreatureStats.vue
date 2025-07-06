@@ -190,98 +190,126 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings.js';
+import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
 
-export default {
-  name: 'CreatureStats',
-  components: { ItemTooltip },
+// ——— Types —————————————————————————————————————————————
 
-  data() {
-    return {
-      stats: null,
-      loading: false,
-      error: null
-    };
-  },
+interface CreatureStatsData {
+  // shape of your API response; add fields as needed
+  [key: string]: any;
+}
 
-  computed: {
-    jobId() { return this.$route.params.jobId; },
-    jobGrowId() { return this.$route.params.jobGrowId; },
-    jobMapping() { return jobMappings[this.jobId] || {}; },
-    jobFriendlyName() {
-      if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-        const grow = this.jobMapping.finalJobGrows.find(g => g.jobGrowId === this.jobGrowId);
-        return grow?.jobGrowName || this.jobMapping.jobName;
-      }
-      return this.jobMapping.jobName || 'Unknown Job';
-    }
-  },
+// ——— Reactive State —————————————————————————————————————
 
-  mounted() {
-    if (this.jobGrowId) this.fetchCreatureStats();
-  },
+const stats   = ref<CreatureStatsData | null>(null);
+const loading = ref(false);
+const error   = ref<string | null>(null);
 
-  watch: {
-    '$route.params.jobGrowId'(n, o) { if (n !== o) this.fetchCreatureStats(); }
-  },
+// Replace this.$refs
+const slotRefs = ref<Record<string, HTMLElement | null>>({});
 
-  methods: {
-    isActiveRoute(name) { return this.$route.name === name; },
-    async fetchCreatureStats() {
-      if (!this.jobGrowId) return;
-      this.loading = true;
-      try {
-        const res = await axios.get(`/api/creature/stats/${this.jobId}/${this.jobGrowId}`);
-        this.stats = res.data;
-      } catch (e) {
-        this.error = e.response?.data?.error || e.message;
-      } finally { this.loading = false; }
-    },
+// ——— Router & Params ————————————————————————————————————
 
-    scrollToSlot(slot) {
-      let el = this.$refs[slot];
-      if (Array.isArray(el)) el = el[0];
-      if (!el) return;
+const route  = useRoute();
+const router = useRouter();
 
-      const offset = 20;
-      const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+const jobId     = computed(() => route.params.jobId  as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
 
-      const obs = new IntersectionObserver((entries, o) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
+// ——— Typed Mapping & Labels —————————————————————————————
 
-          let flashEl = el;
-          if (!flashEl.classList.contains('slot')) {
-            const childSlot = flashEl.querySelector('.slot');
-            if (childSlot) flashEl = childSlot;
-          }
+const jobMapping = computed<JobMapping>(() => {
+  return (jobMappings as Record<string, JobMapping>)[jobId.value] || ({} as JobMapping);
+});
 
-          flashEl.classList.add('flash');
-          setTimeout(() => flashEl.classList.remove('flash'), 2000);
-          o.disconnect();
-        });
-      }, { threshold: 0.5 });
-
-      obs.observe(el);
-    },
-
-    getItemImageUrl(itemId) {
-      return `https://img-api.dfoneople.com/df/items/${itemId}`;
-    },
-
-    hideBrokenIcon(event) {
-      const img = event.target;
-      img.onerror = null;
-      img.src = MissingIcon;
-      img.style.width = '40px';
-    }
+const jobFriendlyName = computed(() => {
+  if (jobGrowId.value && Array.isArray(jobMapping.value.finalJobGrows)) {
+    const grow = jobMapping.value.finalJobGrows.find(
+      (g: JobGrow) => g.jobGrowId === jobGrowId.value
+    );
+    return grow?.jobGrowName || jobMapping.value.jobName || 'Unknown Job';
   }
-};
+  return jobMapping.value.jobName || 'Unknown Job';
+});
+
+// ——— Lifecycle & Watchers —————————————————————————————
+
+onMounted(() => {
+  if (jobGrowId.value) fetchCreatureStats();
+});
+
+watch(
+  () => route.params.jobGrowId,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) fetchCreatureStats();
+  }
+);
+
+// ——— Methods as Functions ————————————————————————————
+
+function isActiveRoute(name: string): boolean {
+  return router.currentRoute.value.name === name;
+}
+
+async function fetchCreatureStats(): Promise<void> {
+  if (!jobGrowId.value) return;
+  loading.value = true;
+  try {
+    const res = await axios.get<CreatureStatsData>(
+      `/api/creature/stats/${jobId.value}/${jobGrowId.value}`
+    );
+    stats.value = res.data;
+  } catch (e: any) {
+    error.value = e.response?.data?.error || e.message;
+  } finally {
+    loading.value = false;
+  }
+}
+
+function scrollToSlot(slot: string): void {
+  const el = slotRefs.value[slot];
+  if (!el) return;
+
+  const offset = 20;
+  const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  const obs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      let flashEl: HTMLElement = el;
+      if (!flashEl.classList.contains('slot')) {
+        const child = flashEl.querySelector<HTMLElement>('.slot');
+        if (child) flashEl = child;
+      }
+
+      flashEl.classList.add('flash');
+      setTimeout(() => flashEl.classList.remove('flash'), 2000);
+      observer.disconnect();
+    });
+  }, { threshold: 0.5 });
+
+  obs.observe(el);
+}
+
+function getItemImageUrl(itemId: string): string {
+  return `https://img-api.dfoneople.com/df/items/${itemId}`;
+}
+
+function hideBrokenIcon(event: Event): void {
+  const img = event.target as HTMLImageElement;
+  img.onerror = null;
+  img.src = MissingIcon;
+  img.style.width = '40px';
+}
 </script>
 
 <style scoped>

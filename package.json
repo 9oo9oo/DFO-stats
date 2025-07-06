@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "server": "cd src && nodemon server.js",
-    "client": "cd client && npm run server",
+    "server": "cd src && nodemon server.ts",
+    "client": "cd client && npm run serve",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "jest --coverage",
     "test:watch": "jest --watch",

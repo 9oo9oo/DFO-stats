@@ -49,12 +49,14 @@
   </div>
 </template>
 
-<script>
-import jobMappings from '@/config/jobMappings.js';
+<script lang="ts">
+import { defineComponent } from 'vue'
+import jobMappings from '@/config/jobMappings.js'
+import type { JobMapping } from '@/types/jobMappings'
 
-export default {
+export default defineComponent({
   name: "HomePage",
-  data() {
+  data(): { jobMappings: Record<string, JobMapping> } {
     return {
       jobMappings,
     };
@@ -90,7 +92,7 @@ export default {
       }
     }
   },
-};
+});
 </script>
 
 <style scoped>
@@ -116,6 +118,7 @@ export default {
   margin: 30px auto;
   max-width: 1000px;
 }
+
 .job-button {
   background-color: transparent;
   border: 2px solid #fff;
@@ -126,6 +129,7 @@ export default {
   padding: 8px 12px;
   transition: background-color 0.2s;
 }
+
 .job-button:hover {
   background-color: #e56717;
 }
@@ -134,6 +138,7 @@ export default {
 .job-group {
   margin-bottom: 40px;
 }
+
 .job-name {
   color: #e56717;
   font-size: 1.5rem;
@@ -156,6 +161,7 @@ export default {
   display: inline-block;
   position: relative;
 }
+
 .awakening-img {
   width: 280px;
   height: 240px;
@@ -164,6 +170,7 @@ export default {
   transition: opacity 0.2s;
   border-radius: 15px;
 }
+
 .awakening-img:hover {
   opacity: 0.5;
 }
@@ -182,6 +189,7 @@ export default {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .img-container:hover .img-overlay {
   opacity: 1;
 }
