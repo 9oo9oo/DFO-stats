@@ -60,7 +60,7 @@
 
         <!-- Weapon & Aura -->
         <div class="weapon-aura-grid">
-          <section ref="WEAPON" class="slot-section">
+          <section :ref="el => { slotRefs['WEAPON'] = el }" class="slot-section">
             <div class="slot-table-block">
             <h2>{{ convertSlotName('WEAPON') }}</h2>
             <table class="stats-table">
@@ -87,7 +87,7 @@
           </div>
           </section>
 
-          <section ref="AURORA" class="slot-section">
+          <section :ref="el => { slotRefs['AURORA'] = el }" class="slot-section">
             <div class="slot-table-block">
             <h2>{{ convertSlotName('AURORA') }}</h2>
             <table class="stats-table">
@@ -129,7 +129,7 @@
               <div
                 v-for="slot in group.slots"
                 :key="slot"
-                :ref="slot"
+                :ref="el => { slotRefs[slot] = el }"
                 class="slot-table-block"
               >
                 <h3>{{ convertSlotName(slot) }}</h3>
@@ -652,6 +652,10 @@ section[class^="group-"] h2 {
 .emblem-table-block h3 {
   padding: 10px 0;
   color: #e56717;
+}
+
+.slot-section.flash {
+  border-radius: 8px;
 }
 
 /* Flash Animation */

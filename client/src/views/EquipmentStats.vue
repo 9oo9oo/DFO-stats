@@ -113,7 +113,7 @@
     <section
       v-for="slot in titleWeaponSlots"
       :key="slot"
-      :ref="slot"
+      :ref="el => { slotRefs[slot] = el }"
       class="slot-section"
     >
       <h2>{{ slotDisplayNames[slot] || slot }}</h2>
@@ -151,7 +151,7 @@
       <section
         v-for="slot in otherSlots"
         :key="slot"
-        :ref="slot"
+        :ref="el => { slotRefs[slot] = el }"
         class="slot-section"
       >
         <h2>{{ slotDisplayNames[slot] || slot }}</h2>
