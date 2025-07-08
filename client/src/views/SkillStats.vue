@@ -104,106 +104,114 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import jobMappings from '@/config/jobMappings.js';
+import jobMappings from '@/config/jobMappings';
+import type { JobMapping, JobGrow } from '@/types/jobMappings';
 
-export default {
-  name: 'SkillStats',
-  data() {
-    return {
-      stats: null,
-      loading: false,
-      error: null,
-    };
-  },
-  computed: {
-    jobId() {
-      return this.$route.params.jobId;
-    },
-    jobGrowId() {
-      return this.$route.params.jobGrowId;
-    },
-    jobMapping() {
-      return jobMappings[this.jobId] || {};
-    },
-    jobFriendlyName() {
-      if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-        const growMapping = this.jobMapping.finalJobGrows.find(
-          (item) => item.jobGrowId === this.jobGrowId
-        );
-        if (growMapping && growMapping.jobGrowName) {
-          return growMapping.jobGrowName;
-        }
-      }
-      return this.jobMapping.jobName || 'Unknown Job';
-    },
-    sortedSkillStats() {
-      if (!this.stats || !this.stats.skillStats) return [];
-      return this.stats.skillStats.slice().sort((a, b) => {
-        if (a.required_level === b.required_level) {
-          return a.skill_name.localeCompare(b.skill_name);
-        }
-        return a.required_level - b.required_level;
-      });
-    },
-    groupedByLevel() {
-      return this.sortedSkillStats.reduce((acc, skill) => {
-        const lvl = skill.required_level;
-        if (!acc[lvl]) acc[lvl] = [];
-        acc[lvl].push(skill);
-        return acc;
-      }, {});
-    },
-    chunkedLevelRows() {
-      const MAX = 6;
-      return Object.entries(this.groupedByLevel).map(([level, skills]) => {
-        const rows = [];
-        for (let i = 0; i < skills.length; i += MAX) {
-          rows.push(skills.slice(i, i + MAX));
-        }
-        return { level, rows };
-      });
+// ——— Types —————————————————————————————————————————————
+
+interface SkillStat {
+  skill_id: string;
+  skill_name: string;
+  total_count: number;
+  average_level: number;
+  required_level: number;
+}
+
+interface SkillStatsData {
+  skillStats?: SkillStat[];
+}
+
+// ——— Reactive State —————————————————————————————————————
+
+const stats = ref<SkillStatsData | null>(null);
+const loading = ref(false);
+const error = ref<string | null>(null);
+
+// ——— Routing & Job Info ——————————————————————————————————
+
+const route = useRoute();
+const router = useRouter();
+const jobId = computed(() => route.params.jobId as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
+
+const jobMapping = computed<JobMapping>(() =>
+  jobMappings[jobId.value] ?? ({} as JobMapping)
+);
+
+const jobFriendlyName = computed(() => {
+  const grows = jobMapping.value.finalJobGrows ?? [];
+  const found = grows.find((g: JobGrow) => g.jobGrowId === jobGrowId.value);
+  return found?.jobGrowName ?? jobMapping.value.jobName ?? 'Unknown Job';
+});
+
+// ——— Computed Skill Data ——————————————————————————————————
+
+const sortedSkillStats = computed<SkillStat[]>(() => {
+  const arr = stats.value?.skillStats ?? [];
+  return arr.slice().sort((a, b) => {
+    if (a.required_level === b.required_level) {
+      return a.skill_name.localeCompare(b.skill_name);
     }
-  },
-  mounted() {
-    if (this.jobGrowId) {
-      this.fetchSkillStats();
-    }
-  },
-  watch: {
-    '$route.params.jobGrowId'(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.fetchSkillStats();
-      }
-    },
-  },
-  methods: {
-    async fetchSkillStats() {
-      if (!this.jobGrowId) return;
-      this.loading = true;
-      try {
-        const response = await axios.get(
-          `/api/skill/stats/${this.jobId}/${this.jobGrowId}`
-        );
-        this.stats = response.data;
-      } catch (err) {
-        this.error =
-          err.response && err.response.data && err.response.data.error
-            ? err.response.data.error
-            : err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
-    formatNumber(number) {
-      return Number(number).toLocaleString();
-    },
-    isActiveRoute(name) {
-      return this.$route.name === name;
-    }
-  },
-};
+    return a.required_level - b.required_level;
+  });
+});
+
+const groupedByLevel = computed<Record<string, SkillStat[]>>(() => {
+  return sortedSkillStats.value.reduce((acc, skill) => {
+    const lvl = skill.required_level.toString();
+    (acc[lvl] ||= []).push(skill);
+    return acc;
+  }, {} as Record<string, SkillStat[]>);
+});
+
+const chunkedLevelRows = computed(() => {
+  const MAX = 6;
+  return Object.entries(groupedByLevel.value).map(([level, skills]) => ({
+    level,
+    rows: Array.from({ length: Math.ceil(skills.length / MAX) }, (_, i) =>
+      skills.slice(i * MAX, i * MAX + MAX)
+    )
+  }));
+});
+
+// ——— Lifecycle & Watchers —————————————————————————————
+
+onMounted(() => {
+  if (jobGrowId.value) fetchSkillStats();
+});
+
+watch(() => route.params.jobGrowId, (n, o) => {
+  if (n !== o) fetchSkillStats();
+});
+
+// ——— Methods —————————————————————————————————————————
+
+async function fetchSkillStats(): Promise<void> {
+  if (!jobGrowId.value) return;
+  loading.value = true;
+  try {
+    const { data } = await axios.get<SkillStatsData>(
+      `/api/skill/stats/${jobId.value}/${jobGrowId.value}`
+    );
+    stats.value = data;
+  } catch (err: any) {
+    error.value = err.response?.data?.error ?? err.message;
+  } finally {
+    loading.value = false;
+  }
+}
+
+function formatNumber(n: number): string {
+  return n.toLocaleString();
+}
+
+function isActiveRoute(name: string): boolean {
+  return router.currentRoute.value.name === name;
+}
 </script>
 
 <style scoped>

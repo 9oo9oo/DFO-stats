@@ -332,172 +332,171 @@
   </div>
 </template>
 
-<script lang="ts">
-import axios from 'axios';
+<script setup lang="ts" name="SummaryStats">
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
+import axios from 'axios';
 
-export default {
-  name: 'SummaryStats',
-  components: { ItemTooltip },
-  data() {
-    return {
-      combos: {},
-      loading: false,
-      error: null,
-      stats: null,
-      avatarStats: null,
-      creatureCombos: null,
-      talismanStats: [],
-      runeStats: [],
-      groups: [
-        { key: 'core', title: 'Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
-        { key: 'jewels', title: 'Accessory', slots: ['wrist', 'ring', 'amulet'] },
-        { key: 'extras', title: 'Special Equipment', slots: ['support', 'magic_ston', 'earring'] }
-      ],
-      fusionGroups: [
-        { key: 'coreFusion', title: 'Fusion Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
-        { key: 'jewelsFusion', title: 'Fusion Accessory', slots: ['wrist', 'ring', 'amulet'] },
-        { key: 'extrasFusion', title: 'Fusion Special Equipment', slots: ['support', 'magic_ston', 'earring'] }
-      ],
-      setIconMapping: {
-        "Hideout's Endless Gold Set": 'hideout.png',
-        "Cleansing Darkness Set": 'cleansing.png',
-        "Ancient Battlefield Valkyrie Set": 'ancient.png',
-        "Death in the Shadows Set": 'death.png',
-        "Dragon Arena Uprising Set": 'dragon.png',
-        "Overwhelming Nature Set": 'overwhelming.png',
-        "Serendipity Set": 'serendipity.png',
-        "Ethereal Orb Arts Set": 'ethereal.png',
-        "Beyond Limit Energy Set": 'beyond.png',
-        "Magic Domain Set": 'magic.png',
-        "Alpha of the Pack Hunt Set": 'alpha.png',
-        "Soul Fairy Set": 'soul.png'
-      }
-    };
-  },
-  computed: {
-    jobId() { return this.$route.params.jobId; },
-    jobGrowId() { return this.$route.params.jobGrowId; },
-    slotDisplayNames() {
-      return {
-        jacket: 'Top',
-        shoulder: 'Head/Shoulder',
-        pants: 'Bottom',
-        waist: 'Belt',
-        shoes: 'Shoes',
-        wrist: 'Bracelet',
-        ring: 'Ring',
-        amulet: 'Necklace',
-        support: 'Sub-Equipment',
-        magic_ston: 'Magic Stone',
-        earring: 'Earrings'
-      };
-    },
-    otherAvatarSlots() {
-      return this.avatarStats
-        ? Object.keys(this.avatarStats)
-          .filter(s => !['WEAPON', 'AURORA', 'AURA_SKIN'].includes(s))
-        : [];
-    },
-  },
-  methods: {
-    comboKey(combo, slots) {
-      return slots.map(s => combo[`${s}_id`] || s).join('-');
-    },
-    async fetchStats() {
-      try {
-        const resp = await axios.get(
-          `/api/equipment/stats/${this.jobId}/${this.jobGrowId}`
-        );
-        this.stats = resp.data;
-      } catch (err) {
-        this.error = err.response?.data?.error || err.message;
-      }
-    },
-    async fetchCombinations() {
-      this.loading = true;
-      try {
-        const resp = await axios.get(
-          `/api/equipment/combinations/${this.jobId}/${this.jobGrowId}`
-        );
-        this.combos = resp.data;
-      } catch (err) {
-        this.error = err.response?.data?.error || err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
-    getItemImageUrl(itemId) {
-      return `https://img-api.dfoneople.com/df/items/${itemId}`;
-    },
-    getSetIconUrl(setName) {
-      const file = this.setIconMapping[setName];
-      if (file) {
-        try {
-          return require(`@/assets/setIcons/${file}`);
-        } catch {
-          return MissingIcon;
-        }
-      }
-      return MissingIcon;
-    },
-    hideBrokenIcon(event) {
-      const img = event.target;
-      img.onerror = null;
-      img.src = MissingIcon;
-      img.style.width = '40px';
-    },
-    async fetchAvatarStats() {
-      try {
-        const { data } = await axios.get(
-          `/api/avatar/stats/${this.jobId}/${this.jobGrowId}`
-        );
-        this.avatarStats = data.avatarStatsBySlot;
-      } catch (err) {
-        this.error = err.message;
-      }
-    },
-    async fetchCreatureCombos() {
-      try {
-        const resp = await axios.get(
-          `/api/creature/combinations/${this.jobId}/${this.jobGrowId}`
-        );
-        this.creatureCombos = resp.data.combinationStats || [];
-      } catch (err) {
-        this.error = err.response?.data?.error || err.message;
-      }
-    },
-    async fetchTalismanStats() {
-      if (!this.jobGrowId) return;
-      try {
-        const { data } = await axios.get(
-          `/api/talisman/stats/${this.jobId}/${this.jobGrowId}`
-        );
-        this.talismanStats = data.talismanStats;
-        this.runeStats = data.runeStats;
-      } catch (err) {
-        this.error = err.response?.data?.error || err.message;
-      }
-    },
-    formatRate(value, divisor) {
-      return (value / divisor).toFixed(2);
-    },
-  },
-  mounted() {
-    this.loading = true;
-    Promise.all([
-      this.fetchStats(),
-      this.fetchCombinations(),
-      this.fetchAvatarStats(),
-      this.fetchCreatureCombos(),
-      this.fetchTalismanStats(),
-    ])
-      .catch(err => { this.error ||= err.message; })
-      .finally(() => { this.loading = false; });
-  }
+// ——— Interfaces ——————————————————————————————————————
+interface SetUsage {
+  set_item_id: string;
+  set_item_name: string;
+  usage_rate: number;
+}
+interface EquipmentItem {
+  item_id: string;
+  item_name: string;
+  usage_rate: number;
+}
+interface Combo {
+  [key: string]: any;
+  usage_count: number;
+}
+interface AvatarStats {
+  [slot: string]: Array<{
+    item_id: string;
+    item_name: string;
+    usage_count: number;
+    option_ability?: string;
+  }>;
+}
+interface CreatureCombo {
+  creature_item: { id: string; name: string };
+  artifact_red: { id: string; name: string };
+  artifact_blue: { id: string; name: string };
+  artifact_green: { id: string; name: string };
+  usage_count: number;
+}
+interface TalismanStat {
+  talisman_item_id: string;
+  talisman_item_name: string;
+  usage_count: number;
+}
+interface RuneStat {
+  rune_item_id: string;
+  rune_item_name: string;
+  usage_count: number;
+}
+interface SummaryStatsData {
+  setUsage: SetUsage[];
+  itemsBySlot: Record<string, EquipmentItem[]>;
+}
+
+// ——— Reactive State —————————————————————————————————————
+const loading = ref(false);
+const error = ref<string | null>(null);
+const stats = ref<SummaryStatsData | null>(null);
+const combos = ref<Record<string, Combo[]>>({});
+const avatarStats = ref<AvatarStats | null>(null);
+const creatureCombos = ref<CreatureCombo[] | null>(null);
+const talismanStats = ref<TalismanStat[]>([]);
+const runeStats = ref<RuneStat[]>([]);
+
+// ——— Config Groups —————————————————————————————————————
+const groups = [
+  { key: 'core', title: 'Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
+  { key: 'jewels', title: 'Accessory', slots: ['wrist', 'ring', 'amulet'] },
+  { key: 'extras', title: 'Special Equipment', slots: ['support', 'magic_ston', 'earring'] },
+];
+const fusionGroups = [
+  { key: 'coreFusion', title: 'Fusion Armor', slots: ['jacket', 'shoulder', 'pants', 'waist', 'shoes'] },
+  { key: 'jewelsFusion', title: 'Fusion Accessory', slots: ['wrist', 'ring', 'amulet'] },
+  { key: 'extrasFusion', title: 'Fusion Special Equipment', slots: ['support', 'magic_ston', 'earring'] },
+];
+
+// ——— Display Helpers —————————————————————————————————————
+const slotDisplayNames: Record<string, string> = {
+  jacket: 'Top', shoulder: 'Head/Shoulder', pants: 'Bottom', waist: 'Belt', shoes: 'Shoes',
+  wrist: 'Bracelet', ring: 'Ring', amulet: 'Necklace', support: 'Sub-Equipment',
+  magic_ston: 'Magic Stone', earring: 'Earrings'
 };
+const otherAvatarSlots = computed(() =>
+  avatarStats.value
+    ? Object.keys(avatarStats.value).filter(s =>
+      !['WEAPON', 'AURORA', 'AURA_SKIN'].includes(s)
+    )
+    : []
+);
+
+// ——— Helpers —————————————————————————————————————————————
+function comboKey(combo: Combo, slots: string[]): string {
+  return slots.map(s => combo[`${s}_id`] || s).join('-');
+}
+function getItemImageUrl(itemId: string): string {
+  return `https://img-api.dfoneople.com/df/items/${itemId}`;
+}
+function getSetIconUrl(setName: string): string {
+  try {
+    return require(`@/assets/setIcons/${setName.toLowerCase()}.png`);
+  } catch {
+    return MissingIcon;
+  }
+}
+function hideBrokenIcon(e: Event) {
+  const img = e.target as HTMLImageElement;
+  img.onerror = null;
+  img.src = MissingIcon;
+  img.style.width = '40px';
+}
+function formatRate(value: number, divisor: number): string {
+  return (value / divisor).toFixed(2);
+}
+
+// ——— Data Fetchers —————————————————————————————————————
+const route = useRoute();
+const jobId = computed(() => route.params.jobId as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
+
+async function fetchStats() {
+  const { data } = await axios.get<SummaryStatsData>(
+    `/api/equipment/stats/${jobId.value}/${jobGrowId.value}`
+  );
+  stats.value = data;
+}
+async function fetchCombinations() {
+  const { data } = await axios.get<Record<string, Combo[]>>(
+    `/api/equipment/combinations/${jobId.value}/${jobGrowId.value}`
+  );
+  combos.value = data;
+}
+async function fetchAvatarStats() {
+  const { data } = await axios.get<{ avatarStatsBySlot: AvatarStats }>(
+    `/api/avatar/stats/${jobId.value}/${jobGrowId.value}`
+  );
+  avatarStats.value = data.avatarStatsBySlot;
+}
+async function fetchCreatureCombos() {
+  const { data } = await axios.get<{ combinationStats: CreatureCombo[] }>(
+    `/api/creature/combinations/${jobId.value}/${jobGrowId.value}`
+  );
+  creatureCombos.value = data.combinationStats;
+}
+async function fetchTalismanStats() {
+  const { data } = await axios.get<{
+    talismanStats: TalismanStat[];
+    runeStats: RuneStat[];
+  }>(`/api/talisman/stats/${jobId.value}/${jobGrowId.value}`);
+  talismanStats.value = data.talismanStats;
+  runeStats.value = data.runeStats;
+}
+
+// ——— Initialization —————————————————————————————————————
+onMounted(() => {
+  loading.value = true;
+  Promise.all([
+    fetchStats(),
+    fetchCombinations(),
+    fetchAvatarStats(),
+    fetchCreatureCombos(),
+    fetchTalismanStats(),
+  ])
+    .catch(err => { error.value ||= err.message; })
+    .finally(() => { loading.value = false; });
+});
 </script>
+
 
 <style scoped>
 .summary-container {

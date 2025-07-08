@@ -226,7 +226,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings';
-import type { JobMapping, JobGrow } from '@/types/jobMappings';
+import type { JobMapping } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
 
@@ -263,14 +263,14 @@ const slotButtons = [
   'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
 ] as const;
 
-const orderedSlots = [
-  'WEAPON', 'AURORA', 'HAIR', 'HEADGEAR', 'FACE',
-  'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
-] as const;
+// const orderedSlots = [
+//   'WEAPON', 'AURORA', 'HAIR', 'HEADGEAR', 'FACE',
+//   'BREAST', 'JACKET', 'SKIN', 'WAIST', 'PANTS', 'SHOES'
+// ] as const;
 
-const orderedEmblemColors = [
-  'platinum', 'multicolored', 'blue', 'yellow', 'green', 'red'
-] as const;
+// const orderedEmblemColors = [
+//   'platinum', 'multicolored', 'blue', 'yellow', 'green', 'red'
+// ] as const;
 
 const equipGroups = [
   { color: 'red', name: 'Red', slots: ['HEADGEAR', 'HAIR'], emblemColors: ['red'] },
@@ -315,14 +315,14 @@ const slotFontColors: Record<string, string> = {
   WAIST: '#4a90e2', SHOES: '#4a90e2'
 };
 
-const emblemStatsByColor = computed<Record<string, EmblemStat[]>>(() => {
-  const groups: Record<string, EmblemStat[]> = {};
-  stats.value?.emblemStats?.forEach(e => {
-    const c = e.slot_color.toLowerCase();
-    (groups[c] ||= []).push(e);
-  });
-  return groups;
-});
+// const emblemStatsByColor = computed<Record<string, EmblemStat[]>>(() => {
+//   const groups: Record<string, EmblemStat[]> = {};
+//   stats.value?.emblemStats?.forEach(e => {
+//     const c = e.slot_color.toLowerCase();
+//     (groups[c] ||= []).push(e);
+//   });
+//   return groups;
+// });
 
 // ——— Lifecycle & Watches —————————————————————————————
 

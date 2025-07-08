@@ -22,88 +22,120 @@
     </span>
 </template>
   
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref, reactive, computed, defineProps } from 'vue';
 import axios from 'axios';
-const cache = new Map();
 
-export default defineComponent({
-    name: 'ItemTooltip',
-    props: {
-        id: { type: String, required: true }
-    },
-    data() {
-        return {
-            visible: false,
-            loading: false,
-            info: {},
-            x: 0,
-            y: 0
-        };
-    },
-    computed: {
-        tooltipStyle() {
-            return { top: this.y + 'px', left: this.x + 'px' };
-        },
-        rarityColor() {
-            switch (this.info.itemRarity) {
-                case 'Rare': return '#b36bff';
-                case 'Unique': return '#ff00ff';
-                case 'Legendary': return '#ff7800';
-                case 'Epic': return '#ffb400';
-                case 'Primeval': return '#59dcc3';
-                default: return '#000';
-            }
-        },
-        displayTypeDetail() {
-            if (this.info.fusionOption && this.info.slots && this.info.slots.length) {
-                return this.info.slots[0].slotName;
-            }
-            return this.info.itemTypeDetail || '';
-        },
-        explainHtml() {
-            // Handle fusion items with fusionOption
-            const fusion = this.info.fusionOption && this.info.fusionOption.options;
-            if (fusion && fusion.length) {
-                return fusion
-                    .map(opt => `<p>${opt.explain.replace(/\n/g, '<br/>')}</p>`)
-                    .join('');
-            }
-            // Otherwise, normal item explanation
-            let raw = this.info.itemExplain;
-            raw = raw
-                .replace(/<tst::up_color>/g, '<span style="color: #e56717; font-weight: bold;">')
-                .replace(/<tst::default>/g, '</span>');
-            const paras = raw.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
-            return paras.map(p => `<p>${p.replace(/\n/g, '<br/>')}</p>`).join('');
-        }
-    },
-    methods: {
-        async onEnter() {
-            this.visible = true;
-            const rect = this.$refs.wrapper.getBoundingClientRect();
-            this.x = rect.width + 8;
-            this.y = 0;
-            if (cache.has(this.id)) {
-                this.info = cache.get(this.id);
-            } else {
-                this.loading = true;
-                try {
-                    const res = await axios.get(`/api/items/${this.id}`);
-                    cache.set(this.id, res.data);
-                    this.info = res.data;
-                } catch (e) {
-                    console.error('Tooltip fetch error:', e);
-                } finally {
-                    this.loading = false;
-                }
-            }
-        },
-        onLeave() {
-            this.visible = false;
-        }
-    }
+// ——— Types —————————————————————————————————————————————
+
+interface Status {
+  name: string;
+  value: string;
+}
+
+interface FusionOption {
+  explain: string;
+}
+
+interface ItemInfo {
+  itemName: string;
+  itemRarity: string;
+  itemTypeDetail?: string;
+  slots?: { slotName: string }[];
+  fusionOption?: { options: FusionOption[] };
+  itemStatus: Status[];
+  itemExplain: string;
+  [key: string]: any;
+}
+
+// ——— Props —————————————————————————————————————————————
+
+const props = defineProps<{ id: string }>();
+
+// ——— Reactive State —————————————————————————————————————
+
+const visible = ref(false);
+const loading = ref(false);
+const info = reactive<Partial<ItemInfo>>({});
+const x = ref(0);
+const y = ref(0);
+
+// Template ref for tooltip wrapper
+const wrapper = ref<HTMLElement | null>(null);
+
+// ——— Computed —————————————————————————————————————————————
+
+const tooltipStyle = computed(() => ({
+  top: `${y.value}px`,
+  left: `${x.value}px`
+}));
+
+const rarityColor = computed(() => {
+  switch (info.itemRarity) {
+    case 'Rare':      return '#b36bff';
+    case 'Unique':    return '#ff00ff';
+    case 'Legendary': return '#ff7800';
+    case 'Epic':      return '#ffb400';
+    case 'Primeval':  return '#59dcc3';
+    default:          return '#000';
+  }
 });
+
+const displayTypeDetail = computed(() => {
+  if (info.fusionOption && info.slots?.length) {
+    return info.slots[0].slotName;
+  }
+  return info.itemTypeDetail ?? '';
+});
+
+const explainHtml = computed(() => {
+  const fusion = info.fusionOption?.options;
+  if (fusion?.length) {
+    return fusion
+      .map(opt => `<p>${opt.explain.replace(/\n/g, '<br/>')}</p>`)
+      .join('');
+  }
+  let raw = info.itemExplain ?? '';
+  raw = raw
+    .replace(/<tst::up_color>/g, '<span style="color: #e56717; font-weight: bold;">')
+    .replace(/<tst::default>/g, '</span>');
+  const paras = raw.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+  return paras.map(p => `<p>${p.replace(/\n/g, '<br/>')}</p>`).join('');
+});
+
+// ——— Cache —————————————————————————————————————————————
+
+const cache = new Map<string, ItemInfo>();
+
+// ——— Methods —————————————————————————————————————————————
+
+async function onEnter(): Promise<void> {
+  visible.value = true;
+  const rect = wrapper.value?.getBoundingClientRect();
+  if (rect) {
+    x.value = rect.width + 8;
+    y.value = 0;
+  }
+
+  if (cache.has(props.id)) {
+    Object.assign(info, cache.get(props.id)!);
+  } else {
+    loading.value = true;
+    try {
+      const { data } = await axios.get<ItemInfo>(`/api/items/${props.id}`);
+      cache.set(props.id, data);
+      Object.assign(info, data);
+    } catch (e) {
+      console.error('Tooltip fetch error:', e);
+    } finally {
+      loading.value = false;
+    }
+  }
+}
+
+function onLeave(): void {
+  visible.value = false;
+}
 </script>
   
 <style scoped>

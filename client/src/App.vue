@@ -1,27 +1,52 @@
+<!-- src/App.vue -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div id="app">
+    <Header></Header>
+    <router-view></router-view>
+    <Footer></Footer>
+  </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from './components/HelloWorld.vue';
+<script>
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 
-@Options({
+export default {
+  name: "App",
   components: {
-    HelloWorld,
+    Header,
+    Footer
   },
-})
-export default class App extends Vue {}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Global styles */
+body {
+  max-width: 1600px;
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #201F24;
+  color: #FFFFFF;
+}
+
+h1 {
+  font-family: 'Noto Sans', sans-serif;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+ul {
+  font-family: 'Noto Sans', sans-serif;
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  font-family: 'Noto Sans', sans-serif;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>

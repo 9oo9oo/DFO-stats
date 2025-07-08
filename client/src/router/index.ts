@@ -7,7 +7,7 @@ import CreatureStats from '@/views/CreatureStats.vue';
 import TalismanStats from '@/views/TalismanStats.vue';
 import SkillStats from '@/views/SkillStats.vue';
 import AvatarStats from '@/views/AvatarStats.vue';
-import SummaryStats from '@/views/Summary.vue';
+import SummaryStats from '@/views/SummaryStats.vue';
 
 const routes = [
     { path: '/', name: 'Home', component: HomePage },

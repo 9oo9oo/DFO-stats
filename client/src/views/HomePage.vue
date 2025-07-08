@@ -9,7 +9,7 @@
     <!-- Navigation buttons -->
     <div class="job-buttons">
       <button
-        v-for="(mapping, jobId) in jobMappings"
+        v-for="(mapping, jobId) in mappings"
         :key="jobId"
         class="job-button"
         @click="scrollToJobGroup(jobId)"
@@ -21,78 +21,78 @@
     <!-- Character sections -->
     <div
       class="job-group"
-      v-for="(mapping, jobId) in jobMappings"
+      v-for="(mapping, jobId) in mappings"
       :key="jobId"
       :id="jobId"
     >
       <h2 class="job-name">{{ mapping.jobName }}</h2>
       <div class="job-images">
         <router-link
-        v-for="(jobGrow, localIndex) in mapping.finalJobGrows"
-        :key="jobGrow.jobGrowId"
-        :to="{
-          name: 'EquipmentStats',
-          params: { jobId: jobId, jobGrowId: jobGrow.jobGrowId }
-        }"
-      >
-  <div class="img-container">
-    <img
-      :src="jobGrow.imgSrc || getImageSrc(jobId, localIndex)"
-      :alt="jobGrow.jobGrowName"
-      class="awakening-img"
-    />
-    <div class="img-overlay">{{ jobGrow.jobGrowName }}</div>
-  </div>
-</router-link>
+          v-for="(jobGrow, idx) in mapping.finalJobGrows"
+          :key="jobGrow.jobGrowId"
+          :to="{ name: 'EquipmentStats', params: { jobId, jobGrowId: jobGrow.jobGrowId } }"
+        >
+          <div class="img-container">
+            <img
+              :src="jobGrow.imgSrc ?? getImageSrc(jobId, idx)"
+              :alt="jobGrow.jobGrowName"
+              class="awakening-img"
+            />
+            <div class="img-overlay">{{ jobGrow.jobGrowName }}</div>
+          </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import jobMappings from '@/config/jobMappings.js'
-import type { JobMapping } from '@/types/jobMappings'
+<script setup lang="ts">
+// import { useRouter } from 'vue-router';
+import jobMappings from '@/config/jobMappings';
+import type { JobMapping } from '@/types/jobMappings';
 
-export default defineComponent({
-  name: "HomePage",
-  data(): { jobMappings: Record<string, JobMapping> } {
-    return {
-      jobMappings,
-    };
-  },
-  methods: {
-    // Return images across all jobs
-    getSequentialIndex(currentJobId, currentLocalIndex) {
-      let count = 0;
-      for (const [jobId, mapping] of Object.entries(this.jobMappings)) {
-        if (jobId === currentJobId) {
-          return count + currentLocalIndex + 1;
-        }
-        count += mapping.finalJobGrows.length;
-      }
-      return 0;
-    },
+// our config is already typed as Record<string,JobMapping>
+const mappings: Record<string, JobMapping> = jobMappings;
 
-    // Dynamically load image or fallback placeholder
-    getImageSrc(jobId, localIndex) {
-      const seqIndex = this.getSequentialIndex(jobId, localIndex);
-      try {
-        return require(`@/assets/classImages/${seqIndex}.jpg`);
-      } catch (error) {
-        return 'https://via.placeholder.com/100';
-      }
-    },
+// const router = useRouter();
 
-    // Smooth-scroll to corresponding character section
-    scrollToJobGroup(jobId) {
-      const target = document.getElementById(jobId);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
+/**
+ * Returns the 1-based sequential index across all jobGrows
+ */
+function getSequentialIndex(currentJobId: string, currentLocalIndex: number): number {
+  let count = 0;
+  for (const [jobId, mapping] of Object.entries(mappings)) {
+    if (jobId === currentJobId) {
+      return count + currentLocalIndex + 1;
     }
-  },
-});
+    count += mapping.finalJobGrows.length;
+  }
+  return 0;
+}
+
+/**
+ * Attempts to require a class image by its sequence index,
+ * falling back to a placeholder if missing.
+ */
+function getImageSrc(jobId: string, localIndex: number): string {
+  const seqIndex = getSequentialIndex(jobId, localIndex);
+  try {
+    // webpack / Vite require context
+    return require(`@/assets/classImages/${seqIndex}.jpg`);
+  } catch {
+    return 'https://via.placeholder.com/100';
+  }
+}
+
+/**
+ * Smooth-scroll to the element whose id matches the jobId.
+ */
+function scrollToJobGroup(jobId: string): void {
+  const target = document.getElementById(jobId);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 </script>
 
 <style scoped>

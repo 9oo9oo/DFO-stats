@@ -83,86 +83,89 @@
     </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import jobMappings from '@/config/jobMappings.js';
+import jobMappings from '@/config/jobMappings';
+import type { JobMapping, JobGrow } from '@/types/jobMappings';
 
-export default {
-  name: 'TalismanStats',
+// ——— Types —————————————————————————————————————————————
 
-  data() {
-    return {
-      stats: null,
-      loading: false,
-      error: null,
-      talismanSlots: [
-        'T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'
-      ]
-    };
-  },
+interface TalismanStat {
+  talisman_item_id:   string;
+  talisman_item_name: string;
+  usage_count:        number;
+}
 
-  computed: {
-    jobId() {
-      return this.$route.params.jobId;
-    },
-    jobGrowId() {
-      return this.$route.params.jobGrowId;
-    },
-    jobMapping() {
-      return jobMappings[this.jobId] || {};
-    },
-    jobFriendlyName() {
-      if (this.jobGrowId && Array.isArray(this.jobMapping.finalJobGrows)) {
-        const growMapping = this.jobMapping.finalJobGrows.find(
-          (item) => item.jobGrowId === this.jobGrowId
-        );
-        if (growMapping && growMapping.jobGrowName) {
-          return growMapping.jobGrowName;
-        }
-      }
-      return this.jobMapping.jobName || 'Unknown Job';
-    }
-  },
+interface RuneStat {
+  rune_item_id:   string;
+  rune_item_name: string;
+  usage_count:    number;
+}
 
-  mounted() {
-    if (this.jobGrowId) {
-      this.fetchTalismanStats();
-    }
-  },
+interface TalismanStatsData {
+  talismanStats?: TalismanStat[];
+  runeStats?:     RuneStat[];
+}
 
-  watch: {
-    '$route.params.jobGrowId'(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.fetchTalismanStats();
-      }
-    }
-  },
+// ——— State —————————————————————————————————————————————
 
-  methods: {
-    async fetchTalismanStats() {
-      if (!this.jobGrowId) return;
-      this.loading = true;
-      try {
-        const response = await axios.get(`/api/talisman/stats/${this.jobId}/${this.jobGrowId}`);
-        this.stats = response.data;
-      } catch (err) {
-        this.error = (err.response && err.response.data && err.response.data.error)
-          ? err.response.data.error
-          : err.message;
-      } finally {
-        this.loading = false;
-      }
-    },
+const stats   = ref<TalismanStatsData | null>(null);
+const loading = ref(false);
+const error   = ref<string | null>(null);
 
-    isActiveRoute(name) {
-      return this.$route.name === name;
-    },
+// ——— Routing & Job Info ——————————————————————————————————
 
-    formatRate(value, divisor) {
-      return (value / divisor).toFixed(2);
-    }
+const route     = useRoute();
+const router    = useRouter();
+const jobId     = computed(() => route.params.jobId as string);
+const jobGrowId = computed(() => route.params.jobGrowId as string);
+
+const jobMapping = computed<JobMapping>(() =>
+  jobMappings[jobId.value] ?? ({} as JobMapping)
+);
+
+const jobFriendlyName = computed(() => {
+  const grows = jobMapping.value.finalJobGrows ?? [];
+  const found = grows.find((g: JobGrow) => g.jobGrowId === jobGrowId.value);
+  return found?.jobGrowName ?? jobMapping.value.jobName ?? 'Unknown Job';
+});
+
+// ——— Lifecycle & Watchers —————————————————————————————
+
+onMounted(() => {
+  if (jobGrowId.value) fetchTalismanStats();
+});
+
+watch(() => route.params.jobGrowId, (n, o) => {
+  if (n !== o) fetchTalismanStats();
+});
+
+// ——— Methods —————————————————————————————————————————
+
+async function fetchTalismanStats(): Promise<void> {
+  if (!jobGrowId.value) return;
+  loading.value = true;
+  try {
+    const { data } = await axios.get<TalismanStatsData>(
+      `/api/talisman/stats/${jobId.value}/${jobGrowId.value}`
+    );
+    stats.value = data;
+  } catch (err: any) {
+    error.value = err.response?.data?.error ?? err.message;
+  } finally {
+    loading.value = false;
   }
-};
+}
+
+function isActiveRoute(name: string): boolean {
+  return router.currentRoute.value.name === name;
+}
+
+function formatRate(value: number, divisor: number): string {
+  return (value / divisor).toFixed(2);
+}
 </script>
 
 <style scoped>

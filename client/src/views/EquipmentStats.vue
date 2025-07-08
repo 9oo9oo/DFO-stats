@@ -269,10 +269,10 @@ const orderedSlots = [
   'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
 ] as const;
 
-const fusionOrderedSlots = [
-  'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
-  'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
-] as const;
+// const fusionOrderedSlots = [
+//   'JACKET', 'SHOULDER', 'PANTS', 'WAIST', 'SHOES',
+//   'WRIST', 'RING', 'AMULET', 'SUPPORT', 'MAGIC_STON', 'EARRING'
+// ] as const;
 
 const setIconMapping: Record<string, string> = {
   "Hideout's Endless Gold Set": 'hideout.png',
