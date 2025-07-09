@@ -60,7 +60,7 @@
 
         <!-- Weapon & Aura -->
         <div class="weapon-aura-grid">
-          <section :ref="el => { slotRefs['WEAPON'] = el }" class="slot-section">
+          <section :ref="setSlotRef('WEAPON')" class="slot-section">
             <div class="slot-table-block">
             <h2>{{ convertSlotName('WEAPON') }}</h2>
             <table class="stats-table">
@@ -87,7 +87,7 @@
           </div>
           </section>
 
-          <section :ref="el => { slotRefs['AURORA'] = el }" class="slot-section">
+          <section :ref="setSlotRef('AURORA')" class="slot-section">
             <div class="slot-table-block">
             <h2>{{ convertSlotName('AURORA') }}</h2>
             <table class="stats-table">
@@ -129,7 +129,7 @@
               <div
                 v-for="slot in group.slots"
                 :key="slot"
-                :ref="el => { slotRefs[slot] = el }"
+                :ref="setSlotRef(slot)"
                 class="slot-table-block"
               >
                 <h3>{{ convertSlotName(slot) }}</h3>
@@ -222,13 +222,14 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings';
 import type { JobMapping } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
+import type { ComponentPublicInstance } from 'vue'
 
 // ——— Types —————————————————————————————————————————————
 
@@ -255,8 +256,18 @@ const stats = ref<AvatarStats | null>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
-// Ref map to replace this.$refs
-const slotRefs = ref<Record<string, HTMLElement | null>>({});
+// ——— Reactive map of slot → DOM element —————————————————————
+const slotRefs = reactive<Record<string, HTMLElement | null>>({})
+
+// ——— Helper to inject into the template —————————————————————
+const setSlotRef = (slot: string) =>
+  (el: Element | ComponentPublicInstance | null): void => {
+    if (el instanceof HTMLElement) {
+      slotRefs[slot] = el
+    } else {
+      slotRefs[slot] = null
+    }
+  }
 
 const slotButtons = [
   'WEAPON', 'HAIR', 'HEADGEAR', 'FACE', 'AURORA',
@@ -390,23 +401,22 @@ function getImageSrc(jobId: string, localIndex: number): string {
     return 'https://via.placeholder.com/250x400';
   }
 }
-
 function scrollToSlot(slot: string): void {
-  const el = slotRefs.value[slot];
-  if (!el) return;
+  const el = slotRefs[slot]
+  if (!el) return
 
-  const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
-  window.scrollTo({ top, behavior: 'smooth' });
+  const top = window.pageYOffset + el.getBoundingClientRect().top - 20
+  window.scrollTo({ top, behavior: 'smooth' })
 
   new IntersectionObserver((entries, obs) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) {
-        el.classList.add('flash');
-        setTimeout(() => el.classList.remove('flash'), 1500);
-        obs.disconnect();
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        el.classList.add('flash')
+        setTimeout(() => el.classList.remove('flash'), 1500)
+        obs.disconnect()
       }
     }
-  }, { threshold: 0.5 }).observe(el);
+  }, { threshold: 0.5 }).observe(el)
 }
 
 function formatRate(value: number, divisor: number): string {

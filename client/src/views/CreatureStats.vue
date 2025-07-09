@@ -55,7 +55,7 @@
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
         <!-- Creature Section -->
-        <section :ref="el => { slotRefs['CREATURE'] = el }" class="stat-section">
+        <section :ref="setSlotRef('CREATURE')" class="stat-section">
           <h2>Creature</h2>
           <div class="tables-container full-width">
             <div class="slot">
@@ -94,7 +94,7 @@
         <section class="stat-section">
           <h2>Artifact</h2>
           <div class="tables-container artifact-container">
-            <div class="slot" :ref="el => { slotRefs['ARTIFACT_RED'] = el }">
+            <div class="slot" :ref="setSlotRef('ARTIFACT_RED')">
               <h3>Red Artifact </h3>
               <table class="stats-table">
                 <thead>
@@ -124,7 +124,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="slot" :ref="el => { slotRefs['ARTIFACT_BLUE'] = el }">
+            <div class="slot" :ref="setSlotRef('ARTIFACT_BLUE')">
               <h3>Blue Artifact</h3>
               <table class="stats-table">
                 <thead>
@@ -154,7 +154,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="slot" :ref="el => { slotRefs['ARTIFACT_GREEN'] = el }">
+            <div class="slot" :ref="setSlotRef('ARTIFACT_GREEN')">
               <h3>Green Artifact</h3>
               <table class="stats-table">
                 <thead>
@@ -191,13 +191,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, reactive, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import jobMappings from '@/config/jobMappings';
 import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
+import type { ComponentPublicInstance } from 'vue'
 
 // ——— Types —————————————————————————————————————————————
 
@@ -212,8 +213,19 @@ const stats = ref<CreatureStatsData | null>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
-// Replace this.$refs
-const slotRefs = ref<Record<string, HTMLElement | null>>({});
+// ——— Reactive map of slot → DOM element —————————————————————
+const slotRefs = reactive<Record<string, HTMLElement | null>>({})
+
+// ——— Helper to inject into the template —————————————————————
+const setSlotRef = (slot: string) =>
+  (el: Element | ComponentPublicInstance | null): void => {
+    if (el instanceof HTMLElement) {
+      slotRefs[slot] = el
+    } else {
+      slotRefs[slot] = null
+    }
+  }
+
 
 // ——— Router & Params ————————————————————————————————————
 
@@ -274,30 +286,21 @@ async function fetchCreatureStats(): Promise<void> {
 }
 
 function scrollToSlot(slot: string): void {
-  const el = slotRefs.value[slot];
-  if (!el) return;
+  const el = slotRefs[slot];
+  if (!(el instanceof Element)) return;
 
-  const offset = 20;
-  const top = window.pageYOffset + el.getBoundingClientRect().top - offset;
+  const top = window.pageYOffset + el.getBoundingClientRect().top - 20;
   window.scrollTo({ top, behavior: 'smooth' });
 
-  const obs = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-
-      let flashEl: HTMLElement = el;
-      if (!flashEl.classList.contains('slot')) {
-        const child = flashEl.querySelector<HTMLElement>('.slot');
-        if (child) flashEl = child;
+  new IntersectionObserver((entries, obs) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        el.classList.add('flash');
+        setTimeout(() => el.classList.remove('flash'), 1500);
+        obs.disconnect();
       }
-
-      flashEl.classList.add('flash');
-      setTimeout(() => flashEl.classList.remove('flash'), 2000);
-      observer.disconnect();
-    });
-  }, { threshold: 0.5 });
-
-  obs.observe(el);
+    }
+  }, { threshold: 0.5 }).observe(el);
 }
 
 function getItemImageUrl(itemId: string): string {
@@ -578,6 +581,10 @@ function hideBrokenIcon(event: Event): void {
 
 .flash {
   animation: flashEffect 2s ease-out;
+}
+
+.stat-section.flash {
+  border-radius: 8px;
 }
 
 /* Icon and Name */

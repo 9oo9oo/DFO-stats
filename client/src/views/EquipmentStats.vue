@@ -113,7 +113,7 @@
     <section
       v-for="slot in titleWeaponSlots"
       :key="slot"
-      :ref="el => { slotRefs[slot] = el }"
+      :ref="setSlotRef(slot)"
       class="slot-section"
     >
       <h2>{{ slotDisplayNames[slot] || slot }}</h2>
@@ -151,7 +151,7 @@
       <section
         v-for="slot in otherSlots"
         :key="slot"
-        :ref="el => { slotRefs[slot] = el }"
+        :ref="setSlotRef(slot)"
         class="slot-section"
       >
         <h2>{{ slotDisplayNames[slot] || slot }}</h2>
@@ -226,6 +226,7 @@ import jobMappings from '@/config/jobMappings';
 import type { JobMapping, JobGrow } from '@/types/jobMappings';
 import ItemTooltip from '@/components/ItemTooltip.vue';
 import MissingIcon from '@/assets/missingicon.png';
+import type { ComponentPublicInstance } from 'vue'
 
 // ——— Types —————————————————————————————————————————————
 
@@ -260,8 +261,18 @@ const stats = ref<EquipmentStatsData | null>(null);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
-// reactive map of slot → DOM element
-const slotRefs = reactive<Record<string, Element | null>>({});
+// ——— Reactive map of slot → DOM element —————————————————————
+const slotRefs = reactive<Record<string, HTMLElement | null>>({})
+
+// ——— Helper to inject into the template —————————————————————
+const setSlotRef = (slot: string) =>
+  (el: Element | ComponentPublicInstance | null): void => {
+    if (el instanceof HTMLElement) {
+      slotRefs[slot] = el
+    } else {
+      slotRefs[slot] = null
+    }
+  }
 
 // static configuration
 const orderedSlots = [
