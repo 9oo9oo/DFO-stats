@@ -55,7 +55,7 @@
       <div v-if="error">Error: {{ error }}</div>
       <div v-if="stats">
         <!-- Creature Section -->
-        <section ref="CREATURE" class="stat-section">
+        <section :ref="el => { slotRefs['CREATURE'] = el }" class="stat-section">
           <h2>Creature</h2>
           <div class="tables-container full-width">
             <div class="slot">
@@ -94,7 +94,7 @@
         <section class="stat-section">
           <h2>Artifact</h2>
           <div class="tables-container artifact-container">
-            <div class="slot" ref="ARTIFACT_RED">
+            <div class="slot" :ref="el => { slotRefs['ARTIFACT_RED'] = el }">
               <h3>Red Artifact </h3>
               <table class="stats-table">
                 <thead>
@@ -124,7 +124,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="slot" ref="ARTIFACT_BLUE">
+            <div class="slot" :ref="el => { slotRefs['ARTIFACT_BLUE'] = el }">
               <h3>Blue Artifact</h3>
               <table class="stats-table">
                 <thead>
@@ -154,7 +154,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="slot" ref="ARTIFACT_GREEN">
+            <div class="slot" :ref="el => { slotRefs['ARTIFACT_GREEN'] = el }">
               <h3>Green Artifact</h3>
               <table class="stats-table">
                 <thead>
