@@ -14,6 +14,3 @@ for V in "${VARS[@]}"; do
     --query "Parameter.Value" --output text >> .env
   echo >> .env
 done
-
-echo "Installing backend deps…"
-npm ci
