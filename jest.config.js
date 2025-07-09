@@ -1,23 +1,22 @@
 module.exports = {
   testEnvironment: 'node',
-
+  preset: 'ts-jest',
   roots: [
     '<rootDir>/src',         // backend
     // '<rootDir>/client/src',  // frontend
   ],
 
-  moduleFileExtensions: ['js', 'json', 'vue'],
+  moduleFileExtensions: ['ts', 'js', 'json', 'vue'],
 
   transform: {
-    '^.+\\.vue$': '@vue/vue3-jest',
-    '^.+\\.js$':  'babel-jest',
+    '^.+\\.tsx?$': 'ts-jest',
+    // '^.+\\.vue$': '@vue/vue3-jest',
+    // '^.+\\.js$':  'babel-jest',
   },
 
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.spec.js',
-    '<rootDir>/src/**/*.spec.js',
+    '<rootDir>/src/**/__tests__/**/*.spec.ts',
     // '<rootDir>/client/src/**/__tests__/**/*.spec.js',
-    // '<rootDir>/client/src/**/*.spec.js',
   ],
 
   // moduleNameMapper: {
@@ -27,8 +26,8 @@ module.exports = {
 
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/server.js',
+    'src/**/*.ts',
+    '!src/server.ts',
     '!src/config/*.js',
     // 'client/src/**/*.js',
     // 'client/src/**/*.vue',

@@ -8,7 +8,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "allowJs": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
